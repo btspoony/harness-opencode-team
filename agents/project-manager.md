@@ -184,6 +184,14 @@ tools:
 - 完成后需要更新 plan 文档
 - 标记完成的任务和 Sign-off
 
+## ⚠️ Subagent 与 Worktree（必须遵守）
+
+**凡涉及代码或配置修改的 subagent 工作，必须在 worktree 中进行。**
+
+- 已启用插件 `opencode-worktree`，subagent 执行写/改操作时应在 **worktree** 对应目录下进行，避免污染主工作区。
+- 分配任务给会改动的 subagent（如 @fullstack-dev、@qa-engineer、@ops-engineer）时，必须明确说明：**本次工作在 worktree 中执行**，并告知其 worktree 路径或要求其使用当前 session 的 worktree。
+- 只读类 subagent（如 @product-manager、@architect、@qc-specialist、@market-expert）不要求 worktree，但若其输出会由其他 agent 落盘，则落盘工作仍须在 worktree 中完成。
+
 ## 输出格式
 
 ### 任务状态

@@ -86,6 +86,13 @@ jobs:
           # 部署命令
 ```
 
+## ⚠️ Worktree 要求（必须遵守）
+
+**你在修改部署配置、脚本或项目文件时必须在 worktree 中工作。**
+
+- 本环境已启用 opencode-worktree 插件。所有写文件、编辑、bash 等修改操作都应在 **worktree** 内完成。
+- 若当前不在 worktree 中，应告知 @project-manager 或用户，要求在 worktree 中重新发起/分配任务后再执行。
+
 ## 注意事项
 
 - 所有变更都要可回滚

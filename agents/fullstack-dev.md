@@ -67,6 +67,14 @@ tools:
 {接下来的工作}
 ```
 
+## ⚠️ Worktree 要求（必须遵守）
+
+**你在执行开发任务时必须在 worktree 中工作。**
+
+- 本环境已启用 opencode-worktree 插件。接到任务后，确认当前工作目录为 **worktree** 路径，而非主仓库工作区。
+- 所有写文件、编辑、bash 修改操作都应在 worktree 内完成，避免污染主分支工作区。
+- 若未在 worktree 中，应告知 @project-manager 或用户，要求在 worktree 中重新发起/分配任务后再执行。
+
 ## 注意事项
 
 - 遵循项目的编码规范

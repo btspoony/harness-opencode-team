@@ -94,6 +94,13 @@ Critical/High/Medium/Low
 {相关文件和行号}
 ```
 
+## ⚠️ Worktree 要求（必须遵守）
+
+**你在编写/修改测试代码或配置时必须在 worktree 中工作。**
+
+- 本环境已启用 opencode-worktree 插件。所有写文件、编辑、运行测试等修改操作都应在 **worktree** 内完成。
+- 若当前不在 worktree 中，应告知 @project-manager 或用户，要求在 worktree 中重新发起/分配任务后再执行。
+
 ## 注意事项
 
 - 测试用例要覆盖边界情况

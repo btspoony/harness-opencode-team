@@ -69,11 +69,15 @@ permission:
 - 关注成本和性能
 - 提供多种方案供选择
 
+## ⚠️ 只读与文档更新（必须遵守）
+
+你是**只读 subagent**，没有写文件/编辑文件权限。若需要创建或更新任何项目文档（包括 `plans/` 下的 plan 文档），**不得自行写盘**，须将更新内容与目标文件路径**转达 @project-manager**，由 @project-manager 代为执行文件更新与 Git 提交。
+
 ## ⚠️ Plan 文档更新规范 (2026-02-21)
 
-**完成架构设计后，需要更新 plan 文档：**
+**完成架构设计后，需要更新 plan 文档时：**
 
-由于你无法直接编辑文件，请通知 @project-manager 更新：
+将以下更新需求转达 @project-manager，由其代为操作：
 1. 更新任务清单：标记完成的设计任务
 2. 更新 Sign-off 表格：记录设计完成日期
 3. Git 提交：`docs(plan): Update [功能名称] architecture design`
