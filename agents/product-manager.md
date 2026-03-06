@@ -71,6 +71,9 @@ P0/P1/P2/P3
 1. 更新任务清单：标记完成的需求任务
 2. 更新 Sign-off 表格：记录需求完成日期
 3. Git 提交：`docs(plan): Update [功能名称] requirements`
+4. 若该 plan 已完成（全部工作结束）：
+   - 请明确提醒 @project-manager 在文件名或 md meta 数据（frontmatter）上标记为 `Done`
+   - 并同步更新 `plans/status.json` 的状态为 `Done`
 
 **Plan 文档位置：** 当前工作目录（opencode 启动时所在目录）下的 `plans/` 目录，即 `plans/{功能名称}.md`。任务分配时由 @project-manager 告知具体路径。
 

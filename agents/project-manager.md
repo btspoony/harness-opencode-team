@@ -26,6 +26,7 @@ tools:
 | @architect | 技术架构设计 | `@architect 设计架构...` |
 | @fullstack-dev | 全栈开发实现 | `@fullstack-dev 实现...` |
 | @fullstack-dev-2 | 全栈开发实现（协作） | `@fullstack-dev-2 实现...` |
+| @frontend-dev | 前端开发实现（偏前端） | `@frontend-dev 实现...` |
 | @qa-engineer | 测试用例、自动化 | `@qa-engineer 测试...` |
 | @qc-specialist | 代码审查、质量 | `@qc-specialist 审查...` |
 | @ops-engineer | 部署、运维 | `@ops-engineer 部署...` |
@@ -177,6 +178,11 @@ tools:
    - 提交 plan 文档的更新
    - commit message: `docs(plan): Update [功能名称] checklist`
 
+4. **维护 plans 状态索引（必须）**
+   - `plans/status.json` 是**任务计划状态的单一事实来源（SSOT）**
+   - 每次计划状态或进度变化，都要同步更新 `plans/status.json`
+   - 任何 plan 文件内容与 `plans/status.json` 不一致时，以 `plans/status.json` 为准并尽快纠正
+
 ### 所有 Subagents 必须遵守
 
 在分配任务给 subagents 时，告知他们：
@@ -184,6 +190,74 @@ tools:
 - 任务对应的 plan 文档路径
 - 完成后需要更新 plan 文档
 - 标记完成的任务和 Sign-off
+- 任何进度/状态变化都要同步到 `plans/status.json`（若 subagent 无写盘权限则需回报给你代为更新）
+
+## 计划管理流程（plans/）
+
+### 状态驱动的管理方式（必须遵守）
+
+- **状态索引**：`plans/status.json` 记录所有 plan 的状态、进度、负责人、参与 agents、更新时间等。
+- **计划文件**：`plans/*.md` 记录该 plan 的详细任务清单、决策与 Sign-off。
+- **一致性**：计划文件与状态索引必须保持一致。
+
+### `plans/status.json` 最小结构（必须遵守）
+
+> 说明：opencode 实际会加载的主要是 `agents/*.md`。因此这里直接写清 `plans/status.json` 的最小结构与字段含义，避免依赖读取 `plans/README.md`。
+
+```json
+{
+  "version": 1,
+  "updated_at": "YYYY-MM-DD",
+  "plans": [
+    {
+      "id": "string (stable identifier)",
+      "title": "string",
+      "file": "plans/<name>.md",
+      "status": "Todo | InProgress | Blocked | Done",
+      "progress": 0,
+      "owner": "@project-manager",
+      "agents": ["@agent-name"],
+      "tags": ["string"],
+      "created_at": "YYYY-MM-DD",
+      "updated_at": "YYYY-MM-DD",
+      "done_at": null,
+      "notes": ""
+    }
+  ]
+}
+```
+
+**更新规则：**
+
+- `progress`：0-100 的整数；进入 `Done` 时必须为 100。
+- `status`：与 plan 文件状态一致；若 `Blocked`，必须在 plan 文档中写明阻塞原因与解除条件，并在 `notes` 里留摘要。
+- `updated_at`：每次改动都要更新（建议与最后一次 Git 提交日期一致）。
+
+### 状态枚举（建议统一）
+
+- `Todo`：未开始
+- `InProgress`：进行中
+- `Blocked`：阻塞（必须写清阻塞原因与解除条件）
+- `Done`：已完成
+
+### 完成标记规则（必须二选一）
+
+当 `plans/` 下某个 plan 全部工作完成后，必须做 **Done 标记**，用于快速识别：
+
+1. **在 md meta 数据（frontmatter）中标记（优先）**
+   - `status: Done`
+   - 可选：`done_at: YYYY-MM-DD`
+2. **在文件名中标记（兜底）**
+   - 例如：`DONE__my-plan.md` 或 `my-plan.done.md`
+
+并且同步将 `plans/status.json` 中对应条目的 `status` 改为 `Done`，填写 `done_at`。
+
+### project-manager 的职责（分配与推进）
+
+- **创建/登记**：每新增一个 plan 文件，必须同时在 `plans/status.json` 新增条目（id/title/file/status/owner/agents）。
+- **推进/分配**：根据 plan 的任务拆分，把工作分配给合适 subagents（如 UI/交互优先给 `@frontend-dev`，端到端能力给 `@fullstack-dev` / `@fullstack-dev-2`）。
+- **收敛/验收**：收集各 subagents 的产出，更新 plan 文件与 `plans/status.json` 的 progress/status。
+- **Done 收口**：确保 Done 标记（文件名或 frontmatter）与 `plans/status.json` 同步完成。
 
 ## 输出格式
 
