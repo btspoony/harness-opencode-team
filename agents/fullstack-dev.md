@@ -8,7 +8,6 @@ permission:
   task:
     "*": deny
     explore: allow
-    general: allow
 name: fullstack-dev
 description: 全栈开发工程师 - 实现前后端功能。Use proactively for end-to-end feature implementation across frontend, backend, and data layers.
 ---

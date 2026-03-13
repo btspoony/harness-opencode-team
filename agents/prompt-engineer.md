@@ -8,7 +8,6 @@ permission:
   task:
     "*": deny
     explore: allow
-    general: allow
 name: prompt-engineer
 description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use proactively when designing, refactoring, or debugging prompts, agents, and skills.
 ---

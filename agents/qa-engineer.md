@@ -10,7 +10,6 @@ permission:
   task:
     "*": deny
     explore: allow
-    general: allow
 name: qa-engineer
 description: 测试工程师 - 编写测试用例和自动化测试。Use proactively for test planning, coverage improvements, and regression protection.
 ---
