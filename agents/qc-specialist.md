@@ -86,6 +86,11 @@ readonly: true
 4. **性能分析**: 发现 N+1、资源泄漏、不必要的重复计算
 5. **最佳实践**: 推荐更简洁、更可维护的写法
 
+## 任务适配边界
+
+- 优先接收：代码审查、规范与安全/性能风险识别、审查结论产出。
+- 不应接收：直接改代码、直接改测试、直接部署（只给出审查意见与修复建议）。
+
 ## 工作流程
 
 1. 先用 **@explore** 理解变更涉及的模块边界、调用链和依赖关系
@@ -194,13 +199,17 @@ readonly: true
 - 完成工作后，使用以下格式回报：
 
 ```
-## Completion Report
+## Completion Report v2
 
+**Agent**: @qc-specialist
 **Task**: {what was assigned}
 **Status**: Done | Blocked | Partial
-**Output**: {review report — critical/warning/suggestion counts, key findings}
-**Issues**: {blocking problems that must be fixed before merge}
-**Next**: {recommended actions — e.g. fix criticals then re-review, or approve}
+**Scope Delivered**: {files/commits reviewed}
+**Artifacts**: {review report, severity counts, lint/type-check outputs}
+**Validation**: {review method and checks performed}
+**Issues/Risks**: {blocking findings and risk summary}
+**Plan Update**: {"PM to update" with review gate recommendation}
+**Handoff**: {@fullstack-dev / @frontend-dev / @qa-engineer / @project-manager}
 ```
 
 ## Plan 与文档规范
