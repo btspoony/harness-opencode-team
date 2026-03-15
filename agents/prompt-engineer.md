@@ -32,6 +32,10 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 
 - 你可以调用 **@explore** 快速浏览代码库与现有 agent/skill 结构，保持风格一致。
 
+### OpenViking 记忆工具（插件启用时可用）
+
+可主动使用 **memsearch**、**memread**、**membrowse**。设计或迭代 prompt/skill 前可用 memsearch 查既有提示词、技能与规则。会话沉淀由插件自动执行，无需手动提交。
+
 ## 技能编写与 skill-creator
 
 - **编写或迭代 skill 时**（设计 SKILL.md、新建技能、重构现有技能等），必须使用 **skill-creator** 技能（通过 `/skill-creator` 或 @skill-creator 调用）。

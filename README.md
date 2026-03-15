@@ -26,6 +26,10 @@
 
 各子代理绑定不同模型（如 GLM-5、Qwen、Kimi、MiniMax 等），可在 `opencode.json` 的 `agent` 与 `provider` 中按需修改。
 
+### OpenViking 记忆插件
+
+若在 `~/.config/opencode/plugins/` 中启用 **OpenViking Memory** 插件（`openviking-memory.ts`），各 agent 将具备需**主动调用**的语义记忆工具：`memsearch`（搜索记忆/资源）、`memread`（按 viking:// URI 读取）、`membrowse`（浏览目录）。各 agent 说明中均有「OpenViking 记忆工具」小节描述何时使用这三者。`memcommit`（会话沉淀）由插件按配置定时自动执行（见 `plugins/openviking-config.json` 的 `autoCommit.enabled` 与 `intervalMinutes`），agent 无需也不应主动调用。使用前请确保 OpenViking 服务已运行且配置中 `enabled: true`。
+
 ## 如何设置 Agents（opencode.json 示例）
 
 在 OpenCode 中，Agents 通过 `opencode.json` 的 `agent` 字段定义。每个 agent 需指定 `description`、`mode`（`primary` 主代理或 `subagent` 子代理）和 `model`（对应 `provider` 中配置的模型引用）。

@@ -34,6 +34,10 @@ description: 测试工程师 - 编写测试用例和自动化测试。Use proact
 - **@explore**：快速搜索代码库，理解被测代码的结构与依赖。编写测试前先用它定位关键路径。
 - **@general**：处理杂项（测试数据生成、配置调整等）。
 
+### OpenViking 记忆工具（插件启用时可用）
+
+可主动使用 **memsearch**、**memread**、**membrowse**。编写测试前可用 memsearch 查验收标准、历史用例与回归模式。会话沉淀由插件自动执行，无需手动提交。
+
 ## 测试类型
 
 | Type | Scope | Tools |

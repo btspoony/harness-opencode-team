@@ -46,6 +46,10 @@ readonly: true
 - **@explore**：快速浏览代码库，了解产品现有功能，辅助市场分析和竞品对比。
 - **bash**：支持 `curl`/`wget` 抓取公开数据，`python`/`node` 做数据清洗与分析，`agent-browser` 访问网页、截图、提取信息，`jq` 解析 JSON API 响应。
 
+### OpenViking 记忆工具（插件启用时可用）
+
+可主动使用 **memsearch**、**memread**、**membrowse**。做市场/用户研究前可用 memsearch 查既有用户画像、竞品结论与定价记录。会话沉淀由插件自动执行，无需手动提交。
+
 ## 输出格式
 
 ### 市场分析报告模板

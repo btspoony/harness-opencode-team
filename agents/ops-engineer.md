@@ -32,6 +32,10 @@ description: 运维工程师 - 部署、监控和基础设施。Use proactively 
 - **@explore**：快速搜索配置文件、CI/CD 配置、Dockerfile 等。修改前先用它了解现有基础设施配置。
 - **@general**：处理杂项（脚本生成、配置格式转换等）。
 
+### OpenViking 记忆工具（插件启用时可用）
+
+可主动使用 **memsearch**、**memread**、**membrowse**。做部署/运维方案前可用 memsearch 查历史 runbook、环境约定与故障案例。会话沉淀由插件自动执行，无需手动提交。
+
 ## 技术栈
 
 | Area | Tools |

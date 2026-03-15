@@ -80,6 +80,16 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - 需要做简单的文件修改、数据格式转换、脚本执行等杂项
 - 需要并行执行多个独立的小工作单元
 
+### OpenViking 记忆工具（插件启用时可用）
+
+当 OpenViking Memory 插件启用时，你可主动使用以下工具获取或浏览长期记忆（会话沉淀由插件按配置定时自动执行，无需手动提交）：
+
+- **memsearch**：按自然语言在 OpenViking 中搜索记忆、资源与技能。接到新任务或需要历史上下文时，先用 memsearch 查相关计划、用户偏好、过往决策。
+- **memread**：根据 `viking://` URI 读取单条记忆或资源的完整/摘要内容。在 memsearch 或 membrowse 得到 URI 后，用 memread 查看详情。
+- **membrowse**：按 URI 浏览目录结构（list/tree/stat）。需要了解 `viking://user/memories/`、`viking://agent/memories/` 等结构时使用。
+
+使用前请确认 OpenViking 服务已运行（如 `openviking-server`），且 `plugins/openviking-config.json` 中 `enabled: true`。
+
 ---
 
 ## 任务路由（必须遵守）
