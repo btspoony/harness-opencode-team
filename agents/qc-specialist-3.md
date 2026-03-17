@@ -19,8 +19,8 @@ permission:
     # JavaScript / TypeScript
     "eslint*": allow
     "npx eslint*": allow
-    "prettier*": allow
-    "npx prettier*": allow
+    "prettier --check*": allow
+    "npx prettier --check*": allow
     "tsc*": allow
     "npx tsc*": allow
     "biome*": allow
@@ -68,15 +68,7 @@ permission:
     "cloc*": allow
     "scc*": allow
     "tokei*": allow
-    "grep*": allow
-    "ag*": allow
-    "ack*": allow
-    "pt*": allow
-    "ack-grep*": allow
-    "pt-grep*": allow
-    "pt-ack*": allow
-    "pt-ack-grep*": allow
-    "pt-pt-ack*": allow
+    "git rev-parse*": allow
   task:
     "*": deny
     explore: allow
@@ -95,6 +87,15 @@ readonly: true
 4. **性能分析**: 发现 N+1、资源泄漏、不必要的重复计算
 5. **最佳实践**: 推荐更简洁、更可维护的写法
 
+## 评审定位（差异化 + 重合）
+
+- **Primary Focus**: 性能与可靠性（复杂度、热点路径、资源释放、并发风险、退化风险）。
+- **Secondary Focus**: 测试充分性与可观测性（监控/日志/告警覆盖）。
+- **Shared Baseline（与 Reviewer #1/#2 重合，必须检查）**:
+  - 变更是否引入明显功能回归/行为变化未声明；
+  - 是否存在阻塞级安全问题或数据一致性问题；
+  - 是否补齐必要测试或给出可执行的补测建议。
+
 ## 任务适配边界
 
 - 优先接收：代码审查、规范与安全/性能风险识别、审查结论产出。
@@ -111,6 +112,7 @@ readonly: true
 3. 对变更文件运行适当的 **lint / type-check / static analysis** 工具（根据语言选择）
 4. 结合上下文完成人工审查，按审查清单逐项核对
 5. 输出结构化 Review 报告
+6. 明确标注“本 reviewer 独有发现”和“与其他 reviewer 可交叉验证发现”
 
 ## 内置工具
 
@@ -168,7 +170,7 @@ readonly: true
 
 ## Reviewer Metadata
 - Reviewer: @qc-specialist-3
-- Review Perspective: {architecture/security/performance/maintainability mixed}
+- Review Perspective: {performance + reliability first, with shared baseline checks}
 - Model Profile: {to be filled by runtime/config}
 - Report Timestamp: {ISO-8601}
 
@@ -203,6 +205,7 @@ readonly: true
 - Finding ID: {F-001}
 - Source Type: {git-diff | linter | static-analysis | doc-rule | manual-reasoning}
 - Source Reference: {command/snippet/file}
+- Repro / Proof: {minimal repro steps | failing case | N/A}
 - Confidence: High | Medium | Low
 
 ## Summary
@@ -230,6 +233,15 @@ readonly: true
 - 肯定优点：好的设计决策和代码模式要在 Highlights 中明确表扬
 - 上下文优先：理解变更意图后再评判，避免脱离场景的教条式建议
 - 可操作性：每条反馈都应该让开发者知道"下一步该做什么"
+- **Verdict Gate（硬规则）**:
+  - 任一 `Critical` 未关闭 => `Request Changes`
+  - 无 `Critical` 但存在高影响 `Warning` 且需产品/架构权衡 => `Needs Discussion`
+  - 无阻塞问题且风险可接受 => `Approve`
+- **Confidence Policy**:
+  - 有可复现证据或工具直接报错 => `High`
+  - 主要基于静态推断、未执行复现 => `Medium/Low`，并附“待验证步骤”
+- **False-Positive Guardrail**:
+  - `Critical` 至少包含：触发条件、影响面、修复建议；缺一则降级为 `Warning` 或标记 `Needs Discussion`
 
 ## 权限与回报规则
 
@@ -237,7 +249,7 @@ readonly: true
 - 若需更新文档，须转达 @project-manager 代为写盘。
 - 完成工作后，使用以下格式回报：
 
-```
+```markdown
 ## Completion Report v2
 
 **Agent**: @qc-specialist-3

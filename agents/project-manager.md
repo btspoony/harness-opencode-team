@@ -127,8 +127,35 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 - **开发任务必须经过 QA**：所有涉及代码开发的 plan（无论大小），**必须**安排 @qa-engineer 进行测试验证，不可跳过。
 - **开发任务必须经过 QC 三审**：所有涉及代码开发的 plan（无论大小），默认必须执行 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；仅 Hotfix 可走 `QC单审快速通道（@qc-specialist）`。
-- **审查结论汇总责任**：`QC三审并行` 完成后，由 @project-manager 基于三份报告做交叉对比并产出统一审查结论。
+- **审查结论汇总责任**：`QC三审并行` 完成后，由 @project-manager 汇总为单一审查结论与 gate 决策。
+- **修复执行责任**：QC 只负责发现问题与给建议；修复工作默认分派给开发团队（`@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`），修复后再回到 QC/QA 流程验证。
 - **Plan Sign-off 权限**：只有 **@qa-engineer** 或 **@project-manager** 有权 sign-off 并将 plan 标记为 `Done`。其他 subagent（包括 QC 三审组）可以给出审查意见，但不能最终确认完成。
+
+### QC 三审轻量汇总（PM 必须执行）
+
+#### 最小流程（4 步）
+
+1. 收集三份 QC 报告，合并同类 finding（去重）。
+2. 标记冲突项并按证据强度裁决（复现/工具报错优先）。
+3. 产出单一 gate 结论（`Approve` / `Request Changes` / `Needs Discussion`）。
+4. 对“需修复项”直接派单给 dev owner，修复后回流 QC/QA 复验。
+
+#### 快速判定规则
+
+- 任一未关闭 `Critical` => `Request Changes`
+- 无 `Critical` 但有高影响 `Warning` 且存在分歧 => `Needs Discussion`
+- 其余 => `Approve`
+
+#### PM 统一输出（简版）
+
+```markdown
+## QC Consolidated Decision
+
+**Decision**: Approve | Request Changes | Needs Discussion
+**Blocking Items**: {list or None}
+**Assigned Fix Owners**: {@frontend-dev / @fullstack-dev / @fullstack-dev-2}
+**Next Step**: {back to dev fix | to QA verification}
+```
 
 ### 判断标准
 
@@ -258,7 +285,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - 收到回报后，检查产出是否符合预期
 - 如果不符合，给出具体反馈并要求修正
 - 如果符合，推进到下一阶段（参照路由表）
-- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。随后由 @project-manager 汇总审查结论，再交 @qa-engineer 验证
+- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。随后由 @project-manager 按“QC 三审轻量汇总”输出统一 `QC Consolidated Decision`，再交 @qa-engineer 验证
+- **QC 发现问题 → Dev 修复闭环**：若统一结论为 `Request Changes` 或包含必须修复项，PM 需立即按模块指派给对应 dev owner 修复（前端给 `@frontend-dev`，后端给 `@fullstack-dev`，跨模块可并行给 `@fullstack-dev-2`）；修复完成后回流 QC/QA 复验
 - **InReview → Done**：@qa-engineer 或你（@project-manager）确认验收通过后，sign-off 并将状态更新为 `Done`
 - 每个阶段完成后，更新 `plans/status.json`
 
