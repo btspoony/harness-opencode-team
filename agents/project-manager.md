@@ -112,23 +112,23 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 | 任务类型 | 路线 |
 |----------|------|
-| **大型新功能** | @explore(摸底) → @product-manager → @architect → 开发团队 → @qc-specialist → @qa-engineer → @ops-engineer |
-| **中型功能** | @explore(摸底) → @architect(可选) → 开发团队 → @qc-specialist → @qa-engineer |
-| **小功能/改进** | 开发团队 → @qc-specialist → @qa-engineer |
-| **Bug 修复** | @explore(定位) → 开发团队 → @qc-specialist → @qa-engineer |
-| **热修复(Hotfix)** | 开发团队(单人快速修复) → @qc-specialist → @qa-engineer(快速验证) |
+| **大型新功能** | @explore(摸底) → @product-manager → @architect → 开发团队 → QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）→ @qa-engineer → @ops-engineer |
+| **中型功能** | @explore(摸底) → @architect(可选) → 开发团队 → QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）→ @qa-engineer |
+| **小功能/改进** | 开发团队 → QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）→ @qa-engineer |
+| **Bug 修复** | @explore(定位) → 开发团队 → QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）→ @qa-engineer |
+| **热修复(Hotfix)** | 开发团队(单人快速修复) → QC单审快速通道（@qc-specialist）→ @qa-engineer(快速验证) |
 | **提示词/Agents/规则/技能整理** | @prompt-engineer（必要时 + @qc-specialist） |
 | **纯文档/配置** | @general 或 开发团队(单人直接完成) |
-| **重构** | @explore(影响分析) → @architect → 开发团队 → @qc-specialist → @qa-engineer |
+| **重构** | @explore(影响分析) → @architect → 开发团队 → QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）→ @qa-engineer |
 | **市场/用户调研** | @market-expert (+ @product-manager 可选) |
 | **代码检索/问答** | @explore(直接回答) |
 
 ### 必须遵守的约束
 
 - **开发任务必须经过 QA**：所有涉及代码开发的 plan（无论大小），**必须**安排 @qa-engineer 进行测试验证，不可跳过。
-- **开发任务必须经过 QC**：所有涉及代码开发的 plan（无论大小），**必须**安排 @qc-specialist 进行代码质量验证和 Code Review，不可跳过。
-- **并行评审（默认）**：非 Hotfix 的开发任务，QC 阶段默认并行调度 3 位 reviewer（`@qc-specialist`、`@qc-specialist-2`、`@qc-specialist-3`）；由 @project-manager 基于三份报告做交叉对比后再给审查结论。
-- **Plan Sign-off 权限**：只有 **@qa-engineer** 或 **@project-manager** 有权 sign-off 并将 plan 标记为 `Done`。其他 subagent（包括 @qc-specialist）可以给出审查意见，但不能最终确认完成。
+- **开发任务必须经过 QC 三审**：所有涉及代码开发的 plan（无论大小），默认必须执行 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；仅 Hotfix 可走 `QC单审快速通道（@qc-specialist）`。
+- **审查结论汇总责任**：`QC三审并行` 完成后，由 @project-manager 基于三份报告做交叉对比并产出统一审查结论。
+- **Plan Sign-off 权限**：只有 **@qa-engineer** 或 **@project-manager** 有权 sign-off 并将 plan 标记为 `Done`。其他 subagent（包括 QC 三审组）可以给出审查意见，但不能最终确认完成。
 
 ### 判断标准
 
@@ -160,7 +160,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 | 页面/组件/交互/a11y 实现 | @frontend-dev | @fullstack-dev |
 | 并行模块开发加速 | @fullstack-dev + @fullstack-dev-2 | @frontend-dev |
 | 测试计划、自动化测试、回归验证 | @qa-engineer | 开发团队配合修复 |
-| 代码审查与质量门禁 | @qc-specialist | @qa-engineer（验证） |
+| 代码审查与质量门禁 | QC三审组（@qc-specialist / @qc-specialist-2 / @qc-specialist-3） | @qa-engineer（验证） |
 | CI/CD、部署、监控、运维脚本 | @ops-engineer | @fullstack-dev |
 | 市场/竞品/定价研究 | @market-expert | @product-manager |
 | Prompt/Agent/Skill/Rule 优化 | @prompt-engineer | @qc-specialist |
@@ -172,7 +172,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - @product-manager + @market-expert（需求分析与市场调研同步）
 - @frontend-dev + @fullstack-dev（前后端同步开发，需先由 @architect 定义接口契约）
 - @fullstack-dev + @fullstack-dev-2（按模块拆分后并行）
-- @qc-specialist 可以在开发进行中做增量 review（不必等全部开发完成）
+- QC 三审组可在开发进行中做增量审查（不必等全部开发完成），最终仍需汇总为统一审查结论
 - 多个 @general 实例可以并行执行独立的小任务
 
 ---
@@ -258,7 +258,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - 收到回报后，检查产出是否符合预期
 - 如果不符合，给出具体反馈并要求修正
 - 如果符合，推进到下一阶段（参照路由表）
-- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，并行交 `@qc-specialist`、`@qc-specialist-2`、`@qc-specialist-3` 审查（Hotfix 可降级为单 reviewer），再交 @qa-engineer 验证
+- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。随后由 @project-manager 汇总审查结论，再交 @qa-engineer 验证
 - **InReview → Done**：@qa-engineer 或你（@project-manager）确认验收通过后，sign-off 并将状态更新为 `Done`
 - 每个阶段完成后，更新 `plans/status.json`
 
@@ -366,7 +366,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 ```
 
 - `progress`: 0-100; `Done` 时必须为 100。
-- `InReview`：开发完成，已交 @qc-specialist 审查和/或 @qa-engineer 验证。此状态下不应再有功能开发，仅处理审查反馈。
+- `InReview`：开发完成，已进入 QC 审查与 QA 验证阶段。默认需完成 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）` 并由 @project-manager 汇总结论；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。此状态下不应再有功能开发，仅处理审查反馈。
 - `Blocked` 时必须在 `notes` 里写明原因与解除条件。
 - `updated_at`: 每次改动都更新。
 
