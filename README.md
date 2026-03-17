@@ -19,12 +19,21 @@
 | `fullstack-dev-2`  | 全栈开发（协作）| subagent | 协作实现                     |
 | `frontend-dev`     | 前端开发       | subagent | UI、前端架构与体验优化       |
 | `qa-engineer`      | 测试工程师     | subagent | 测试用例与自动化测试         |
-| `qc-specialist`    | 质量控制专家   | subagent | 代码审查与质量保证           |
+| `qc-specialist`    | 质量控制专家 #1 | subagent | 代码审查，主审架构/可维护性  |
+| `qc-specialist-2`  | 质量控制专家 #2 | subagent | 代码审查，主审安全/正确性    |
+| `qc-specialist-3`  | 质量控制专家 #3 | subagent | 代码审查，主审性能/可靠性    |
 | `ops-engineer`     | 运维工程师     | subagent | 部署、监控与基础设施         |
 | `market-expert`    | 市场专家       | subagent | 市场分析与用户研究           |
 | `prompt-engineer`  | 提示词工程师   | subagent | 提示词/Agents/规则/技能整理  |
 
 各子代理绑定不同模型（如 GLM-5、Qwen、Kimi、MiniMax 等），可在 `opencode.json` 的 `agent` 与 `provider` 中按需修改。
+
+### 质量审查（QC 三审）
+
+默认代码变更走 **QC 三审并行**：`@qc-specialist`、`@qc-specialist-2`、`@qc-specialist-3` 从不同视角审查（架构/可维护性、安全/正确性、性能/可靠性），同时遵守统一的 **Shared Baseline**（功能回归、阻塞级安全与数据一致性、测试充分性）。仅 Hotfix 可走单审快速通道（`@qc-specialist`）。
+
+- **汇总**：三审完成后由 **@project-manager** 做轻量汇总（去重、冲突按证据裁决），产出单一 gate 结论（Approve / Request Changes / Needs Discussion）。
+- **修复归属**：QC 只负责发现问题与建议；**修复工作默认分派给开发团队**（@fullstack-dev / @frontend-dev / @fullstack-dev-2），修复后再回流 QC/QA 复验。
 
 ### OpenViking 记忆插件
 
@@ -84,7 +93,17 @@
             "model": "provider-id/model-id"
         },
         "qc-specialist": {
-            "description": "质量控制专家 - 代码审查和质量保证",
+            "description": "质量控制专家 - 代码审查，主审架构/可维护性",
+            "mode": "subagent",
+            "model": "provider-id/model-id"
+        },
+        "qc-specialist-2": {
+            "description": "质量控制专家（Reviewer #2）- 主审安全/正确性",
+            "mode": "subagent",
+            "model": "provider-id/model-id"
+        },
+        "qc-specialist-3": {
+            "description": "质量控制专家（Reviewer #3）- 主审性能/可靠性",
             "mode": "subagent",
             "model": "provider-id/model-id"
         },
