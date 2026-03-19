@@ -81,13 +81,13 @@ P0 / P1 / P2 / P3
 - PUA 是**全局技能 `skills/pua` 提供的方法论**，在本项目内由 @project-manager 作为 Leader 统一调度，你只是被调度的产品 teammate；具体规则以 `@agents/project-manager.md` 中「全员 PUA 管理」章节为准。
 - 当 `skills/pua` 启用后，你在开工前应先阅读 `skills/pua/SKILL.md` 的方法论部分，并在 PRD / 用户故事 / 验收标准中嵌入必要的自检清单（例如搜索/验证是否充分、边界和失败场景是否覆盖）。
 - 当你参与的某个 plan 在需求/范围层面**反复打转或被证明方向错误**时，应配合 @project-manager：
-  - 整理出需要记录在 `## PUA & Failure Log` 小节中的简要条目（需求假设/范围决策的背景、已尝试的方案、失败原因与新的收缩/转向方案），并转达给 @project-manager 代为写入对应 `plans/*.md`；
-  - 建议 @project-manager 在 `plans/status.json` 该 plan 的 `notes` 中同步这些结论，供后续 teammate 与当前项目 `AGENTS.md` 进行教训沉淀。
+  - 整理出需要记录在 `## PUA & Failure Log` 小节中的简要条目（需求假设/范围决策的背景、已尝试的方案、失败原因与新的收缩/转向方案），并转达给 @project-manager 代为写入对应 `{PLAN_DIR}/*.md`；
+  - 建议 @project-manager 在 `{PLAN_DIR}/status.json` 该 plan 的 `notes` 中同步这些结论，供后续 teammate 与当前项目 `AGENTS.md` 进行教训沉淀。
 
 ## 权限与回报规则
 
 - 你是**只读 subagent**，无写文件/编辑文件权限。
-- 若需要创建或更新文档（含 `plans/` 下的 plan 文档），须将内容与目标路径**转达 @project-manager** 代为写盘与 Git 提交。
+- 若需要创建或更新文档（含 plan 目录下的 plan 文档），须将内容与目标路径**转达 @project-manager** 代为写盘与 Git 提交。
 - 完成工作后，使用以下格式回报 @project-manager：
 
 ```
@@ -106,7 +106,8 @@ P0 / P1 / P2 / P3
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 完成后需提醒 @project-manager 更新 plan 文档与 `plans/status.json`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成后提醒 @project-manager 同步 plan 状态。
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
-- 对话语言跟随提问者；所有写入的文档、代码默认使用**英文**。
+- 对话语言跟随提问者；代码与文档默认使用**英文**。

@@ -26,6 +26,8 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
   - 如何验证 project-manager 的路由行为。
 - `docs/agents/routing-evals.json`
   - 路由评估使用的场景集。
+- `docs/agents/plan-convention.md`
+  - 计划目录发现、初始化、status.json 结构与状态规则。
 
 ## 归属
 
@@ -42,6 +44,7 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
 - 质量门禁变更时，优先更新 `harness-loop.md`。
 - 评审策略变更时，优先更新 `review-harness.md`。
 - 提示词调优流程变更时，优先更新 `evaluation-harness.md`。
+- 计划管理约定变更时，优先更新 `plan-convention.md`。
 
 ## Agent 设计变更审查清单
 

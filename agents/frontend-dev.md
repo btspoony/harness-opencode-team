@@ -89,18 +89,19 @@ description: 前端开发工程师 - UI/前端架构与体验优化。Use proact
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `plans/status.json`。
-- **禁止将 plan 状态更新为 Done**：完成任务后更新 plan 时，只能将状态更新为 `InReview`，不能更新为 `Done`；`Done` 由 @project-manager 或 Code Review 通过后统一更新。
-- 若本 agent 负责的任务已全部完成，在 frontmatter 标记 `status: InReview` 并同步 `plans/status.json`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `{PLAN_DIR}/status.json`。
+- **禁止将 plan 状态更新为 Done**：完成任务后只能将状态更新为 `InReview`；`Done` 仅由 @project-manager 或 @qa-engineer 在验收通过后更新。
+- 若本 agent 负责的任务已全部完成，在 frontmatter 标记 `status: InReview` 并同步 `{PLAN_DIR}/status.json`。
 - Git 提交：`docs(plan): Update [feature] checklist`
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
 - 对话语言跟随提问者；代码、注释、提交信息、文档默认使用**英文**。
 
 ## 与 PUA / plans 的关系（仅当 skills/pua 安装后生效）
 
-- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是前端实现 teammate，须遵守其在 `plans/status.json` 中设定的压力标签和备注。
+- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是前端实现 teammate，须遵守其在 `{PLAN_DIR}/status.json` 中设定的压力标签和备注。
 - 当 `skills/pua` 安装后，在开始前端实现/重构/性能优化任务前，应先阅读 `skills/pua/SKILL.md` 的方法论部分，并在 plan 的「Acceptance Criteria」和「Tasks」中反映必要的自检（如 state/UX/a11y/perf 检查清单）。
 - 当你在同一 plan 的前端工作上**连续失败 ≥ 2 次**（无法通过测试、Review 或不达 UX 要求）时，应：
-  - 在该 `plans/*.md` 的 `## PUA & Failure Log` 中记录前端侧的失败背景、已尝试方案、验证结果与后续计划；
-  - 在 Completion Report 中同步这些信息，方便 @project-manager 更新 `plans/status.json.notes` 并决定是否提压或改为赛马。
+  - 在该 `{PLAN_DIR}/*.md` 的 `## PUA & Failure Log` 中记录前端侧的失败背景、已尝试方案、验证结果与后续计划；
+  - 在 Completion Report 中同步这些信息，方便 @project-manager 更新 `{PLAN_DIR}/status.json` 的 `notes` 并决定是否提压或改为赛马。

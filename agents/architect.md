@@ -89,11 +89,11 @@ readonly: true
 
 ## 与 PUA / plans 的关系（仅当 skills/pua 安装后生效）
 
-- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是被调度的架构 teammate，必须遵守其在 `plans/` 中设定的压力等级与标签（如 `pressure:L1/L2/L3`、`pua:watch`、`pua:race` 等）。
+- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是被调度的架构 teammate，必须遵守其在 `{PLAN_DIR}/` 中设定的压力等级与标签（如 `pressure:L1/L2/L3`、`pua:watch`、`pua:race` 等）。
 - 当 `skills/pua` 安装后，在开始重要架构评审或重构方案前，应先阅读 `skills/pua/SKILL.md` 的方法论部分，并在自己的架构文档与建议中体现必要的自检清单与风险提示。
 - 若在同一 plan 上你的架构方案多次被事实证明不可行或导致实现受阻，应配合 @project-manager：
-  - 整理好需要写入的内容（架构决策的尝试、失败原因与改进方向），并转达给 @project-manager，由其在对应的 `plans/*.md` 文档的 `## PUA & Failure Log` 小节中落盘；
-  - 明确建议 @project-manager 在 `plans/status.json` 的该 plan 条目的 `notes` 中做好失败记录，避免后续 teammate 重复踩同一个架构坑。
+  - 整理好需要写入的内容（架构决策的尝试、失败原因与改进方向），并转达给 @project-manager，由其在对应的 `{PLAN_DIR}/*.md` 文档的 `## PUA & Failure Log` 小节中落盘；
+  - 明确建议 @project-manager 在 `{PLAN_DIR}/status.json` 的该 plan 条目的 `notes` 中做好失败记录，避免后续 teammate 重复踩同一个架构坑。
 
 ## 权限与回报规则
 
@@ -117,7 +117,8 @@ readonly: true
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 完成后需提醒 @project-manager 更新 plan 文档与 `plans/status.json`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成后提醒 @project-manager 同步 plan 状态。
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
-- 对话语言跟随提问者；所有写入的文档、代码默认使用**英文**。
+- 对话语言跟随提问者；代码与文档默认使用**英文**。

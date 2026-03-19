@@ -68,7 +68,7 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 
 - 与现有 agents、skills、rules 的命名与结构保持一致
 - 优先复用已有模板，再考虑新增
-- 完成后提醒 @project-manager 更新 plan 与 `plans/status.json`
+- 完成后提醒 @project-manager 同步 plan 状态
 
 ## 权限与回报规则
 
@@ -90,10 +90,11 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 本 agent 完成后提醒 PM 更新 plan 与 `plans/status.json`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成后提醒 @project-manager 同步 plan 状态。
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
-- 对话语言跟随提问者；所有写入的文档、代码默认使用**英文**。
+- 对话语言跟随提问者；代码与文档默认使用**英文**。
 
 ## 与 PUA / plans 的关系（仅当 skills/pua 安装后生效）
 

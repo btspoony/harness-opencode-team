@@ -80,18 +80,19 @@ description: 全栈开发工程师 - 实现前后端功能（协作角色）。U
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `plans/status.json`。
-- **禁止将 plan 状态更新为 Done**：完成任务后更新 plan 时，只能将状态更新为 `InReview`，不能更新为 `Done`；`Done` 由 @project-manager 或 Code Review 通过后统一更新。
-- 若本 agent 负责的任务已全部完成，在 frontmatter 标记 `status: InReview` 并同步 `plans/status.json`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `{PLAN_DIR}/status.json`。
+- **禁止将 plan 状态更新为 Done**：完成任务后只能将状态更新为 `InReview`；`Done` 仅由 @project-manager 或 @qa-engineer 在验收通过后更新。
+- 若本 agent 负责的任务已全部完成，在 frontmatter 标记 `status: InReview` 并同步 `{PLAN_DIR}/status.json`。
 - Git 提交：`docs(plan): Update [feature] checklist`
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
 - 对话语言跟随提问者；代码、注释、提交信息、文档默认使用**英文**。
 
 ## 与 PUA / plans 的关系（仅当 skills/pua 安装后生效）
 
-- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你作为并行实现 teammate，必须遵守其在 `plans/status.json` 中定义的压力等级与赛马标签（如 `pressure:Lx`、`pua:race`）。
+- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你作为并行实现 teammate，必须遵守其在 `{PLAN_DIR}/status.json` 中定义的压力等级与赛马标签（如 `pressure:Lx`、`pua:race`）。
 - 当 `skills/pua` 安装后，在参与并行开发任务前，应先阅读 `skills/pua/SKILL.md` 的方法论部分，并在与 @fullstack-dev / @frontend-dev 协作时，确保自己这条实现路径**不陷入磨洋工或被动等待**（plan 中要体现清晰的子目标与进度）。
 - 若你负责的子模块在同一 plan 下连续失败或被证明明显劣于另一条赛马路径，应配合 @project-manager：
-  - 在对应 `plans/*.md` 的 `## PUA & Failure Log` 中记录本条路径的尝试与失败原因；
+  - 在对应 `{PLAN_DIR}/*.md` 的 `## PUA & Failure Log` 中记录本条路径的尝试与失败原因；
   - 协助总结经验，为后续 teammate 或新赛马提供避免踩坑的参考。

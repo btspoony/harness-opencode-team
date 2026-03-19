@@ -15,6 +15,7 @@
 - `docs/agents/evaluation-harness.md`：prompt/流程迭代评估方法
 - `docs/agents/review-harness.md`：QC 三审共享基线与报告模板
 - `docs/agents/routing-harness.md` + `docs/agents/routing-evals.json`：路由回归评估集
+- `docs/agents/plan-convention.md`：计划目录发现、初始化与 status.json 约定
 
 建议优先阅读 `AGENTS.md`，再按需进入 `docs/agents/` 深入。
 

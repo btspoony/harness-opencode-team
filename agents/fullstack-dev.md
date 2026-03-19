@@ -79,19 +79,20 @@ description: 全栈开发工程师 - 实现前后端功能。Use proactively for
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `plans/status.json`。
-- **禁止将 plan 状态更新为 Done**：完成任务后更新 plan 时，只能将状态更新为 `InReview`，不能更新为 `Done`；`Done` 由 @project-manager 或 Code Review 通过后统一更新。
-- 若本 agent 负责的任务已全部完成，在 frontmatter 标记 `status: InReview` 并同步 `plans/status.json`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `{PLAN_DIR}/status.json`。
+- **禁止将 plan 状态更新为 Done**：完成任务后只能将状态更新为 `InReview`；`Done` 仅由 @project-manager 或 @qa-engineer 在验收通过后更新。
+- 若本 agent 负责的任务已全部完成，在 frontmatter 标记 `status: InReview` 并同步 `{PLAN_DIR}/status.json`。
 - Git 提交：`docs(plan): Update [feature] checklist`
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
 - 对话语言跟随提问者；代码、注释、提交信息、文档默认使用**英文**。
 
 ## 与 PUA / plans 的关系（仅当 skills/pua 安装后生效）
 
-- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是被调度的实现 teammate，必须遵守其在 `plans/status.json` 中设定的压力标签（如 `pressure:L1/L2/L3`、`pua:watch`、`pua:race`、`pua:fail>2` 等）。
+- 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是被调度的实现 teammate，必须遵守其在 `{PLAN_DIR}/status.json` 中设定的压力标签（如 `pressure:L1/L2/L3`、`pua:watch`、`pua:race`、`pua:fail>2` 等）。
 - 当 `skills/pua` 安装后，在开始本 agent 的实现任务前，应先阅读 `skills/pua/SKILL.md` 的方法论部分，并在日常开发中优先通过**多方案尝试 + 充分搜索/读代码/验证**来避免“没搜索就猜”“被动等待”等偷懒模式。
 - 当你在同一 plan 上**连续失败 ≥ 2 次**（例如多轮实现都无法通过测试 / Review / 业务验收），你必须：
-  - 在对应 `plans/*.md` 的 `## PUA & Failure Log` 小节中写一份精简版 `[PUA-REPORT]`（背景、已尝试方案、失败原因、自我反思、下一步计划）；
-  - 在 `plans/status.json` 的该 plan 条目的 `notes` 中补充关键结论，便于 @project-manager 做压力调整、赛马或重新分配。
+  - 在对应 `{PLAN_DIR}/*.md` 的 `## PUA & Failure Log` 小节中写一份精简版 `[PUA-REPORT]`（背景、已尝试方案、失败原因、自我反思、下一步计划）；
+  - 在 `{PLAN_DIR}/status.json` 的该 plan 条目的 `notes` 中补充关键结论，便于 @project-manager 做压力调整、赛马或重新分配。
 - 当发现自己已经难以在当前压力等级下有效推进时，应主动在 Completion Report 与 plan notes 中说明现状，而不是直接放弃，由 @project-manager 决定是否引入新的 teammate 并行尝试。

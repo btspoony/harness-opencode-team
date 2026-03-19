@@ -102,17 +102,18 @@ Critical / High / Medium / Low
 
 ## Plan 与文档规范
 
-- Plan 文档位于当前工作目录的 `plans/` 目录，由 @project-manager 告知具体路径。
-- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `plans/status.json`。
-- **本 agent 与 @project-manager 为唯二可将 plan 状态更新为 Done 的角色**：验收通过后，可在 frontmatter 标记 `status: Done` 并同步 `plans/status.json`；其他 agent 禁止将状态更新为 Done。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
+- 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `{PLAN_DIR}/status.json`。
+- **本 agent 与 @project-manager 为唯二可将 plan 状态更新为 Done 的角色**：验收通过后，可在 frontmatter 标记 `status: Done` 并同步 `{PLAN_DIR}/status.json`；其他 agent 禁止将状态更新为 Done。
 - Git 提交：`docs(plan): Update [feature] checklist`
 - 开发项目规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；无则按本 agent 规则执行。
-- 对话语言跟随提问者；测试代码、断言信息、文档默认使用**英文**。
+- 对话语言跟随提问者；代码与文档默认使用**英文**。
 
 ## 与 PUA / plans 的关系（仅当 skills/pua 安装后生效）
 
 - 全局 PUA 管理由 @project-manager 作为 **Leader** 统一控制，你是测试 teammate，负责在高压场景下仍保证验证质量，而不是简单“放行”或“卡死”。
 - 当 `skills/pua` 安装后，在设计测试计划与用例时，应先阅读 `skills/pua/SKILL.md` 的方法论部分，并在 plan 的测试相关章节中体现出清晰的覆盖目标与回归策略，避免“完成但质量烂”的模式。
 - 当你在同一 plan 的测试执行上**连续失败 ≥ 2 次**（如环境不稳定、用例设计反复返工、长期无法形成稳定结论），应：
-  - 在 `plans/*.md` 的 `## PUA & Failure Log` 中记录测试侧的失败背景、环境/数据问题、尝试过的补救措施与后续调整方案；
-  - 在 Completion Report 和 `plans/status.json.notes` 中，帮助 @project-manager 识别这是实现问题、环境问题还是测试策略问题，以便做出相应的压力调整和任务重构。
+  - 在 `{PLAN_DIR}/*.md` 的 `## PUA & Failure Log` 中记录测试侧的失败背景、环境/数据问题、尝试过的补救措施与后续调整方案；
+  - 在 Completion Report 和 `{PLAN_DIR}/status.json` 的 `notes` 中，帮助 @project-manager 识别这是实现问题、环境问题还是测试策略问题，以便做出相应的压力调整和任务重构。
