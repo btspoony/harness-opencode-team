@@ -1,0 +1,51 @@
+# Agent 共享规则入口
+
+本文件是 `~/.config/opencode/docs/agents/` 共享文档的总入口，提供可复用于不同项目/角色的通用约束与流程。
+
+## 适用范围
+
+- 适用于使用 `~/.config/opencode/agents/*.md` 角色提示词的执行场景。
+- 与具体业务仓库无关的流程规则，优先写在本目录。
+- 项目级规则冲突时，按“用户指令 > 项目 `AGENTS.md` / `CLAUDE.md` > 全局共享规则”处理。
+
+## 信息源优先级
+
+1. 当前任务中的用户指令
+2. 项目级 `AGENTS.md`（项目 cwd 下）
+3. 本共享入口 `~/.config/opencode/docs/agents/AGENTS.md`
+4. 本目录下的专题文档（`harness-loop.md`、`review-harness.md` 等）
+5. 角色提示词（`~/.config/opencode/agents/*.md`）
+
+## 渐进式读取
+
+按需读取（均为绝对路径）：
+
+1. `~/.config/opencode/docs/agents/index.md` — 知识库索引与归属
+2. `~/.config/opencode/docs/agents/harness-loop.md` — 生命周期与阶段门禁
+3. `~/.config/opencode/docs/agents/evaluation-harness.md` — 评估与基准
+4. `~/.config/opencode/docs/agents/review-harness.md` — QC 共享基线
+5. `~/.config/opencode/docs/agents/routing-harness.md` — PM 路由评估
+6. `~/.config/opencode/docs/agents/plan-convention.md` — plan 目录约定
+
+## 最小交付循环（非平凡任务）
+
+1. 澄清意图和验收标准
+2. 计划登记（若项目启用 plan）
+3. 分派到最匹配角色
+4. 审查与验证门禁（QC + QA）
+5. 复盘沉淀为可复用规则
+
+## 不变量
+
+- 保持边界显式，避免跨层隐式耦合。
+- 行为变更必须有对应验证证据。
+- 拒绝未记录的破坏性变更。
+- 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外（细则见 `harness-loop.md`）。
+
+## 升级触发
+
+以下情况应升级到人工决策：
+
+- 验收标准与系统约束冲突
+- 方案取舍存在重大风险或产品分歧
+- 两次完整实现尝试后仍失败

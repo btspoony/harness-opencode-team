@@ -10,7 +10,8 @@
 > Agent 运行时 cwd 是项目目录，agent prompt 中引用这些文件需使用**绝对路径**。
 > 全局配置（`~/.config/opencode/`）对 agent 只读：agent 只能读取和提出建议，实际写入由用户本人维护。
 
-- `AGENTS.md`：轻量入口与优先级规则（Table of Contents）
+- `AGENTS.md`：本配置仓库维护入口（边界与变更原则）
+- `docs/agents/AGENTS.md`：共享规则入口（跨角色/跨项目复用）
 - `docs/agents/index.md`：agents 知识库索引与维护规则
 - `docs/agents/harness-loop.md`：任务生命周期与门禁流转
 - `docs/agents/evaluation-harness.md`：prompt/流程迭代评估方法
@@ -18,7 +19,7 @@
 - `docs/agents/routing-harness.md` + `docs/agents/routing-evals.json`：路由回归评估集
 - `docs/agents/plan-convention.md`：计划目录发现、初始化与 status.json 约定
 
-建议优先阅读 `AGENTS.md`，再按需进入 `docs/agents/` 深入。
+建议优先阅读 `AGENTS.md`（仓库维护入口），再读 `docs/agents/AGENTS.md`（共享规则入口），最后按需进入 `docs/agents/` 专题文档。
 
 ### 计划管理模式（兼容无 `plans/` 项目）
 

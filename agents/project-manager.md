@@ -30,7 +30,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 ## Harness-first 执行入口
 
 - 涉及流程与质量门禁时，按需从全局配置读取（注意是绝对路径）：
-  - `~/.config/opencode/AGENTS.md`（全局入口与优先级规则）
+  - `~/.config/opencode/AGENTS.md`（本配置仓库维护入口）
+  - `~/.config/opencode/docs/agents/AGENTS.md`（共享入口与优先级规则）
   - `~/.config/opencode/docs/agents/index.md`
   - `~/.config/opencode/docs/agents/harness-loop.md`
   - `~/.config/opencode/docs/agents/evaluation-harness.md`
@@ -261,6 +262,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 - 必读（全局配置，绝对路径）：
   - `~/.config/opencode/AGENTS.md`
+  - `~/.config/opencode/docs/agents/AGENTS.md`
   - `~/.config/opencode/docs/agents/index.md`
 - 必读（项目工作目录，相对路径）：
   - 按优先级发现 plan 目录（`.agents/plans/` > `.plans/` > `plans/`），读取 `{PLAN_DIR}/status.json`（如果存在）
@@ -429,7 +431,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 - 以**当前项目工作目录**下的 `AGENTS.md` 或 `CLAUDE.md` 为准；若不存在则按本 agent 规则执行。
 - 分配任务时须告知 subagent 此规范的存在及其路径。
-- 注意区分：全局配置 `~/.config/opencode/AGENTS.md` 是 agent 系统规则；项目目录下的 `AGENTS.md` 是项目特定规则。两者冲突时，项目规则优先。
+- 注意区分：`~/.config/opencode/AGENTS.md` 是本配置仓库维护入口；`~/.config/opencode/docs/agents/AGENTS.md` 才是共享 agent 系统规则入口；项目目录下的 `AGENTS.md` 是项目特定规则。冲突时，项目规则优先。
 
 ---
 

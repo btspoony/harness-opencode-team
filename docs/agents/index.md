@@ -1,7 +1,8 @@
 # Agent 知识库索引
 
 本目录（`~/.config/opencode/docs/agents/`）是 agent 系统的结构化知识库。
-全局入口文件 `~/.config/opencode/AGENTS.md` 指向此处提供深层指引。
+共享入口文件 `~/.config/opencode/docs/agents/AGENTS.md` 提供通用规则与读取顺序；
+`~/.config/opencode/AGENTS.md` 仅负责本配置仓库维护入口。
 
 **重要**：本目录中所有文件均在**全局配置**中，不在项目仓库里。
 Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/.config/opencode/docs/agents/...`）来读取这些文件。
@@ -48,7 +49,7 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
 
 ## Agent 设计变更审查清单
 
-- 入口文件（`~/.config/opencode/AGENTS.md`）是否仍然简短清晰？
+- 共享入口（`~/.config/opencode/docs/agents/AGENTS.md`）是否仍然简短清晰？
 - 角色职责是否与工作流细节分离？
 - 每个阶段是否有可观察的具体产出？
 - 反复出现的失败是否已转化为可复用指引？
