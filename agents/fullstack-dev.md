@@ -40,7 +40,7 @@ description: 全栈开发工程师 - 实现前后端功能。Use proactively for
 
 1. 理解需求文档和架构设计（含 API 契约）
 2. 用 @explore 了解相关模块的现有代码
-3. **分支门禁（首次写仓库前必须完成）**：核对 Assignment 的 **`Working branch`** / **`Branch policy`**（见 `~/.config/opencode/docs/agents/harness-loop.md`）。切换到 PM 指定分支，或自约定 `base` 新建 `feature/*` / `fix/*`；**禁止**在未获 `Branch policy: direct on …` 授权时于 `main`/`master`（或项目默认分支）上直接实现。不确定时回报 @project-manager。
+3. **分支门禁（首次写仓库前必须完成）**：核对 Assignment 的 **`Working branch`** / **`Branch policy`**（见 `~/.config/opencode/docs/agents/harness-loop.md`）。若指定已有分支则 `checkout` 到该分支；若为 `create <new> from <base>`：**`<base>` 以 Assignment 为准**（可为 `main`、已有 `feature/*`、`current` 等，**勿默认当成 `main`**）——若 `<base>` 为 `current`，在当前 `HEAD` 上 `checkout -b <new>`；否则先 `checkout <base>` 再 `checkout -b <new>`；**禁止**在未获 `Branch policy: direct on …` 授权时于默认保护分支上直接实现。未写明 `<base>` 时不要猜，回报 @project-manager。
 4. 编写代码实现
 5. 编写单元测试
 6. 代码自审

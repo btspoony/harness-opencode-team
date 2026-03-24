@@ -57,10 +57,18 @@
 - 不得在**默认保护分支**（常见名：`main`、`master`；以项目约定为准）上直接实现功能改动，除非 Assignment 含显式例外。
 - 例外须在 Assignment 中写明一行：**`Branch policy: direct on <branch> — <reason>`**（典型：团队约定的热修直接打默认分支）。
 
+**`<base>` 与叠分支（stacked branches）**
+
+- 门禁的目标是**不在未授权的默认分支上直接提交**，不是「只能从 `main` 开新分支」。
+- 当需要**从已有功能分支继续拆新分支**时，Assignment 应写清**祖先分支** `<base>`，例如：`create feature/foo-part2 from feature/foo`。
+- **`<base>` 可取**：`main` / `master`（或项目默认分支名）、任意已存在的 `feature/*` / `fix/*`、远程跟踪分支名、或 **`current`**（表示以执行者检出时的 `HEAD` 为祖先，用于「就在当前分支上再拉一枝」）。
+- 若只写 **`Working branch`: `feature/foo`且无「create … from …」**：表示**沿用 / 切到**该已存在分支上开发，不要求新建。
+- 若写新建但未写 `<base>`：实现侧应**停下问** `@project-manager`（或按项目 `AGENTS.md` 的默认 base）；**禁止**擅自假设「一定是 `main`」。
+
 **角色职责**
 
-- **`@project-manager`**：向 `@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`、以及会向仓库提交工件的 `@qa-engineer`、会改仓库内文件的 `@ops-engineer`、对**项目仓库**落盘的 `@prompt-engineer` 分派前，核对分支策略；在 Assignment 中写明 **`Working branch`**（沿用已有分支名，或「自 `<base>` 新建 `feature/...` / `fix/...`」）。若用户已指定分支，照抄进 Assignment。
-- **实现 / QA / 运维 / prompt（项目侧）**：在**首次**编辑仓库内文件或执行 `git commit` 前，核对当前分支与 Assignment；若未授权 `Branch policy` 且当前在默认分支，则**先**切到 PM 指定的 `Working branch` 或新建 `feature/<topic>` / `fix/<topic>`，再改动。不确定时回报 `@project-manager`，不得静默在默认分支上堆提交。
+- **`@project-manager`**：向 `@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`、以及会向仓库提交工件的 `@qa-engineer`、会改仓库内文件的 `@ops-engineer`、对**项目仓库**落盘的 `@prompt-engineer` 分派前，核对分支策略；在 Assignment 中写明 **`Working branch`**（沿用已有分支名，或 `create <new-branch> from <base>`，其中 `<base>` 遵守上一节）。若用户已指定分支/祖先，照抄进 Assignment。
+- **实现 / QA / 运维 / prompt（项目侧）**：在**首次**编辑仓库内文件或执行 `git commit` 前，核对当前分支与 Assignment；若未授权 `Branch policy` 且当前在默认分支，则**先**切到 PM 指定的 `Working branch`，或按 Assignment 从 `<base>` 新建 `feature/<topic>` / `fix/<topic>`（`git fetch` 如需；若 `<base>` 为 `current` 则在当前 `HEAD` 上 `checkout -b <new>`，否则 `checkout <base>` 再 `checkout -b <new>`），再改动。不确定时回报 `@project-manager`，不得静默在默认分支上堆提交。
 
 ### 3) 实现
 

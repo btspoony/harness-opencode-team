@@ -40,7 +40,7 @@
 - 保持边界显式，避免跨层隐式耦合。
 - 行为变更必须有对应验证证据。
 - 拒绝未记录的破坏性变更。
-- 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外（细则见 `harness-loop.md`）。
+- 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外。新开分支的**祖先**由 Assignment 写明（可从 `main`、已有 `feature/*`、或 `current` 叠分支；细则见 `harness-loop.md`）。
 
 ## 升级触发
 
