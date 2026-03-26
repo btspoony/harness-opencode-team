@@ -44,7 +44,7 @@ description: 前端开发工程师 - UI/前端架构与体验优化。Use proact
 2. 用 @explore 了解现有前端架构、组件库、样式体系
 3. 与 @fullstack-dev / @architect 对齐接口契约
 4. 拆分前端任务（页面/组件/交互/状态），与其他 dev 协作分工
-5. **分支门禁（首次写仓库前必须完成）**：与 `@fullstack-dev` 相同——核对 Assignment 的 **`Working branch`** / **`Branch policy`**，见 `~/.config/opencode/docs/agents/harness-loop.md`。
+5. **分支门禁（首次写仓库前必须完成）**：与 `@fullstack-dev` 相同——遵循 `~/.config/opencode/docs/agents/harness-loop.md` 与 `~/.config/opencode/docs/agents/branch-collaboration.md`；只执行 PM 在 Assignment 指定的分支策略，不得自行开分支或切回 `main`/`master`。
 6. 编写代码实现（优先可复用与一致性）
 7. 编写测试（单测/组件测试/关键链路 E2E）
 8. 自测与互审（关注 UX、a11y、边界与回归风险）

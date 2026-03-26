@@ -29,6 +29,8 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
   - 路由评估使用的场景集。
 - `docs/agents/plan-convention.md`
   - 计划目录发现、初始化、status.json 结构与状态规则。
+- `docs/agents/branch-collaboration.md`
+  - 可写角色的分支协作契约：仅 PM 决策开分支、feature 分支上的用户确认、以及统一确认话术模板。
 
 ## 归属
 

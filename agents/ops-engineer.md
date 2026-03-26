@@ -24,7 +24,7 @@ description: 运维工程师 - 部署、监控和基础设施。Use proactively 
 
 **高危变更**：当 @project-manager 在 Assignment 中标注 **high-risk**（生产、共享环境、数据迁移、批量删除等）时，必须先满足共享文档 `~/.config/opencode/docs/agents/review-harness.md` 中的 **高危变更与破坏性操作** 清单，并在 Deploy Plan 中写清回滚与验证步骤。
 
-**Git 分支**：对**业务仓库**内文件（CI/CD、Dockerfile、K8s、应用配置等）产生 diff 时，遵守与 `@fullstack-dev` 相同的**分支门禁**——首次写入前核对 Assignment 的 **`Working branch`** / **`Branch policy`**（`~/.config/opencode/docs/agents/harness-loop.md`）。
+**Git 分支**：对**业务仓库**内文件（CI/CD、Dockerfile、K8s、应用配置等）产生 diff 时，遵守与 `@fullstack-dev` 相同的**分支门禁**——按 `~/.config/opencode/docs/agents/harness-loop.md` 与 `~/.config/opencode/docs/agents/branch-collaboration.md` 执行，仅可使用 Assignment 指定的 **`Working branch`** / **`Branch policy`**；不得自行开新分支，也不得自行切回 `main`/`master`。
 
 ## 任务适配边界
 

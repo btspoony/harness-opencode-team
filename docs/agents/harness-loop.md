@@ -52,6 +52,8 @@
 
 适用于 cwd 为 **Git 托管的业务/应用仓库** 且本轮会产生**仓库内可合并 diff** 的任务（代码、业务向测试与 fixture、影响构建或运行时的配置等）。**不**用于约束仅由用户本人维护的 `~/.config/opencode/` 全局配置（该目录对 agent 只读）。
 
+与 PM/可写角色的协同细则（含用户确认话术）见：`~/.config/opencode/docs/agents/branch-collaboration.md`。
+
 **默认规则**
 
 - 不得在**默认保护分支**（常见名：`main`、`master`；以项目约定为准）上直接实现功能改动，除非 Assignment 含显式例外。
@@ -67,8 +69,8 @@
 
 **角色职责**
 
-- **`@project-manager`**：向 `@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`、以及会向仓库提交工件的 `@qa-engineer`、会改仓库内文件的 `@ops-engineer`、对**项目仓库**落盘的 `@prompt-engineer` 分派前，核对分支策略；在 Assignment 中写明 **`Working branch`**（沿用已有分支名，或 `create <new-branch> from <base>`，其中 `<base>` 遵守上一节）。若用户已指定分支/祖先，照抄进 Assignment。
-- **实现 / QA / 运维 / prompt（项目侧）**：在**首次**编辑仓库内文件或执行 `git commit` 前，核对当前分支与 Assignment；若未授权 `Branch policy` 且当前在默认分支，则**先**切到 PM 指定的 `Working branch`，或按 Assignment 从 `<base>` 新建 `feature/<topic>` / `fix/<topic>`（`git fetch` 如需；若 `<base>` 为 `current` 则在当前 `HEAD` 上 `checkout -b <new>`，否则 `checkout <base>` 再 `checkout -b <new>`），再改动。不确定时回报 `@project-manager`，不得静默在默认分支上堆提交。
+- **`@project-manager`（唯一分支决策入口）**：向 `@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`、以及会向仓库提交工件的 `@qa-engineer`、会改仓库内文件的 `@ops-engineer`、对**项目仓库**落盘的 `@prompt-engineer` 分派前，核对分支策略；在 Assignment 中写明 **`Working branch`**（沿用已有分支名，或 `create <new-branch> from <base>`，其中 `<base>` 遵守上一节）。若用户已指定分支/祖先，照抄进 Assignment。**只有 `@project-manager` 可以决定是否新开分支、从哪个 `<base>` 开分支。**
+- **实现 / QA / 运维 / prompt（项目侧）**：在**首次**编辑仓库内文件或执行 `git commit` 前，核对当前分支与 Assignment，并在回报中明确“正在哪个分支上工作”。**禁止自行决定新开分支、禁止自行切回 `main`/`master` 重开分支。**若未授权 `Branch policy` 且当前在默认分支，则仅可按 PM 已写明的 `Working branch` 执行切换/开枝；若 Assignment 未写清或与现场分支不一致，先回报 `@project-manager`，不得擅自处理。
 
 ### 3) 实现
 

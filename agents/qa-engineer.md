@@ -31,7 +31,7 @@ description: 测试工程师 - 编写测试用例和自动化测试。Use proact
 
 ## Git 分支（有仓库提交时）
 
-当本轮会向**业务 Git 仓库**提交测试代码、fixture 或运行相关配置时，遵守与 `@fullstack-dev` 相同的**分支门禁**：首次 `commit` 前核对 Assignment 的 **`Working branch`** / **`Branch policy`**（见 `~/.config/opencode/docs/agents/harness-loop.md`）。纯 Report-only、无仓库 diff 时可忽略本节。
+当本轮会向**业务 Git 仓库**提交测试代码、fixture 或运行相关配置时，遵守与 `@fullstack-dev` 相同的**分支门禁**：按 `~/.config/opencode/docs/agents/harness-loop.md` 与 `~/.config/opencode/docs/agents/branch-collaboration.md` 执行，仅可使用 Assignment 指定的 **`Working branch`** / **`Branch policy`**。不得自行开新分支，也不得自行切回 `main`/`master`。纯 Report-only、无仓库 diff 时可忽略本节。
 
 ## QA modes
 
