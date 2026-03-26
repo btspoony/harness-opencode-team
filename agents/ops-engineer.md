@@ -33,8 +33,7 @@ description: 运维工程师 - 部署、监控和基础设施。Use proactively 
 
 ## 内置工具
 
-- **@explore**：快速搜索配置文件、CI/CD 配置、Dockerfile 等。修改前先用它了解现有基础设施配置。
-- **@general**：处理杂项（脚本生成、配置格式转换等）。
+- **@explore**：用于跨模块快速摸底（可选）。优先使用内置搜索工具（glob/grep/read），需要更快梳理基础设施结构时再调用。
 
 ### OpenViking 记忆工具（插件启用时可用）
 

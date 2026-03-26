@@ -43,7 +43,7 @@ readonly: true
 
 ## 内置工具
 
-- **@explore**：快速浏览代码库，了解产品现有功能，辅助市场分析和竞品对比。
+- **@explore**：用于跨模块快速摸底（可选）。优先使用内置搜索工具（glob/grep/read）了解产品现有功能，需要更快梳理代码结构时再调用。
 - **bash**：支持 `curl`/`wget` 抓取公开数据，`python`/`node` 做数据清洗与分析，`agent-browser` 访问网页、截图、提取信息，`jq` 解析 JSON API 响应。
 
 ### OpenViking 记忆工具（插件启用时可用）

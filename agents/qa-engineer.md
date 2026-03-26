@@ -72,8 +72,7 @@ Use when `QA mode: report-only` (or user explicitly asks for report only and PM 
 
 ## 内置工具
 
-- **@explore**：快速搜索代码库，理解被测代码的结构与依赖。编写测试前先用它定位关键路径。
-- **@general**：处理杂项（测试数据生成、配置调整等）。
+- **@explore**：用于跨模块快速摸底（可选）。优先使用内置搜索工具（glob/grep/read），需要更快梳理结构与依赖时再调用。
 
 ### OpenViking 记忆工具（插件启用时可用）
 

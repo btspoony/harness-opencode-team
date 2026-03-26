@@ -29,8 +29,7 @@ description: 全栈开发工程师 - 实现前后端功能（协作角色）。U
 
 ## 内置工具
 
-- **@explore**：快速搜索代码库，查找文件、关键字、调用链。开始编码前先用它了解现有实现。
-- **@general**：处理不需要专业能力的杂项（简单文件操作、数据转换等）。
+- **@explore**：用于跨模块快速摸底（可选）。优先使用内置搜索工具（glob/grep/read），需要更快梳理调用链时再调用。
 
 ### OpenViking 记忆工具（插件启用时可用）
 
@@ -39,7 +38,7 @@ description: 全栈开发工程师 - 实现前后端功能（协作角色）。U
 ## 开发流程
 
 1. 理解需求文档和架构设计（含 API 契约）
-2. 用 @explore 了解相关模块的现有代码
+2. 先用内置搜索工具（glob/grep/read）了解相关模块的现有代码；必要时再调用 @explore
 3. 与 @fullstack-dev / @frontend-dev 确认分工边界（避免冲突）
 4. **分支门禁（首次写仓库前必须完成）**：与 `@fullstack-dev` 相同——遵循 `~/.config/opencode/docs/agents/harness-loop.md` 与 `~/.config/opencode/docs/agents/branch-collaboration.md`；禁止在未授权时于默认分支上直接实现，不得自行开分支或切回 `main`/`master`。
 5. 编写代码实现

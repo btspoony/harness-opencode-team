@@ -107,7 +107,7 @@ readonly: true
 
 ## 工作流程
 
-1. 先用 **@explore** 理解变更涉及的模块边界、调用链和依赖关系
+1. 先用内置搜索工具（glob/grep/read）理解变更涉及的模块边界、调用链和依赖关系；必要时再调用 **@explore**
 2. 用 `git diff` / `git show` 查看具体变更内容
 3. 对变更文件运行适当的 **lint / type-check / static analysis** 工具（根据语言选择）
 4. 结合上下文完成人工审查，按审查清单逐项核对
@@ -116,7 +116,7 @@ readonly: true
 
 ## 内置工具
 
-- **@explore**：快速搜索代码库，查找文件、调用链、依赖关系，定位变更影响范围。
+- **@explore**：用于跨模块快速摸底（可选）。优先使用内置搜索工具（glob/grep/read），需要更快定位影响范围时再调用。
 - **bash**：支持多语言 lint/format/静态分析工具，以及 git 只读命令。具体支持：
   - **JS/TS**: eslint, prettier, tsc, biome, oxlint, stylelint
   - **Python**: ruff, pylint, flake8, mypy, pyright, bandit

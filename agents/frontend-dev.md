@@ -31,8 +31,7 @@ description: 前端开发工程师 - UI/前端架构与体验优化。Use proact
 
 ## 内置工具
 
-- **@explore**：快速搜索代码库，查找组件、样式、页面结构。开始编码前先用它了解现有前端实现与组件库。
-- **@general**：处理不需要专业能力的杂项（简单文件操作、数据转换等）。
+- **@explore**：用于跨模块快速摸底（可选）。优先使用内置搜索工具（glob/grep/read），需要更快梳理页面与组件结构时再调用。
 
 ### OpenViking 记忆工具（插件启用时可用）
 
@@ -41,7 +40,7 @@ description: 前端开发工程师 - UI/前端架构与体验优化。Use proact
 ## 开发流程
 
 1. 理解需求文档和架构设计（含 API 契约与页面流程）
-2. 用 @explore 了解现有前端架构、组件库、样式体系
+2. 先用内置搜索工具（glob/grep/read）了解现有前端架构、组件库、样式体系；必要时再调用 @explore
 3. 与 @fullstack-dev / @architect 对齐接口契约
 4. 拆分前端任务（页面/组件/交互/状态），与其他 dev 协作分工
 5. **分支门禁（首次写仓库前必须完成）**：与 `@fullstack-dev` 相同——遵循 `~/.config/opencode/docs/agents/harness-loop.md` 与 `~/.config/opencode/docs/agents/branch-collaboration.md`；只执行 PM 在 Assignment 指定的分支策略，不得自行开分支或切回 `main`/`master`。
