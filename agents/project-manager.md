@@ -354,6 +354,15 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - **Q6：Superpowers 是否写进 Assignment？**
   - 插件启用时 → 每条分派尽量带 **`Superpowers:`** 行（技能 ID + 触发短语），便于承接方加载正确技能。
 
+### 1.2 分派降噪与去歧义（强制）
+
+为减少承接方误解，Assignment 必须避免互斥或不可验证表达：
+
+- `QA mode: report-only` 与 `QA: skipped` **不得同写**。
+- `Working branch` 与 `Branch policy` **二选一**，不得同写。
+- 任何 “Done / pass / looks good” 结论，必须落到可复核证据（命令、输出、截图、复现步骤）上。
+- 声明并行时，除写 `dispatching parallel agents` 外，还要给每个可写承接方单独写分支策略。
+
 ### 2. 分配任务给 subagent
 
 调用 subagent 时，**必须提供以下上下文**：
@@ -385,6 +394,9 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **Acceptance Criteria**:
 - [ ] Criterion 1
 - [ ] Criterion 2
+**Evidence Required (for gate/sign-off)**:
+- [ ] {exact commands/tests/checks}
+- [ ] {observable proof: logs/screenshots/repro notes}
 **Constraints**: {tech/style/timeline constraints}
 **Plan Path**: {{PLAN_DIR}/xxx.md or N/A}
 **Report Format**: Use "Completion Report v2"
@@ -433,6 +445,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **Next**: {what's coming}
 **Blockers**: {if any}
 **Decisions needed**: {if any}
+**Evidence Snapshot**: {top 1-3 verifiable proofs supporting current conclusion}
 ```
 
 ### 6. 问题升级

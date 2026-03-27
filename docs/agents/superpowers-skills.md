@@ -19,6 +19,29 @@
 - **优先级**：用户显式指令（含项目 `AGENTS.md` / `CLAUDE.md`）> Superpowers 技能中的流程要求 > 一般惯例。若用户禁止 TDD，则不得强制 `test-driven-development`。
 - **与 harness 的关系**：不改变 `harness-loop.md` 的阶段顺序；技能规定的是**每个阶段内的做法**（例如排障前先走系统化调试、宣称完成前先有验证证据）。
 
+## 最小技能声明契约（减少歧义）
+
+为降低“技能已提及但执行动作不一致”的情况，`@project-manager` 在 Assignment 中应按下列最小结构声明（可简写）：
+
+```markdown
+Superpowers:
+- <skill-id> — Trigger: <why now>; Expected evidence: <what output proves it ran>
+```
+
+示例：
+
+```markdown
+Superpowers:
+- systematic-debugging — Trigger: intermittent 500s with unknown root cause; Expected evidence: repro steps + narrowed hypothesis + log slice
+- verification-before-completion — Trigger: before sign-off; Expected evidence: command/output or reproducible QA proof
+```
+
+约束：
+
+- 不写“泛口号式”技能名（例如只写 `use superpowers`）。
+- `Expected evidence` 必须可核对；不能是“done”“looks good”这类不可验证描述。
+- 若同一任务包含多个技能，按“流程技能 → 实现技能”排序，避免承接方误判先后。
+
 ## 技能清单（简称）
 
 | 技能名 | 用途摘要 |
@@ -52,6 +75,12 @@
 | 必用（登记/拆 plan） | `writing-plans`（非平凡任务、多阶段交付） |
 | 必用（收口） | `verification-before-completion`（汇总 Done、sign-off、merge 前须有 QA/命令证据）；`finishing-a-development-branch`（分支收尾策略） |
 | 宜（意图不清） | 推动或分派前由相关角色做 `brainstorming`（PM 可直接与用户澄清，或分派 @product-manager / @architect） |
+
+补充执行约束（PM）：
+
+- 当任务是 **Bug/异常**，若 Assignment 的 `Superpowers` 未出现 `systematic-debugging`（且非 Hotfix），视为分派不完整。
+- 当任务进入 **gate / sign-off / merge decision**，若未出现 `verification-before-completion` 或等价证据要求，视为门禁不完整。
+- 当任务声明 **并行分派**，`Superpowers` 中应显式包含 `dispatching-parallel-agents`（或同义触发短语），并为每个可写承接方写清 `Working branch`。
 
 ### @product-manager
 
@@ -136,6 +165,13 @@
 | 升级与重复失败 | `AGENTS.md` / `harness-loop.md`：多次失败升级人工等 | `systematic-debugging`、`verification-before-completion` | **一致**：技能减少「无根因重复改」；**达不到 harness 升级条件**时仍以文档为准。 |
 
 **小结**：Superpowers 主要填充各阶段**如何做**的细节；**阶段顺序、Done 权限、QC/QA 路由、分支唯一决策人**仍以 `docs/agents` 与 `@project-manager` 路由表为准。
+
+## 快速去歧义规则（建议直接复用到 Assignment）
+
+- `QA mode: report-only` 与 `QA: skipped` 互斥，不能同时出现。
+- `Hotfix` 与 `RCA complete before code changes` 互斥：热修可先最小修复，但必须补“事后 RCA”项。
+- `QC: skipped` 只用于已定义例外（product-docs only / tech-spec only）；否则默认进入 QC 路径。
+- `Working branch` 与 `Branch policy` 只能二选一；两者同写时，以 PM 明确改写为准后再执行。
 
 ## 维护说明
 
