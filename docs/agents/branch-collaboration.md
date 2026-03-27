@@ -5,7 +5,7 @@
 ## 适用范围
 
 - 当任务会在项目 Git 仓库产生可合并 diff 时适用。
-- 适用于 `@project-manager`、`@fullstack-dev`、`@frontend-dev`、`@fullstack-dev-2`、`@qa-engineer`、`@ops-engineer`、`@prompt-engineer`（项目侧写入）。
+- 适用于 `@project-manager`、`@product-manager`、`@architect`、`@fullstack-dev`、`@frontend-dev`、`@fullstack-dev-2`、`@qa-engineer`、`@ops-engineer`、`@prompt-engineer`（项目侧写入）。
 
 ## 唯一分支决策者
 

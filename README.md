@@ -50,8 +50,8 @@
 | Agent ID           | 角色           | 模式     | 说明                         |
 |--------------------|----------------|----------|------------------------------|
 | `project-manager`  | 项目经理       | primary  | 协调团队、管理进度           |
-| `product-manager`  | 产品经理       | subagent | 需求分析、产品规划           |
-| `architect`        | 技术架构师     | subagent | 架构设计、技术决策           |
+| `product-manager`  | 产品经理       | subagent | 需求分析、产品规划、产品向文档落盘 |
+| `architect`        | 技术架构师     | subagent | 架构设计、技术决策、技术向文档落盘 |
 | `fullstack-dev`    | 全栈开发       | subagent | 前后端功能实现               |
 | `fullstack-dev-2`  | 全栈开发（协作）| subagent | 协作实现                     |
 | `frontend-dev`     | 前端开发       | subagent | UI、前端架构与体验优化       |
