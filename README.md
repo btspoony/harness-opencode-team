@@ -196,6 +196,26 @@
 - **provider**：各模型服务商与 API 配置（需自行填入 API Key 等）。
 - **agent**：上述角色与 `mode`、`model` 的映射；详细行为以 `agents/*.md` 为准。
 
+## 安装到 OpenCode
+
+将本配置安装到 OpenCode 的推荐方式如下：
+
+仓库地址：[`https://github.com/btspoony/harness-opencode-team`](https://github.com/btspoony/harness-opencode-team)
+
+1. 备份你现有的 OpenCode 配置目录（可选但推荐）：
+   - `mv ~/.config/opencode ~/.config/opencode.backup.$(date +%Y%m%d-%H%M%S)`
+2. 克隆本仓库到 OpenCode 默认配置路径：
+   - `git clone https://github.com/btspoony/harness-opencode-team.git ~/.config/opencode`
+3. 安装依赖（如需本地插件依赖）：
+   - `cd ~/.config/opencode && npm install`
+4. 按需编辑 `~/.config/opencode/opencode.json`：
+   - 配置 `provider`（填入你自己的 API Key/模型）
+   - 调整 `default_agent`、`agent`、`plugin`、`mcp` 等
+5. 重启 OpenCode（或重载配置）使新配置生效。
+
+如果你不想覆盖现有目录，也可以只拷贝关键文件（如 `opencode.json`、`agents/`、`docs/agents/`）到你当前的 `~/.config/opencode/` 中再手动合并。
+
 ## 许可与使用
 
-本配置以开源形式分享，便于他人复用与二次定制。使用 OpenCode 时请遵守其官方条款及各模型/MCP 服务商的使用政策。
+本项目采用 **MIT License**，详见根目录 `LICENSE` 文件。  
+使用 OpenCode 时请遵守其官方条款及各模型/MCP 服务商的使用政策。
