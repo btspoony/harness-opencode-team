@@ -2,6 +2,17 @@
 
 本文件将 **Superpowers** 插件中的技能（`~/.config/opencode/opencode.json` 中 `plugin` 已启用时）映射到 `~/.config/opencode/agents/*.md` 业务流程。
 
+## 未安装插件时
+
+若当前环境没有 Superpowers（`skill` 里看不到、`plugin` 未配置）：拉取并按官方说明操作即可。
+
+- **安装说明（英文）**: `https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md`  
+- **改 `~/.config/opencode/opencode.json` 须先征得用户同意**（见 `~/.config/opencode/AGENTS.md`）；不同意就只口述步骤，不代写。
+
+**Agent 可照做的英文一句**：
+
+`Fetch and follow https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md for OpenCode; get user approval before editing ~/.config/opencode/opencode.json.`
+
 ## 如何“使用”技能
 
 - 各角色在对应任务阶段应 **显式加载并遵循** 相应技能的完整内容（在支持 `/skill-name` 或少样本名称的环境中，通过技能名调用；以 OpenCode / 宿主客户端实际能力为准）。

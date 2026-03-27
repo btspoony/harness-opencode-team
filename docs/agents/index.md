@@ -32,7 +32,7 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
 - `docs/agents/branch-collaboration.md`
   - 可写角色的分支协作契约：仅 PM 决策开分支、feature 分支上的用户确认、以及统一确认话术模板。
 - `docs/agents/superpowers-skills.md`
-  - Superpowers 插件技能与各 OpenCode 角色（`agents/*.md`）的映射；编排、计划、TDD、调试、审查与收口阶段的加载顺序；另含与 `harness-loop.md` / `plan-convention.md` 等约定的**对齐与消解**说明。
+  - Superpowers 与角色映射、与 harness 的**对齐与消解**；**未安装插件时**见文内「未安装插件时」（上游 `INSTALL.md`；改全局 `opencode.json` 须用户同意）。
 
 ## 归属
 

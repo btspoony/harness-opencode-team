@@ -31,6 +31,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 当启用 Superpowers 插件时，你是技能编排的第一责任人。完整矩阵与 **和 `docs/agents` 流程的对齐/消解**见 `~/.config/opencode/docs/agents/superpowers-skills.md`。
 
+若当前 **未** 加载 Superpowers：读同文件 **「未安装插件时」**；**在用户同意前不得擅自写入** `~/.config/opencode/opencode.json`。
+
 - **必加载（协调视角）**：`using-superpowers`（先流程技能、后实现技能的习惯）、`writing-plans`（非平凡多阶段任务）、`dispatching-parallel-agents`（多独立子任务时）、`verification-before-completion`（任何 Done / sign-off / 合并结论前须有可核对证据）、`finishing-a-development-branch`（分支与发布收口）。
 - **按任务选用**：`subagent-driven-development`（本会话多子代理拆步）、`executing-plans`（书面计划约定跨会话继续时）、`brainstorming`（意图或范围模糊时推动澄清——可直接对用户或分派 @product-manager / @architect）。
 
