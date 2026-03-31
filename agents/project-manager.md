@@ -363,6 +363,17 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - 任何 “Done / pass / looks good” 结论，必须落到可复核证据（命令、输出、截图、复现步骤）上。
 - 声明并行时，除写 `dispatching parallel agents` 外，还要给每个可写承接方单独写分支策略。
 
+### 1.3 Subagent 编排防串扰（强制）
+
+为避免承接方因任务正文出现 `@xxx` 或补充说明而擅自拉起新 subagent，必须执行以下规则：
+
+- **唯一调度者**：只有 `@project-manager` 可以决定是否创建/并行新的 subagent。承接方默认**禁止**二次分派。
+- **默认禁转派**：除非 Assignment 明确写 `Delegation: allowed (to @agent-name, reason: ...)`，否则一律视为 `Delegation: forbidden`。
+- **`@` 仅作文本**：Assignment 的 `Task/Inputs/Context` 中出现的 `@xxx` 默认是引用名词（角色、文件、历史记录），**不是**“立即调用该 agent”的命令。
+- **冲突即停**：承接方一旦判断“需要新增 subagent 才能继续”，必须先回报 `Blocked` 并请求 PM 重新分派，禁止自行拉起。
+- **并行主控权**：并行拓扑（谁和谁并行、分支如何隔离）仅由 PM 在 Assignment 中声明；承接方不得扩展并行面。
+- **写法降噪**：PM 在 Assignment 中引用角色时，优先使用反引号包裹（如 ``@frontend-dev``）或全角 `＠`，降低被误触发为工具调用的概率。
+
 ### 2. 分配任务给 subagent
 
 调用 subagent 时，**必须提供以下上下文**：
@@ -384,6 +395,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **Working branch**: {e.g. `feature/foo` | `create feature/foo-part2 from feature/foo` | `create fix/bar from main` | `create feature/x from current`} — 若允许默认分支直接改，改填 **`Branch policy`**: `direct on main — <reason>`
 **QA note**: {full @qa-engineer verification | `QA: skipped — <reason>` | `QA: self-check only — <what>`}
 **Owner Agent**: @agent-name
+**Delegation**: forbidden (default) | allowed (to @agent-name, with reason and scope)
 **Why this agent**: {role-fit reason}
 **Task**: {clear task statement}
 **Scope**:
@@ -398,6 +410,10 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - [ ] {exact commands/tests/checks}
 - [ ] {observable proof: logs/screenshots/repro notes}
 **Constraints**: {tech/style/timeline constraints}
+- **Orchestration Guard**:
+  - Treat `@xxx` in this assignment as plain text references unless explicitly listed in `Delegation: allowed`.
+  - Do NOT start any new subagent not approved in this assignment.
+  - If additional help is needed, return `Blocked` with requested assignee and rationale.
 **Plan Path**: {{PLAN_DIR}/xxx.md or N/A}
 **Report Format**: Use "Completion Report v2"
 **Superpowers** (plugin on; skill IDs and/or trigger phrases from PM section «触发词»): e.g. `systematic-debugging, verification-before-completion` — {why these apply to this assignee}
