@@ -363,6 +363,18 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - **Q6：Superpowers 是否写进 Assignment？**
   - 插件启用时 → 每条分派尽量带 **`Superpowers:`** 行（技能 ID + 触发短语），便于承接方加载正确技能。
 
+### 1.1.1 最小 Phase Gate 决策树（强制）
+
+在每次分派实现类任务前，按以下顺序快速判定：
+
+1. `specify` 完成了吗？没有则先补问题定义与验收。
+2. `clarify` 完成了吗？若有高影响歧义未收敛，标记 `blocked`，不得进入实现。
+3. `plan` 完成并可引用了吗？没有则不得分派开发。
+4. `tasks` 已拆解了吗？没有则不得 `implement`。
+5. 执行中发现新约束？先回写 `plan`（必要时回开 `clarify`）再继续。
+
+若为 hotfix，可走压缩路径，但必须在 Assignment 或回报中写明事后 `clarify/RCA` 补记安排。
+
 ### 1.2 分派降噪与去歧义（强制）
 
 为减少承接方误解，Assignment 必须避免互斥或不可验证表达：
@@ -393,6 +405,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - 前置阶段的产出摘要（如架构师的方案、PM 的 PRD）
 - 该 subagent 完成后需要回报的内容（见下方回报格式）
 - 明确指定“为什么是这个 agent”（角色匹配理由）
+- 阶段门禁状态（Prepare/Execute 到哪一步，是否允许进入下一步）
 
 分派时使用以下模板（可删减无关项）：
 
@@ -401,6 +414,10 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 **Primary** (when multiple routes apply): {e.g. Bug 修复 | 小功能/改进}
 **Additional gates** (optional): {e.g. 用户可见 UI — QA 须可观察证据}
+**Phase Gate Checklist**:
+- Prepare: `specify` [done|n/a], `clarify` [done|n/a], `plan` [done|n/a]
+- Execute: `plan locked` [done|n/a], `tasks` [done|n/a], `implement` [this assignment|done]
+- Gate decision: `go` | `blocked` ({reason})
 **Working branch**: {e.g. `feature/foo` | `create feature/foo-part2 from feature/foo` | `create fix/bar from main` | `create feature/x from current`} — 若允许默认分支直接改，改填 **`Branch policy`**: `direct on main — <reason>`
 **QA note**: {full @qa-engineer verification | `QA: skipped — <reason>` | `QA: self-check only — <what>`}
 **Owner Agent**: @agent-name
@@ -451,6 +468,10 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - 收到回报后，检查产出是否符合预期
 - 如果不符合，给出具体反馈并要求修正
 - 如果符合，推进到下一阶段（参照路由表）
+- **阶段门禁推进（强制）**：
+  - 非 hotfix 任务必须先完成 `specify -> clarify -> plan`，才能分派实现类任务。
+  - 进入实现前必须完成 `tasks` 拆解并在 Assignment 的 `Phase Gate Checklist` 标记为 done。
+  - 若实现中发现新约束，先回写 plan（并必要时补 clarify）再继续 implement。
 - **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。随后由 @project-manager 按“QC 三审轻量汇总”输出统一 `QC Consolidated Decision`，再交 @qa-engineer 验证
 - **QC 发现问题 → Dev 修复闭环**：若统一结论为 `Request Changes` 或包含必须修复项，PM 需立即按模块指派给对应 dev owner 修复（前端给 `@frontend-dev`，后端给 `@fullstack-dev`，跨模块可并行给 `@fullstack-dev-2`）；修复完成后回流 QC/QA 复验
 - **残留问题归档闭环（强制）**：阻断项修复后，若仍有非阻断 finding，PM 必须在对应 plan（或 `{PLAN_DIR}/status.json`）登记 Residual Findings，并写明 owner 与目标里程碑/日期；未完成留档不得宣告最终收口
@@ -465,6 +486,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 **Task**: {task name}
 **Phase**: {current phase}
+**Phase Gates**: {specify/clarify/plan/tasks/implement current state}
 **Context Loaded**: {exact file paths loaded in preflight}
 **Progress**: {percentage}
 **Completed**: {what's done}

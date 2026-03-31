@@ -18,7 +18,7 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
 以下路径均相对于 `~/.config/opencode/`：
 
 - `docs/agents/harness-loop.md`
-  - 端到端任务生命周期、归属与门禁流转；含 RCA 约定、**Git 功能分支门禁**、可选前置门、与常见阶段化工作流的概念对照。
+  - 端到端任务生命周期、归属与门禁流转；含 RCA 约定、**Spec-Driven 双阶段门禁**（`specify -> clarify -> plan` / `plan locked -> tasks -> implement`）、**Git 功能分支门禁**、可选前置门、与常见阶段化工作流的概念对照。
 - `docs/agents/evaluation-harness.md`
   - 如何评估和调优 agent 提示词与工作流。
 - `docs/agents/review-harness.md`
@@ -29,6 +29,8 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
   - 路由评估使用的场景集。
 - `docs/agents/plan-convention.md`
   - 计划目录发现、初始化、status.json 结构与状态规则。
+- `docs/agents/phase-gate-playbook.md`
+  - Phase Gate 执行手册：`specify -> clarify -> plan -> tasks -> implement` 的角色动作与最小证据要求。
 - `docs/agents/branch-collaboration.md`
   - 可写角色的分支协作契约：仅 PM 决策开分支、feature 分支上的用户确认、以及统一确认话术模板。
 - `docs/agents/superpowers-skills.md`

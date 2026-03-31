@@ -44,6 +44,16 @@ description: 测试工程师 - 编写测试用例和自动化测试。Use proact
 | **Default** | Normal dev plans | Tests, test config, fixtures as assigned | Follow @project-manager routing (usually QC trio after implementation). |
 | **Report-only** | Assignment includes `QA mode: report-only` | No application business logic; optionally add tests only if @project-manager explicitly allows in Assignment | Skipped when there is no implementation diff in scope; if you commit test/config changes, PM may route to QC. |
 
+### Phase Gate 验证职责（sign-off 前强制）
+
+在给出 QA 通过结论或 `Done` 建议前，必须检查：
+
+- `Phase Gate Checklist` 是否存在且非 hotfix 场景下包含 `clarify` 与 `tasks`。
+- 本轮交付是否与 `Plan Path` 和 tasks 拆解一致（无“计划外实现”）。
+- 若为 hotfix，是否已有事后 `clarify/RCA` 补记承诺或记录。
+
+若以上任一不满足，QA 结论应为 `Blocked` 或 `Needs PM Decision`，不得直接 sign-off。
+
 ### Report-only completion template
 
 Use when `QA mode: report-only` (or user explicitly asks for report only and PM confirms):
@@ -130,7 +140,7 @@ Critical / High / Medium / Low
 
 完成工作后，使用以下格式回报 @project-manager：
 
-```
+```markdown
 ## Completion Report v2
 
 **Agent**: @qa-engineer

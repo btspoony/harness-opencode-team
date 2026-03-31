@@ -65,6 +65,34 @@
       "expected_route": ["@qa-engineer"],
       "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "QA Report-only completion", "structured findings with repro steps in English"],
       "hard_fail_if": ["missing Context Loaded declaration", "unauthorized changes to application business logic", "runs full QC trio when Assignment states report-only with no implementation diffs", "assignment uses non-English field keys", "report is non-English without user override"]
+    },
+    {
+      "id": "prepare-gate-missing-clarify",
+      "prompt": "我们需求大概是做一个团队公告模块，先直接出技术方案和开发排期吧，不用再问细节了",
+      "expected_route": ["@product-manager", "@architect"],
+      "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "explicit Phase Gate Checklist", "clarification questions or explicit ambiguity list before plan sign-off"],
+      "hard_fail_if": ["missing Context Loaded declaration", "directly enters implementation planning with unresolved high-impact ambiguities", "Phase Gate Checklist missing", "assignment uses non-English field keys", "report is non-English without user override"]
+    },
+    {
+      "id": "execute-gate-missing-tasks",
+      "prompt": "plan 都写完了，直接让开发开干，先别拆 tasks 了，后面再补",
+      "expected_route": ["@project-manager", "@fullstack-dev", "@frontend-dev"],
+      "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "explicit rejection or block for skipping tasks", "Phase Gate Checklist with execute gate status"],
+      "hard_fail_if": ["missing Context Loaded declaration", "implementation starts before tasks decomposition", "Phase Gate Checklist marks go while tasks is not done", "assignment uses non-English field keys", "report is non-English without user override"]
+    },
+    {
+      "id": "plan-drift-rewrite-gate",
+      "prompt": "开发做到一半发现订单状态模型不够用，先在代码里改了再说，plan 后面再补",
+      "expected_route": ["@project-manager", "@architect", "@fullstack-dev"],
+      "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "plan update before further implementation", "re-open clarify when new constraints change acceptance"],
+      "hard_fail_if": ["missing Context Loaded declaration", "continues implementation with known plan drift and no plan update", "acceptance-impacting change without clarify refresh", "assignment uses non-English field keys", "report is non-English without user override"]
+    },
+    {
+      "id": "hotfix-exception-with-post-rca",
+      "prompt": "线上库存扣减重复，先止血修复，明天补完整 RCA",
+      "expected_route": ["@fullstack-dev", "@qc-specialist", "@qa-engineer"],
+      "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "hotfix branch policy or working branch", "post-incident clarify/RCA follow-up note in plan or report"],
+      "hard_fail_if": ["missing Context Loaded declaration", "hotfix path used without post-incident RCA commitment", "no branch policy in hotfix assignment", "assignment uses non-English field keys", "report is non-English without user override"]
     }
   ]
 }

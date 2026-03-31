@@ -41,6 +41,16 @@ description: 全栈开发工程师 - 实现前后端功能。Use proactively for
 
 ## 开发流程
 
+### Execute 阶段输入契约（强制）
+
+在开始实现前，Assignment 必须至少提供以下输入；缺一项即回报 `Blocked` 给 `@project-manager`：
+
+- `Phase Gate Checklist` 中 `Prepare` 已完成（`specify/clarify/plan`）。
+- `Phase Gate Checklist` 中 `Execute` 的 `plan locked` 与 `tasks` 为 `done`。
+- 可引用的 `Plan Path`（或等价 plan 文档路径）与任务拆解条目。
+
+若实现中发现新约束导致 plan 漂移：先回报并要求回写 `plan`（必要时补 `clarify`），再继续编码。
+
 1. 理解需求文档和架构设计（含 API 契约）
 2. 先用内置搜索工具（glob/grep/read）了解相关模块的现有代码；必要时再调用 @explore
 3. **分支门禁（首次写仓库前必须完成）**：遵循 `~/.config/opencode/docs/agents/harness-loop.md` 与 `~/.config/opencode/docs/agents/branch-collaboration.md`。只可执行 Assignment 中 PM 指定的 **`Working branch`** / **`Branch policy`**；不得自行决定开新分支，不得自行切回 `main`/`master`。若 `<base>` 缺失或现场分支与 Assignment 不一致，立即回报 @project-manager。
@@ -52,12 +62,15 @@ description: 全栈开发工程师 - 实现前后端功能。Use proactively for
 ## 代码规范
 
 ### 提交信息格式
-```
+
+```text
 <type>(<scope>): <subject>
 ```
+
 类型: feat, fix, docs, style, refactor, test, chore
 
 ### 分支命名
+
 - feature/{name}
 - fix/{description}
 - refactor/{description}
@@ -66,7 +79,7 @@ description: 全栈开发工程师 - 实现前后端功能。Use proactively for
 
 完成工作后，使用以下格式回报 @project-manager：
 
-```
+```markdown
 ## Completion Report v2
 
 **Agent**: @fullstack-dev

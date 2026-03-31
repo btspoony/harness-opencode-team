@@ -26,14 +26,15 @@
 4. `~/.config/opencode/docs/agents/review-harness.md` — QC 共享基线
 5. `~/.config/opencode/docs/agents/routing-harness.md` — PM 路由评估
 6. `~/.config/opencode/docs/agents/plan-convention.md` — plan 目录约定
-7. `~/.config/opencode/docs/agents/branch-collaboration.md` — 可写角色分支协作契约与 PM 确认话术
-8. `~/.config/opencode/docs/agents/superpowers-skills.md` — Superpowers 技能与角色映射；未装 Superpowers 插件时见文内「未安装插件时」（改全局 `opencode.json` 须用户同意）
+7. `~/.config/opencode/docs/agents/phase-gate-playbook.md` — Phase Gate 执行手册（Prepare/Execute）
+8. `~/.config/opencode/docs/agents/branch-collaboration.md` — 可写角色分支协作契约与 PM 确认话术
+9. `~/.config/opencode/docs/agents/superpowers-skills.md` — Superpowers 技能与角色映射；未装 Superpowers 插件时见文内「未安装插件时」（改全局 `opencode.json` 须用户同意）
 
 ## 最小交付循环（非平凡任务）
 
-1. 澄清意图和验收标准
-2. 计划登记（若项目启用 plan）
-3. 分派到最匹配角色
+1. 准备阶段：`specify -> clarify -> plan`
+2. 执行准备：`plan` 锁定后执行 `tasks` 拆解
+3. 分派到最匹配角色并 `implement`
 4. 审查与验证门禁（QC + QA）
 5. 复盘沉淀为可复用规则
 

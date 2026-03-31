@@ -34,6 +34,7 @@
 - 预期路由（应使用哪些 agent）
 - 预期产出（计划、审查摘要、验证证据）
 - 硬性失败条件（缺少 QA、跳过审查等）
+- 阶段门禁轨迹（`specify -> clarify -> plan -> tasks -> implement`）
 
 ## 评分维度
 
@@ -45,6 +46,7 @@
 - 吞吐量：每轮产出进展，避免不必要的等待
 - 鲁棒性：失败或歧义后的恢复质量
 - 阶段适度性：任务体量与门禁深度匹配（小改动不套全量“计划评审”链，大改动不跳过 RCA/契约）
+- Phase Gate 合规：非 hotfix 不得跳过 `clarify` 与 `tasks`
 
 ## Prompt 变更的最低接受标准
 
@@ -53,6 +55,7 @@
 - 策略合规性不下降
 - 不增加可避免的交接循环
 - 至少 3/5 场景中证据质量持平或更好
+- 关键场景中 `Phase Gate` 合规率不低于变更前（建议目标：100%）
 
 ## 回归记录
 
@@ -64,6 +67,45 @@
 - 回滚或后续调整
 
 将此日志保存在相关 plan 文件的 notes 或 failure log 中。
+
+## 评估执行输出约定（新增）
+
+当使用 `routing-evals.json` 跑回归时，建议统一输出以下结构，便于横向比较：
+
+```markdown
+# Routing Eval Report
+
+## Run Metadata
+- date: YYYY-MM-DD
+- ruleset version: {version}
+- evaluator: {agent/person}
+
+## Overall
+- total_cases: {n}
+- pass_cases: {n}
+- borderline_cases: {n}
+- fail_cases: {n}
+- phase_gate_compliance_rate: {pass_cases / total_cases}
+
+## Failed Cases
+- {case-id}: {reason}
+- {case-id}: {reason}
+
+## Borderline Cases
+- {case-id}: {what is missing and why still borderline}
+
+## Regression Signals
+- {signal}: {count}
+
+## Recommended Actions
+- {doc or prompt change proposal}
+```
+
+最小要求：
+
+- 每个失败用例必须对应 `hard_fail_if` 中的具体条目，避免“主观失败”。
+- 必须单独报告 `Phase Gate` 相关失败（`clarify/tasks/plan-drift/hotfix-post-rca`）。
+- 报告应可回溯到本次评估使用的 `routing-evals.json` 版本。
 
 ## 实践指引
 

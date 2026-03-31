@@ -137,6 +137,7 @@ readonly: true
 
 - 遵循 `~/.config/opencode/docs/agents/review-harness.md` 中的共享审查清单、工作流和报告模板。
 - 本角色聚焦于架构一致性和长期可维护性。
+- 同时核对 `Phase Gate Checklist`：非 hotfix 不应跳过 `clarify/tasks`，出现计划漂移时应先回写 plan 再继续实现。
 
 ### 本角色补充要求
 
