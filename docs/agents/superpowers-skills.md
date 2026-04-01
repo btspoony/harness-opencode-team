@@ -48,6 +48,27 @@ Superpowers:
 - `Expected evidence` 必须可核对；不能是“done”“looks good”这类不可验证描述。
 - 若同一任务包含多个技能，按“流程技能 → 实现技能”排序，避免承接方误判先后。
 
+## 编排触发短语表（PM Assignment / Status Update）
+
+`@project-manager` 在 **对用户说明**、**Status Update**、**Assignment** 中应混用下列**英文短语或技能 ID**（可与中文并列），与 Superpowers 技能描述用语一致，便于宿主/插件匹配。其他角色只需按 Assignment 中的 `Superpowers` 行执行。
+
+| 意图 | 建议写入的自然语言 / 技能 ID（示例） | 对应技能 |
+|------|----------------------------------------|----------|
+| 编排总览、技能先后顺序 | `using superpowers`；`load skills in order`；先流程再实现 | using-superpowers |
+| 0→1、目标含糊、多方案取舍 | `brainstorming`；`brainstorm before we build`；脑暴后再定范围 | brainstorming |
+| 多阶段、动代码前先书面拆解 | `writing-plans`；`write the plan first`；里程碑与依赖写清再开发 | writing-plans |
+| 下次会话按书面计划继续 | `executing-plans`；`execute plan`；`checkpoints`；跨会话按计划推进 | executing-plans |
+| 本会话内多 subagent 按步跑 | `subagent-driven-development`；`subagent-driven`；本会话内子代理编排 | subagent-driven-development |
+| 多独立任务并行分派 | `dispatching parallel agents`；`dispatch parallel agents`；并行分派、无依赖任务并行 | dispatching-parallel-agents |
+| Bug/间歇性/排障 | `systematic debugging`；`no fix before root cause`；RCA 与证据链；先调查再修复 | systematic-debugging |
+| 未禁止 TDD 时的实现方式 | `test-driven development`；`TDD`；先写失败测试再过绿 | test-driven-development |
+| 大块合并前作者侧 | `requesting code review` | requesting-code-review |
+| 按 QC 结论改代码 | `receiving code review`；对照 review 结论逐项核实再改 | receiving-code-review |
+| Gate 前必须有证据 | `verification before completion`；`verify before claiming done`；须附命令与输出/复现步骤 | verification-before-completion |
+| 合并/删分支/发布收口 | `finishing a development branch`；merge / cleanup 选项与风险 | finishing-a-development-branch |
+| 并行实验、隔离工作树 | `git worktree`；`using git worktrees` | using-git-worktrees（**仍须** Assignment 已批准的 **`Working branch`**；不得在 worktree 内擅自新建/切换未授权分支；见「张力与消解」表） |
+| 技能/Prompt 工程 | `writing-skills`（通常随 @prompt-engineer 任务写出） | writing-skills |
+
 ## 技能清单（简称）
 
 | 技能名 | 用途摘要 |

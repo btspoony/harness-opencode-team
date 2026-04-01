@@ -22,10 +22,12 @@
 - `docs/agents/plan-convention.md`：计划目录发现、初始化与 status.json 约定
 - `docs/agents/phase-gate-playbook.md`：Phase Gate 执行手册（Prepare/Execute 的最小动作与证据）
 - `docs/agents/superpowers-skills.md`：Superpowers 与角色映射、与 harness 的对齐说明；未装插件时的上游安装指引
+- `docs/agents/library-docs-and-hosts.md`：库文档检索单一协议（Context7 MCP / ctx7 CLI、禁止双跑）、OpenCode 与 Cursor 宿主差异、大型插件注入降噪
+- `docs/agents/opencode-config-secrets.md`：`opencode.json` 密钥占位 `{env:}` / `{file:}` 说明；配合根目录 `secrets.env.example`
 
 建议优先阅读 `AGENTS.md`（仓库维护入口），再读 `docs/agents/AGENTS.md`（共享规则入口），最后按需进入 `docs/agents/` 专题文档。
 
-本仓库根目录还有 `opencode.json`（主配置）、`plugins/`（可选插件，如 OpenViking）、`package.json`（`@opencode-ai/plugin` 等本地依赖，按需安装）。
+本仓库根目录还有 `opencode.json`（主配置；**密钥请用环境变量**，见 `opencode-config-secrets.md`）、`secrets.env.example`、`plugins/`（可选插件，如 OpenViking）、`package.json`（`@opencode-ai/plugin` 等本地依赖，按需安装）。
 
 ### 计划管理模式（兼容无 `plans/` 项目）
 

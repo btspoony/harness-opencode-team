@@ -39,6 +39,10 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
   - 从公开 harness 实践提炼、且已写入 `harness-loop` / PM 的理念索引：意图门禁、Task category、可验证编辑、长任务纪律、可选分层 `AGENTS.md`。
 - `docs/agents/optional-tooling-by-capability.md`
   - 按能力维度可选的 MCP/skills（文档检索、搜索、浏览器验证、Git 工作流等）；与理念对齐，避免重复堆叠。
+- `docs/agents/library-docs-and-hosts.md`
+  - 库文档检索的**单一事实来源**（Context7 主路径 / CLI 备用、禁止双跑）；OpenCode 与 Cursor 的技能与上下文差异；大型插件注入降噪建议。
+- `docs/agents/opencode-config-secrets.md`
+  - 全局 `opencode.json` 中密钥使用 `{env:}`、`{file:}` 的约定与变量名；配合仓库根目录 `secrets.env.example`。
 
 ## 归属
 
@@ -57,6 +61,7 @@ Agent 运行时 cwd 是项目工作目录，因此必须使用绝对路径（`~/
 - 提示词调优流程变更时，优先更新 `evaluation-harness.md`。
 - 计划管理约定变更时，优先更新 `plan-convention.md`。
 - 编排理念（意图门禁、Task category、可验证编辑等）变更时，同步 `harness-loop.md`、`open-harness-principles.md`、`agents/project-manager.md`（含 Assignment 模板）、`phase-gate-playbook.md` 与 `routing-harness.md`（回归信号）。
+- 库文档协议或宿主说明变更时，同步 `library-docs-and-hosts.md` 与根目录 `AGENTS.md` 中的短引用；密钥约定变更时同步 `opencode-config-secrets.md` 与 `secrets.env.example`。
 
 ## Agent 设计变更审查清单
 

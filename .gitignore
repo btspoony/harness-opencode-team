@@ -4,3 +4,5 @@ bun.lock
 opencode.json
 skills/*
 plugins/*
+secrets.env
+.secrets/

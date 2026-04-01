@@ -2,6 +2,8 @@
 
 本文档按**能力维度**列出可选增强项，与 `open-harness-principles.md` 中的「文档检索、可观察验证、结构化探索」等理念对应。是否接入由用户决定；**修改全局 `opencode.json` 须用户明确同意**。
 
+**库文档检索**（Context7 MCP vs ctx7 CLI、禁止双跑）的单一协议见：`~/.config/opencode/docs/agents/library-docs-and-hosts.md`。
+
 ## 能力 → 可选接入
 
 | 能力 | 用途 | 说明 |

@@ -58,6 +58,13 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 ## Harness-first 执行入口
 
+### 上下文与 token 纪律（渐进式读取）
+
+- **极简任务**（单点小改、路由表已明确）：优先只读 `docs/agents/AGENTS.md`（优先级与最小循环）+ 本轮 Assignment；**勿**默认通读 `harness-loop.md` 全文。
+- **标准交付**（非平凡功能 / Bug / 跨模块）：再读 `harness-loop.md` 中与**当前阶段**相关的节，必要时 `phase-gate-playbook.md`。
+- **路由或门禁规则变更**：再读 `routing-harness.md`，并用 `routing-evals.json` 做回归。
+- 完整索引：`docs/agents/index.md`。细节以专题文档为准，避免在对话中重复粘贴大段规则。
+
 - 涉及流程与质量门禁时，按需从全局配置读取（注意是绝对路径）：
   - `~/.config/opencode/AGENTS.md`（本配置仓库维护入口）
   - `~/.config/opencode/docs/agents/AGENTS.md`（共享入口与优先级规则）
@@ -89,26 +96,9 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 ### 触发词（编排时请多用，便于宿主/插件匹配技能）
 
-在 **对用户说明**、**Status Update**、**Assignment** 中尽量**原样混用**下列英文短语或技能 ID（可与中文并列），与 Superpowers 技能描述中的用语一致，提高自动加载概率。
+**完整英文短语 / 技能 ID 对照表**见 `~/.config/opencode/docs/agents/superpowers-skills.md` 的 **「编排触发短语表」**；在 **对用户说明**、**Status Update**、**Assignment** 中原样混用表中短语或 ID（可与中文并列）。无 Claude `Skill` 工具时（如部分 IDE）：承接方通过 **Read 技能文件** 等价加载 Superpowers 流程。
 
-| 意图 | 建议写入的自然语言 / 技能 ID（示例） | 对应技能 |
-|------|----------------------------------------|----------|
-| 编排总览、技能先后顺序 | `using superpowers`；`load skills in order`；先流程再实现 | using-superpowers |
-| 0→1、目标含糊、多方案取舍 | `brainstorming`；`brainstorm before we build`；脑暴后再定范围 | brainstorming |
-| 多阶段、动代码前先书面拆解 | `writing-plans`；`write the plan first`；里程碑与依赖写清再开发 | writing-plans |
-| 下次会话按书面计划继续 | `executing-plans`；`execute plan`；`checkpoints`；跨会话按计划推进 | executing-plans |
-| 本会话内多 subagent 按步跑 | `subagent-driven-development`；`subagent-driven`；本会话内子代理编排 | subagent-driven-development |
-| 多独立任务并行分派 | `dispatching parallel agents`；`dispatch parallel agents`；并行分派、无依赖任务并行 | dispatching-parallel-agents |
-| Bug/间歇性/排障 | `systematic debugging`；`no fix before root cause`；RCA 与证据链；先调查再修复 | systematic-debugging |
-| 未禁止 TDD 时的实现方式 | `test-driven development`；`TDD`；先写失败测试再过绿 | test-driven-development |
-| 大块合并前作者侧 | `requesting code review` | requesting-code-review |
-| 按 QC 结论改代码 | `receiving code review`；对照 review 结论逐项核实再改 | receiving-code-review |
-| Gate 前必须有证据 | `verification before completion`；`verify before claiming done`；须附命令与输出/复现步骤 | verification-before-completion |
-| 合并/删分支/发布收口 | `finishing a development branch`；merge / cleanup 选项与风险 | finishing-a-development-branch |
-| 并行实验、隔离工作树 | `git worktree`；`using git worktrees` | using-git-worktrees（**仍须**使用 Assignment 已批准的 **`Working branch`**，不得在 worktree 内擅自新建/切换未授权分支；见 `superpowers-skills.md`「张力与消解」） |
-| 技能/Prompt 工程 | `writing-skills`（通常随 @prompt-engineer 任务写出） | writing-skills |
-
-- **分派习惯**：在每条 Assignment 末尾增加一行 **`Superpowers`**（见下方模板），列出逗号分隔的 **技能 ID** 或上方英文**短语**，并一句话说明「为何本任务需要加载该项」。
+- **分派习惯**：在每条 Assignment 末尾增加一行 **`Superpowers`**（见下方模板），列出逗号分隔的 **技能 ID** 或表中英文**短语**，并一句话说明「为何本任务需要加载该项」。
 - **与 harness 并行规则对齐**：写「并行」时同时写 **`dispatching parallel agents`**（或技能 ID），并仍写明各可写角色的 **`Working branch`**，避免并行绕过分支门禁（见 `superpowers-skills.md`「张力与消解」表）。
 
 ---

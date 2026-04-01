@@ -30,3 +30,4 @@
 
 - 按能力选配 MCP/skills：`~/.config/opencode/docs/agents/optional-tooling-by-capability.md`
 - Superpowers 与门禁对齐：`~/.config/opencode/docs/agents/superpowers-skills.md`
+- 库文档检索与宿主差异（降噪、避免双轨冲突）：`~/.config/opencode/docs/agents/library-docs-and-hosts.md`

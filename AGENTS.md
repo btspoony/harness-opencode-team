@@ -27,21 +27,10 @@ OpenCode 不会自动加载本文件；agent 需在被指示时显式读取。
 2. 再按需读 `~/.config/opencode/docs/agents/index.md` 与具体 harness 文档；若调整编排理念或选配工具，读 `docs/agents/open-harness-principles.md` 与 `docs/agents/optional-tooling-by-capability.md`。
 3. 若改动了路由/门禁规则，同步更新对应 docs 并做一致性检查。
 
-<!-- context7 -->
-Use the `ctx7` CLI to fetch current documentation whenever the user asks about a library, framework, SDK, API, CLI tool, or cloud service -- even well-known ones like React, Next.js, Prisma, Express, Tailwind, Django, or Spring Boot. This includes API syntax, configuration, version migration, library-specific debugging, setup instructions, and CLI tool usage. Use even when you think you know the answer -- your training data may not reflect recent changes. Prefer this over web search for library docs.
+## 库文档与宿主差异（单一入口）
 
-Do not use for: refactoring, writing scripts from scratch, debugging business logic, code review, or general programming concepts.
+涉及**第三方库 / API / CLI / 云服务**的语法、配置、版本迁移等问题时，不要只靠训练数据。完整协议（Context7 MCP 优先、ctx7 CLI 备用、OpenCode vs Cursor、会话降噪）见：
 
-## Steps
+`~/.config/opencode/docs/agents/library-docs-and-hosts.md`
 
-1. Resolve library: `npx ctx7@latest library <name> "<user's question>"`
-2. Pick the best match (ID format: `/org/project`) by: exact name match, description relevance, code snippet count, source reputation (High/Medium preferred), and benchmark score (higher is better). If results don't look right, try alternate names or queries (e.g., "next.js" not "nextjs", or rephrase the question)
-3. Fetch docs: `npx ctx7@latest docs <libraryId> "<user's question>"`
-4. Answer using the fetched documentation
-
-You MUST call `library` first to get a valid ID unless the user provides one directly in `/org/project` format. Use the user's full question as the query -- specific and detailed queries return better results than vague single words. Do not run more than 3 commands per question. Do not include sensitive information (API keys, passwords, credentials) in queries.
-
-For version-specific docs, use `/org/project/version` from the `library` output (e.g., `/vercel/next.js/v14.3.0`).
-
-If a command fails with a quota error, inform the user and suggest `npx ctx7@latest login` or setting `CONTEXT7_API_KEY` env var for higher limits. Do not silently fall back to training data.
-<!-- context7 -->
+维护本仓库时：若变更上述协议，请同步该文件，并检查 Cursor 等环境中的 Context7 规则是否仍指向该路径。

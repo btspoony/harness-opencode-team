@@ -31,6 +31,8 @@
 9. `~/.config/opencode/docs/agents/superpowers-skills.md` — Superpowers 技能与角色映射；未装 Superpowers 插件时见文内「未安装插件时」（改全局 `opencode.json` 须用户同意）
 10. `~/.config/opencode/docs/agents/open-harness-principles.md` — 开源 harness 理念在本仓库的落点索引（意图门禁、Task category、可验证编辑等）
 11. `~/.config/opencode/docs/agents/optional-tooling-by-capability.md` — 按能力可选的 MCP/skills（与 harness 理念对齐，非插件依赖）
+12. `~/.config/opencode/docs/agents/library-docs-and-hosts.md` — 库文档检索单一协议（Context7 MCP / ctx7 CLI）、宿主差异、会话上下文降噪
+13. `~/.config/opencode/docs/agents/opencode-config-secrets.md` — `opencode.json` 密钥占位 `{env:}` / `{file:}` 与变量名说明
 
 ## 最小交付循环（非平凡任务）
 
