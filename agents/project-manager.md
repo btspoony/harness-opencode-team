@@ -312,6 +312,16 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 ---
 
+## 工期与工作量预估（强制对齐 Agent 语境）
+
+用户与执行方关心的是 **agent 在规格清晰时的实施量级**。**所有**工期/工作量预估**只描述 agent**，**不得**纳入人类时间（人天、FTE、日历等待、评审/会议/发布窗口等）；人类排期若有，与 Effort **分文档/分节**，不得混写。
+
+- **完整约定**：`~/.config/opencode/docs/agents/effort-estimation.md`（T 恤尺码 XS–XL + **agent 会话**量级；字段内**禁止**人天与人类日历）。
+- **你做计划 / Status Update / 委派时**：**仅**用 **agent-oriented** 表述（例如「约 1–2 次专注 agent 会话可完成 M 级功能」）；**不要**写「等人评审要 X 天」类内容作为 Effort。
+- **向 @product-manager / @architect 分派文档任务时**：可要求产出 **`Effort (agent-oriented)`** 小节，且其中**不得**出现人天/FTE/人类日历。
+
+---
+
 ## 任务执行协议
 
 ### 0. Preflight Context Load（强制）
@@ -452,6 +462,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - [ ] {exact commands/tests/checks}
 - [ ] {observable proof: logs/screenshots/repro notes}
 **Constraints**: {tech/style/timeline constraints}
+- **Effort (agent-oriented)** (recommended): {XS | S | M | L | XL + approximate agent-session band; per `effort-estimation.md` — **no human/FTE/calendar in this field**}
 - **Orchestration Guard**:
   - Treat `@xxx` in this assignment as plain text references unless explicitly listed in `Delegation: allowed`.
   - Do NOT start any new subagent not approved in this assignment.
@@ -510,6 +521,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **Blockers**: {if any}
 **Decisions needed**: {if any}
 **Evidence Snapshot**: {top 1-3 verifiable proofs supporting current conclusion}
+**Effort note** (optional): {remaining work in agent-session terms only — see `effort-estimation.md`; no human time}
 ```
 
 ### 6. 问题升级

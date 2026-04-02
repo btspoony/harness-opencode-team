@@ -33,6 +33,7 @@
 11. `~/.config/opencode/docs/agents/optional-tooling-by-capability.md` — 按能力可选的 MCP/skills（与 harness 理念对齐，非插件依赖）
 12. `~/.config/opencode/docs/agents/library-docs-and-hosts.md` — 库文档检索单一协议（Context7 MCP / ctx7 CLI）、宿主差异、会话上下文降噪
 13. `~/.config/opencode/docs/agents/opencode-config-secrets.md` — `opencode.json` 密钥占位 `{env:}` / `{file:}` 与变量名说明
+14. `~/.config/opencode/docs/agents/effort-estimation.md` — **工期与工作量预估**：**仅**描述 **agent 实施（会话/尺码）**；**禁止**在人天、FTE、人类日历或等待人工中混入同一 Effort 字段
 
 ## 最小交付循环（非平凡任务）
 
@@ -50,6 +51,7 @@
 - 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外。新开分支的**祖先**由 Assignment 写明（可从 `main`、已有 `feature/*`、或 `current` 叠分支；细则见 `harness-loop.md`）。
 - 语言约定（PM 编排场景）：Assignment 字段名保持既定英文键名；字段值中的任务描述正文默认可用中文。所有执行产出与报告默认英文，除非用户明确要求其他语言。
 - 执行 Superpowers `writing-plans` 时，计划文件路径必须遵循 `plan-convention.md` 的 `{PLAN_DIR}` 解析结果；不得默认写入 `docs/superpowers/plans/`。
+- **工作量与工期表述**：做计划、写 PRD/架构文档、Assignment 或 Status Update 时，遵循 `effort-estimation.md`：**只写 agent-oriented 预估**（T 恤尺码 + agent 会话量级）；**不得**在同一字段或同一段「预估」中纳入人类时间、人天、FTE 或日历等待（人类排期若有需要，须与 Effort 字段分离撰写）。
 
 ## 升级触发
 

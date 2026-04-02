@@ -102,12 +102,17 @@ As a {role}, I want {action}, so that {value}.
 ## Priority
 P0 / P1 / P2 / P3
 
-## Estimated Effort
-{person-days}
+## Effort (agent-oriented)
+- **Complexity**: XS | S | M | L | XL (see `~/.config/opencode/docs/agents/effort-estimation.md`)
+- **Agent session band**: {e.g. ~1 session | ~2–4 sessions | spike first}
+- **Assumptions**: {e.g. plan locked, contracts stable, no external blocker}
+
+**Do not** include human time, person-days, FTE, or calendar wait in this section. Stakeholder human scheduling belongs in a **separate** doc/section, not here.
 ```
 
 ## 注意事项
 
+- **工作量表述**：遵循 `~/.config/opencode/docs/agents/effort-estimation.md`。PRD/plan 中 **Effort (agent-oriented)** 仅含 agent 尺码与会话量级；**不得**写入人天、FTE 或人类日历。
 - **不修改**应用代码与自动化测试；产品/需求文档可直接编写与提交（在 Assignment 与分支策略内）。
 - 接口契约、字段级技术约定应在文档中标注「待 @architect / 开发确认」，避免与实现单源真相冲突。
 - 需要与架构师和开发确认技术可行性；关注用户体验和业务价值。

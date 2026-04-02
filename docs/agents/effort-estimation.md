@@ -1,0 +1,40 @@
+# 工期与工作量预估（Agent 语境）
+
+在 OpenCode / Cursor 等多角色 agent 编排下，**所有「工期 / 工作量 / Effort」类预估只描述 agent 实施量级**：在规格与验收已就绪、上下文可加载的前提下，**agent 连续或少量会话内**完成实现与基础自证（跑通命令/单测等）需要多少**agent 工作量**。
+
+## 硬性规则（不得混入人工时间）
+
+凡使用本 harness 的计划、PRD、架构文档、Assignment、Status Update 中的 **Effort / 工期 / 预估** 表述：
+
+- **必须**只反映 **agent 执行与会话**（见下节尺码与会话带）。
+- **禁止**纳入任何**人类时间**，包括但不限于：人天 / person-days / FTE、人类日历天或周、等待人工评审、会议、排期空档、发布窗口、合规签批排队、跨团队人类响应时间。
+- **禁止**用「标了轴的人天」变相写人类时间；**本节字段内不要使用人天 / FTE / 人类日历**。
+- **QC/QA 在流程中的迭代**：视为 **agent 会话**的一部分（可多算几次会话），**不要**单独加「人类审查要等 X 天」。
+
+若业务方必须另做**人类排期或合同人天**，须在**与本 Effort 字段完全分离**的文档或章节（例如路线图、商务附件）中撰写，**不得**写进 `Effort (agent-oriented)` 或同名小节，以免与 agent 预估混读。
+
+## 推荐写法：T 恤尺码 + agent 会话带
+
+1. **XS**：单文件 / 单测点 / 配置微调 — 通常 **<1** 次完整 agent 回合可交付。  
+2. **S**：局部模块小改 — 约 **1** 次专注会话。  
+3. **M**：单功能横切少量文件 — 约 **1–3** 次会话（含流程内 QC/QA agent 迭代则取上沿）。  
+4. **L**：多模块、新子系统、或强依赖摸底 — 约 **3–8** 次会话；**应拆里程碑**。  
+5. **XL**：接近子系统级或未知域 — **先 spike / 原型**，未摸底前不给紧凑数字预估。
+
+「**会话**」指：一次连贯的 agent 运行（读上下文 → 实现 → 运行验证），**不是**人类 8 小时工作日。
+
+## 文档与模板中的字段名（建议）
+
+- **PRD / 产品文档**：**`## Effort (agent-oriented)`** — 仅 **Complexity (XS–XL) + agent session band + 假设**（规格已锁、契约稳定等）。  
+- **架构 / 技术计划**：**`### Implementation effort (agent-oriented)`** — 同上；区分 **spike** vs **build**。  
+- **PM Assignment `Constraints`**：**`Effort (agent-oriented)`**: `M, ~2–4 agent sessions — assumes plan locked and contracts stable`。  
+- **Status Update**：剩余工作仅用 agent 会话语言（如「约 1 次会话可收口」），**不写**人类日历或人天。
+
+## 与不确定性的关系
+
+- **规格未锁、接口未定、依赖外部凭证**：标 **`blocked` / `spike required`**，改为「先 1 次摸底会话再更新 Effort」，仍**只**用 agent 会话描述。  
+- **高危变更 / 生产发布**：人类审批或发布节奏**不计入**本节 Effort；若需记录依赖，用 **阻塞/依赖清单**（非时间预估字段）。
+
+## 维护
+
+变更本约定时：同步 `docs/agents/AGENTS.md` 引用、`docs/agents/index.md` 映射，以及 `agents/project-manager.md`、`agents/product-manager.md`、`agents/architect.md` 中的模板与指针。
