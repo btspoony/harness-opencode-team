@@ -55,6 +55,7 @@ alwaysApply: true
 - **跨角色工作流、门禁或路由**变更时：先更新 `docs/agents/` 中相关专题，再同步 `agents/*.md`（含路由与角色表）；宜在同一提交中完成。
 - 质量门禁变更时，优先更新 `harness-loop.md`。
 - 评审策略变更时，优先更新 `review-harness.md`。
+- **QC 三审角色提示词**（`agents/qc-specialist.md`、`qc-specialist-2.md`、`qc-specialist-3.md`）：流程与共用正文以 **`agents/qc-specialist.md`** 为准；`-2`/`-3` 仅保留 frontmatter、开场白 Reviewer 编号、`## 并行审查时本 reviewer 的侧重`、Completion Report 中的 **Agent** 名。共享基线或清单变更时同步 `docs/agents/review-harness.md`，并视需要在同一提交中更新三份 agent 内对 harness 的引用。
 - 提示词调优流程变更时，优先更新 `evaluation-harness.md`。
 - Superpowers 与编排骨架对照（`superpowers-skills.md`）变更时：只更新该专题与必要的角色短指针；勿在各 `agents/*.md` 内嵌长对照表。
 - 计划管理约定变更时，优先更新 `plan-convention.md`。

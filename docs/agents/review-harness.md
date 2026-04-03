@@ -1,7 +1,6 @@
 # QC 审查基线
 
-本文档定义了所有 QC 审查员的共享基线。
-角色文件中只需保留各审查员特有的聚焦方向和升级说明。
+本文档定义了所有 QC 审查员的共享基线。三份 QC 角色提示词（`agents/qc-specialist.md`、`agents/qc-specialist-2.md`、`agents/qc-specialist-3.md`）在流程、门禁与要点上应与本文一致且彼此对齐：**共用正文以 `agents/qc-specialist.md` 为准**；`-2` / `-3` 仅保留 frontmatter、开场白中的 Reviewer 编号、`## 并行审查时本 reviewer 的侧重` 一节，以及 Completion Report 模板里的 **Agent** 名。
 
 ## 共享基线（所有审查员）
 

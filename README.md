@@ -87,6 +87,7 @@
 
 默认代码变更走 **QC 三审并行**：`@qc-specialist`、`@qc-specialist-2`、`@qc-specialist-3` 从不同视角审查（架构/可维护性、安全/正确性、性能/可靠性），同时遵守统一的 **Shared Baseline**（功能回归、阻塞级安全与数据一致性、测试充分性）。仅 Hotfix 可走单审快速通道（`@qc-specialist`）。
 
+- **角色提示词维护**：`agents/qc-specialist.md` 为 QC 共用正文模板；`qc-specialist-2.md` / `qc-specialist-3.md` 与其保持同步，仅差异为 Reviewer 编号、`## 并行审查时本 reviewer 的侧重` 与 Completion Report 中的 **Agent** 字段。共享基线与报告模板见 `docs/agents/review-harness.md`。
 - **汇总**：三审完成后由 **@project-manager** 做轻量汇总（去重、冲突按证据裁决），产出单一 gate 结论（Approve / Request Changes / Needs Discussion）。
 - **修复归属**：QC 只负责发现问题与建议；**修复工作默认分派给开发团队**（@fullstack-dev / @frontend-dev / @fullstack-dev-2），修复后再回流 QC/QA 复验。
 
