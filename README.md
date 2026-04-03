@@ -8,9 +8,9 @@
 
 > **注意**: 以下路径均相对于本全局配置目录 `~/.config/opencode/`。
 > Agent 运行时 cwd 是项目目录，agent prompt 中引用这些文件需使用**绝对路径**。
-> 全局配置（`~/.config/opencode/`）对 agent 只读：agent 只能读取和提出建议，实际写入由用户本人维护。
+> 全局配置（`~/.config/opencode/`）对 agent 只读：agent 只能读取和提出建议，实际写入由用户本人执行。
 
-- `AGENTS.md`：OpenCode **全局 Rules**（每会话加载；含共享 harness、优先级、索引与渐进式读取列表）；`docs/agents/AGENTS.md` 与 `docs/agents/index.md` 为重定向存根
+- `AGENTS.md`：OpenCode **全局 Rules**（每会话加载；含 harness 优先级、不变量、专题文档与角色索引）；`docs/agents/AGENTS.md` 与 `docs/agents/index.md` 为重定向入口。**本仓库**的结构说明、变更约定与审查清单仅见 `.cursor/rules/opencode-config-repo-maintenance.mdc`（不在 `AGENTS.md` 重复）
 - `agents/*.md`：各角色 OpenCode agent 提示词（frontmatter + 正文），由 `opencode.json` 的 `agent` 引用加载
 - `docs/agents/AGENTS.md` / `docs/agents/index.md`：重定向至根目录 `AGENTS.md`（兼容旧链接）
 - `docs/agents/harness-loop.md`：任务生命周期与门禁流转（含 RCA、Git 功能分支门禁）
@@ -24,7 +24,7 @@
 - `docs/agents/library-docs-and-hosts.md`：库文档检索单一协议（Context7 MCP / ctx7 CLI、禁止双跑）、OpenCode 与 Cursor 宿主差异、大型插件注入降噪
 - `docs/agents/opencode-config-secrets.md`：`opencode.json` 密钥占位 `{env:}` / `{file:}` 说明；配合根目录 `secrets.env.example`
 
-建议：根目录 `AGENTS.md` 已在每会话加载（含入口与索引）；需要深度细节时再读 `docs/agents/` 下专题文档。在 Cursor 中维护本仓库时，同时受 `.cursor/rules/opencode-config-repo-maintenance.mdc` 约束。
+建议：根目录 `AGENTS.md` 已在每会话加载（含入口与索引）；需要深度细节时再读 `docs/agents/` 下专题文档。Cursor 工作区会加载 `.cursor/rules/` 下与本仓库相关的约定（见上条路径）。
 
 本仓库根目录还有 `opencode.json`（主配置；**密钥请用环境变量**，见 `opencode-config-secrets.md`）、`secrets.env.example`、`plugins/`（可选插件，如 OpenViking）、`package.json`（`@opencode-ai/plugin` 等本地依赖，按需安装）。
 

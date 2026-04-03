@@ -44,8 +44,6 @@
 
 ## 与仓库其他文档的关系
 
-- 共享流程与渐进式读取列表：根目录 `~/.config/opencode/AGENTS.md`
+- 共享流程与专题文档索引：根目录 `~/.config/opencode/AGENTS.md`
 - 按能力选配 MCP：`docs/agents/optional-tooling-by-capability.md`
 - Superpowers 与 harness 消解：`docs/agents/superpowers-skills.md`
-
-维护本文件时：若变更检索协议，请同步检查根目录 `AGENTS.md`（全局 Rules 中的短引用）、`.cursor/rules/opencode-config-repo-maintenance.mdc` 与 Cursor `context7` 类规则是否仍指向本路径。

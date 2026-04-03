@@ -95,7 +95,7 @@
 
 ### Git 功能分支门禁（业务仓库）
 
-适用于 cwd 为 **Git 托管的业务/应用仓库** 且本轮会产生**仓库内可合并 diff** 的任务（代码、业务向测试与 fixture、影响构建或运行时的配置等）。**不**用于约束仅由用户本人维护的 `~/.config/opencode/` 全局配置（该目录对 agent 只读）。
+适用于 cwd 为 **Git 托管的业务/应用仓库** 且本轮会产生**仓库内可合并 diff** 的任务（代码、业务向测试与 fixture、影响构建或运行时的配置等）。**不**用于约束 `~/.config/opencode/` 全局配置目录（该目录对 agent 只读；落盘仅由用户执行）。
 
 与 PM/可写角色的协同细则（含用户确认话术）见：`~/.config/opencode/docs/agents/branch-collaboration.md`。
 

@@ -34,7 +34,3 @@
 
 - **规格未锁、接口未定、依赖外部凭证**：标 **`blocked` / `spike required`**，改为「先 1 次摸底会话再更新 Effort」，仍**只**用 agent 会话描述。  
 - **高危变更 / 生产发布**：人类审批或发布节奏**不计入**本节 Effort；若需记录依赖，用 **阻塞/依赖清单**（非时间预估字段）。
-
-## 维护
-
-变更本约定时：同步根目录 `AGENTS.md` 中的相关段落，以及 `agents/project-manager.md`、`agents/product-manager.md`、`agents/architect.md` 中的模板与指针。

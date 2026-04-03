@@ -200,7 +200,3 @@ Superpowers:
 - `Hotfix` 与 `RCA complete before code changes` 互斥：热修可先最小修复，但必须补“事后 RCA”项。
 - `QC: skipped` 只用于已定义例外（product-docs only / tech-spec only）；否则默认进入 QC 路径。
 - `Working branch` 与 `Branch policy` 只能二选一；两者同写时，以 PM 明确改写为准后再执行。
-
-## 维护说明
-
-- 角色提示词中仅保留**短路由**与本文件路径；本表扩展时更新此处，避免在每个 `agents/*.md` 重复长表格。

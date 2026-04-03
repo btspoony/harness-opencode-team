@@ -1,36 +1,74 @@
 ---
-description: Boundaries and change workflow when maintaining the ~/.config/opencode configuration repository (Cursor workspace)
+description: 在 Cursor 工作区维护 ~/.config/opencode 全局配置仓库时的边界与变更流程
 alwaysApply: true
 ---
 
-# OpenCode config repository maintenance
+# OpenCode 配置仓库维护
 
-This rule applies when the workspace is `~/.config/opencode/` (the global OpenCode config repo). It does **not** replace project `AGENTS.md` in other repositories.
+当工作区为 `~/.config/opencode/`（全局 OpenCode 配置仓库）时适用本规则。本规则**不**替代其他仓库中的项目级 `AGENTS.md`。
 
-## Canonical rules entry
+## 维护话术与清单的唯一入口
 
-- **Root** `~/.config/opencode/AGENTS.md`: OpenCode **global** rules (loaded every session). Holds shared harness priorities, invariants, progressive-reading list, and knowledge-base index; see [OpenCode Rules — Global](https://opencode.ai/docs/rules/#global).
-- **`docs/agents/AGENTS.md`** and **`docs/agents/index.md`**: **Redirect stubs** only; do not maintain long-form content there (avoids drift).
+下列内容**仅在本文件**展开：**本配置仓库如何维护**、**更新规则**、**设计审查清单**、**重定向存根策略**、**避免与执行向正文双轨**。  
+**不**在根目录 `AGENTS.md`、`docs/agents/*.md`、`agents/*.md` 中重复上述维护话术或指向本文件的说明。
 
-## Repository boundary
+**例外（仍保留在执行向文档中）**：与运行时行为直接相关的边界陈述，例如「全局配置落盘仅由用户执行」「未经同意不得改 `opencode.json` / 凭据」等。
 
-- This directory is user-maintained **global tooling config**, not a business application repo.
-- When cwd is `~/.config/opencode` (or below), default task goal is **maintain this config repo**, not an external project.
-- Change files here only with clear user authorization; prefer read-first, then edit.
-- When executing in a **business** project cwd, that project’s `AGENTS.md` / `CLAUDE.md` wins; this rule is irrelevant unless the workspace is still this repo.
+**人类读者 / 非 Cursor 宿主**：用编辑器或 Read 打开本路径即可：`.cursor/rules/opencode-config-repo-maintenance.mdc`。
 
-## Maintenance principles
+### 仓库内文件分工（索引）
 
-- **Single authority** for entry + index: root `AGENTS.md`. Deep process text stays in `docs/agents/*.md` topic files; update those when phases/gates change, and adjust root `AGENTS.md` only if the progressive list or summary invariants need to match.
-- Avoid drift: one source of truth per topic; no duplicate long bodies in redirect stubs.
-- Role prompts should reference `docs/agents/*.md` for stage-specific gates instead of pasting long rules.
+| 路径 | 用途 |
+|------|------|
+| `AGENTS.md` | OpenCode 每会话加载；执行向优先级、不变量、专题索引、角色归属；官方说明见 [OpenCode Rules — Global](https://opencode.ai/docs/rules/#global) |
+| `docs/agents/AGENTS.md`、`docs/agents/index.md` | 重定向存根；勿写长文正文（避免漂移） |
+| `docs/agents/*.md`（上列除外） | 编排骨架专题正文 |
+| `agents/*.md` | 角色提示词 |
+| **本文件** | 维护边界、更新规则、设计审查；工作目录为本仓库时的默认任务理解 |
 
-## Quick navigation
+## 仓库边界
 
-1. `~/.config/opencode/AGENTS.md` — global entry, priorities, index, progressive list
-2. Harness philosophy and optional tooling: `open-harness-principles.md`, `optional-tooling-by-capability.md`
-3. After changing routing or gates: update the relevant topic docs and root `AGENTS.md` if needed; run consistency checks
+- 本目录为用户维护的**全局工具配置**，不是业务应用仓库。
+- 当当前工作目录为 `~/.config/opencode`（或其子目录）时，默认任务目标是**维护本配置仓库**，而非外部项目。
+- 仅可在用户明确授权下修改此处文件；优先先读后改。
+- 在**业务**项目工作目录下执行时，以该项目 `AGENTS.md` / `CLAUDE.md` 为准；除非工作区仍是本仓库，否则本规则不适用。
 
-## Library docs and hosts
+## 维护原则
 
-For third-party library / API / CLI / cloud syntax, config, and migrations, do not rely on training data alone. Single protocol: `~/.config/opencode/docs/agents/library-docs-and-hosts.md`. If you change that protocol, sync Cursor rules that reference it.
+- **单一权威**（入口 + 专题索引）：根目录 `AGENTS.md`。深层流程正文放在 `docs/agents/*.md` 专题中；阶段或门禁变更时先更新专题，仅当专题索引或摘要级不变量需对齐时再改根目录 `AGENTS.md`。
+- 避免漂移：每个主题单一事实来源；重定向存根中不要重复维护长正文。
+- 角色提示词应引用 `docs/agents/*.md` 中的阶段门禁，勿粘贴大段规则。
+
+## 快速导航
+
+1. `~/.config/opencode/AGENTS.md` — 全局入口、优先级、专题索引、不变量
+2. 编排骨架理念与可选工具：`open-harness-principles.md`、`optional-tooling-by-capability.md`
+3. 路由或门禁变更后：按需更新相关专题与根目录 `AGENTS.md`，并做一致性检查
+4. **本文件** — 维护本配置仓库时的更新规则与设计审查清单
+
+## 库文档与宿主
+
+涉及第三方库 / API / CLI / 云服务语法、配置与迁移时，勿仅依赖模型训练数据。单一协议见 `~/.config/opencode/docs/agents/library-docs-and-hosts.md`。若变更该协议，请同步引用它的 Cursor 规则。
+
+## 更新规则（供维护全局配置的用户）
+
+- **跨角色工作流、门禁或路由**变更时：先更新 `docs/agents/` 中相关专题，再同步 `agents/*.md`（含路由与角色表）；宜在同一提交中完成。
+- 质量门禁变更时，优先更新 `harness-loop.md`。
+- 评审策略变更时，优先更新 `review-harness.md`。
+- 提示词调优流程变更时，优先更新 `evaluation-harness.md`。
+- Superpowers 与编排骨架对照（`superpowers-skills.md`）变更时：只更新该专题与必要的角色短指针；勿在各 `agents/*.md` 内嵌长对照表。
+- 计划管理约定变更时，优先更新 `plan-convention.md`。
+- 工期 / 工作量口径变更时，优先更新 `effort-estimation.md`，并同步 PM / product-manager / architect 模板与根目录 **`AGENTS.md`** 中 Effort / 工期相关不变量或索引简述。
+- 编排理念变更时，同步 `harness-loop.md`、`open-harness-principles.md`、`agents/project-manager.md`、`phase-gate-playbook.md` 与 `routing-harness.md`。
+- 库文档协议或宿主说明变更时，同步 `library-docs-and-hosts.md`、根目录 **`AGENTS.md`** 中的相关指针；核对 Cursor **Context7** 类规则（如 `~/.cursor/rules/context7.mdc`）及本文件上文**库文档与宿主**小节中的指向是否仍与 `docs/agents/library-docs-and-hosts.md` 一致。
+- 密钥约定变更时，同步 `opencode-config-secrets.md` 与 `secrets.env.example`。
+- **共享入口、优先级、专题索引或不变量**变更时：只改**根目录 `AGENTS.md`**，并检查 `docs/agents/AGENTS.md` / `docs/agents/index.md` 存根无需改（除非要调整重定向文案）。
+- **本维护规则**（边界、更新规则、审查清单）变更时：同步本文件 `.cursor/rules/opencode-config-repo-maintenance.mdc`。
+
+## Agent 设计变更审查清单
+
+- 根目录 `AGENTS.md`（全局入口）是否仍结构清晰、便于每会话加载？
+- 角色职责是否与工作流细节分离？
+- 每个阶段是否有可观察的具体产出？
+- 反复出现的失败是否已转化为可复用指引？
+- `AGENTS.md`、`docs/agents/*.md`、`agents/*.md` 是否仍夹带独立的「维护 / 跨文件同步 / 更新规则」长段或对本文件的重复说明？若有，应删并并入本节「更新规则」，避免执行向文档与维护清单双轨。

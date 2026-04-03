@@ -76,6 +76,6 @@
 
 如果任一场景失败：
 
-- 向用户提议对 `~/.config/opencode/agents/project-manager.md` 或 `~/.config/opencode/docs/agents/*` 的修改（全局配置仅由用户本人维护，agent 不得直接写入）
+- 向用户提议对 `~/.config/opencode/agents/project-manager.md` 或 `~/.config/opencode/docs/agents/*` 的修改（全局配置写入仅由用户本人执行，agent 不得直接落盘）
 - 重新运行完整场景集
 - 在 plan notes 中记录变更内容及原因

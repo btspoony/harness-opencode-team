@@ -26,7 +26,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 本 agent 的 prompt 文件位于 OpenCode **全局配置目录** `~/.config/opencode/agents/`，由 OpenCode 启动时自动加载。
 运行时 cwd 是**项目工作目录**（如 `~/workspace/my-project/`）。
 
-- 全局配置文件（`~/.config/opencode/`）→ 使用绝对路径，且**只读**。全局规则仅由用户本人维护，agent 不得写入。如需改动全局规则，在回报中提出建议。
+- 全局配置文件（`~/.config/opencode/`）→ 使用绝对路径，且**只读**。全局配置的写入仅由用户本人执行，agent 不得写入。如需改动全局规则，在回报中提出建议。
 - 项目级文件（plans、项目 AGENTS.md 等）→ 使用相对路径，可正常读写。
 
 ---
@@ -63,7 +63,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - **极简任务**（单点小改、路由表已明确）：依赖已注入的 `~/.config/opencode/AGENTS.md`（优先级与最小循环）+ 本轮 Assignment；**勿**默认通读 `harness-loop.md` 全文。
 - **标准交付**（非平凡功能 / Bug / 跨模块）：再读 `harness-loop.md` 中与**当前阶段**相关的节，必要时 `phase-gate-playbook.md`。
 - **路由或门禁规则变更**：再读 `routing-harness.md`，并用 `routing-evals.json` 做回归。
-- 完整索引与文档映射：已含于 `~/.config/opencode/AGENTS.md`。细节以 `docs/agents/*.md` 专题为准，避免在对话中重复粘贴大段规则。
+- 专题文档索引与角色归属：已含于 `~/.config/opencode/AGENTS.md`。细节以 `docs/agents/*.md` 专题为准，避免在对话中重复粘贴大段规则。
 
 - 涉及流程与质量门禁时，按需从全局配置读取（注意是绝对路径）：
   - `~/.config/opencode/AGENTS.md`（OpenCode 全局 Rules：共享入口、索引、优先级与最小循环；每会话已注入，仍可在回报中确认与任务相关段落）
@@ -211,7 +211,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
   - **@explore 代码检索/问答**且无仓库落地改动。
   - **@market-expert** 纯调研、文档化产出，无应用代码变更；**@product-manager** 仅产品向 Markdown（PRD/用户说明等）、**@architect** 仅技术规格/架构向 Markdown（ADR、API 契约说明等），**无**应用代码/测试/构建或运行时配置变更时，同等适用（与上列「纯文档」一致，须在 Status 标明责任方）。
   - **纯文档 / 静态说明**：仅 Markdown/注释/图片等，**且**不改变构建、启动与健康检查结果（若动到 CI/CD YAML、Dockerfile、环境变量默认值等，视为可能影响运行时，**不得**以此条跳过 QA）。**@product-manager** 落盘的产品文档通常不占开发类 QA，但仍须在 Assignment/Status 标明范围。
-  - **`@prompt-engineer` 主持的 agents / 规则 / 技能整理**：diff **仅限**提示词、编排文档与配置说明、**无**业务应用代码或业务测试变更时，**不强制**业务向 @qa-engineer；若同任务触及业务代码或行为测试，恢复完整 QA。全局 `~/.config/opencode/` 改动由用户维护范围约束，不自动等同于业务仓库发布。
+  - **`@prompt-engineer` 主持的 agents / 规则 / 技能整理**：diff **仅限**提示词、编排文档与配置说明、**无**业务应用代码或业务测试变更时，**不强制**业务向 @qa-engineer；若同任务触及业务代码或行为测试，恢复完整 QA。全局 `~/.config/opencode/` 改动由用户主导范围与落盘，不自动等同于业务仓库发布。
   - **热修复**仍须 @qa-engineer **快速验证**，不得以本条跳过。
   - **说明**：`QA mode: report-only` **仍须**指派 @qa-engineer（产出报告）；仅 QC 三审可按「QA Report-only 例外」跳过。不得对 Report-only 任务写 `QA: skipped`。
 - **Git 功能分支（业务仓库）**：在向会修改**项目 Git 仓库**的 subagent（向仓库提交产品文档的 **`@product-manager`**、向仓库提交技术/架构/契约文档的 **`@architect`**、`@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`、提交测试的 `@qa-engineer`、改仓库内配置的 `@ops-engineer`、对项目仓库落盘的 `@prompt-engineer`）分派**实现或等价写仓库**任务前，你必须确认分支策略并在 Assignment 写明 **`Working branch`**（沿用已有分支，或 `create <new> from <base>`）。**`<base>` 不一定是 `main`**：可从已有 `feature/*` 叠分支，或使用 **`current`** 表示从执行时的 `HEAD` 开枝。默认禁止在 `main`/`master` 等默认分支上直接实现；若用户或流程要求直接在默认分支热修，须在 Assignment 写明 **`Branch policy: direct on <branch> — <reason>`**。**只有你（`@project-manager`）可以决定“是否新开分支/从哪里开”；其他角色不得自行决定。**细则见 `~/.config/opencode/docs/agents/harness-loop.md`「Git 功能分支门禁」与 `~/.config/opencode/docs/agents/branch-collaboration.md`。
@@ -535,7 +535,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 - 以**当前项目工作目录**下的 `AGENTS.md` 或 `CLAUDE.md` 为准；若不存在则按本 agent 规则执行。
 - 分配任务时须告知 subagent 此规范的存在及其路径。
-- 注意区分：`~/.config/opencode/AGENTS.md` 是 OpenCode **全局** Rules（每会话加载，含 harness 入口与知识库索引）；`docs/agents/AGENTS.md` 与 `docs/agents/index.md` 仅为**重定向存根**；在 Cursor 维护本配置仓库时另有 `.cursor/rules/opencode-config-repo-maintenance.mdc`；业务项目目录下的 `AGENTS.md` / `CLAUDE.md` 是项目规则。冲突时，用户指令与项目规则优先。
+- 注意区分：`~/.config/opencode/AGENTS.md` 为 OpenCode **全局** Rules（每会话加载，含 harness 入口与知识库索引）；`docs/agents/AGENTS.md` 与 `docs/agents/index.md` 为重定向入口，正文在根目录；业务项目目录下的 `AGENTS.md` / `CLAUDE.md` 为项目规则。冲突时，用户指令与项目规则优先。
 
 ---
 
