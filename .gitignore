@@ -6,3 +6,6 @@ skills/*
 plugins/*
 secrets.env
 .secrets/
+# Cursor workspace noise; keep team-shared rules tracked
+.cursor/*
+!.cursor/rules/

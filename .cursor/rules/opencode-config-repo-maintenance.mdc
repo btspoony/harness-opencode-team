@@ -1,0 +1,36 @@
+---
+description: Boundaries and change workflow when maintaining the ~/.config/opencode configuration repository (Cursor workspace)
+alwaysApply: true
+---
+
+# OpenCode config repository maintenance
+
+This rule applies when the workspace is `~/.config/opencode/` (the global OpenCode config repo). It does **not** replace project `AGENTS.md` in other repositories.
+
+## Canonical rules entry
+
+- **Root** `~/.config/opencode/AGENTS.md`: OpenCode **global** rules (loaded every session). Holds shared harness priorities, invariants, progressive-reading list, and knowledge-base index; see [OpenCode Rules — Global](https://opencode.ai/docs/rules/#global).
+- **`docs/agents/AGENTS.md`** and **`docs/agents/index.md`**: **Redirect stubs** only; do not maintain long-form content there (avoids drift).
+
+## Repository boundary
+
+- This directory is user-maintained **global tooling config**, not a business application repo.
+- When cwd is `~/.config/opencode` (or below), default task goal is **maintain this config repo**, not an external project.
+- Change files here only with clear user authorization; prefer read-first, then edit.
+- When executing in a **business** project cwd, that project’s `AGENTS.md` / `CLAUDE.md` wins; this rule is irrelevant unless the workspace is still this repo.
+
+## Maintenance principles
+
+- **Single authority** for entry + index: root `AGENTS.md`. Deep process text stays in `docs/agents/*.md` topic files; update those when phases/gates change, and adjust root `AGENTS.md` only if the progressive list or summary invariants need to match.
+- Avoid drift: one source of truth per topic; no duplicate long bodies in redirect stubs.
+- Role prompts should reference `docs/agents/*.md` for stage-specific gates instead of pasting long rules.
+
+## Quick navigation
+
+1. `~/.config/opencode/AGENTS.md` — global entry, priorities, index, progressive list
+2. Harness philosophy and optional tooling: `open-harness-principles.md`, `optional-tooling-by-capability.md`
+3. After changing routing or gates: update the relevant topic docs and root `AGENTS.md` if needed; run consistency checks
+
+## Library docs and hosts
+
+For third-party library / API / CLI / cloud syntax, config, and migrations, do not rely on training data alone. Single protocol: `~/.config/opencode/docs/agents/library-docs-and-hosts.md`. If you change that protocol, sync Cursor rules that reference it.

@@ -31,7 +31,7 @@
 |------|----------|-------------------|
 | 角色加载 | `opencode.json` + `~/.config/opencode/agents/*.md` | 依赖项目规则与 Composer 配置；未必加载 OpenCode 的 PM |
 | Superpowers | `plugin` 启用后注册技能；按名称/短语触发 | 无 Claude Code `Skill` 工具时：**用 Read 读取技能文件**或宿主自带的 skill 机制；`using-superpowers` 中的「先 invoke Skill」**映射为「先读取对应 SKILL.md 再执行」** |
-| 流程权威 | `docs/agents/AGENTS.md` 与 `harness-loop.md` 不变 | 与项目 `AGENTS.md` / `CLAUDE.md` 冲突时：**用户与项目规则优先**（见共享入口「信息源优先级」） |
+| 流程权威 | 根目录 `AGENTS.md`（全局）与 `harness-loop.md` 等专题不变 | 与项目 `AGENTS.md` / `CLAUDE.md` 冲突时：**用户与项目规则优先**（见根目录 `AGENTS.md`「信息源优先级」） |
 
 ---
 
@@ -44,8 +44,8 @@
 
 ## 与仓库其他文档的关系
 
-- 共享流程与渐进式读取列表：`docs/agents/AGENTS.md`
+- 共享流程与渐进式读取列表：根目录 `~/.config/opencode/AGENTS.md`
 - 按能力选配 MCP：`docs/agents/optional-tooling-by-capability.md`
 - Superpowers 与 harness 消解：`docs/agents/superpowers-skills.md`
 
-维护本文件时：若变更检索协议，请同步检查根目录 `AGENTS.md`（维护入口中的短引用）与 Cursor `context7` 类规则是否仍指向本路径。
+维护本文件时：若变更检索协议，请同步检查根目录 `AGENTS.md`（全局 Rules 中的短引用）、`.cursor/rules/opencode-config-repo-maintenance.mdc` 与 Cursor `context7` 类规则是否仍指向本路径。

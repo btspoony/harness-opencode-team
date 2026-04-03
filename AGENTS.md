@@ -1,36 +1,134 @@
-# Agent 配置仓库入口
+# OpenCode 全局 Rules（单一入口）
 
-本文件是 `~/.config/opencode/` 这个**配置仓库本身**的维护入口。
-OpenCode 不会自动加载本文件；agent 需在被指示时显式读取。
+OpenCode 将 `~/.config/opencode/AGENTS.md` 作为**全局规则**在每个会话加载。官方说明：[Rules — Global](https://opencode.ai/docs/rules/#global)。
 
-## 双入口约定
+**单一权威**：原 `docs/agents/AGENTS.md` 中的共享流程与 `docs/agents/index.md` 中的索引、维护清单已**合并到本文件**。上述两个路径仅保留**重定向存根**，供历史链接与书签兼容；请勿在长文上双轨维护。
 
-- 本文件（`~/.config/opencode/AGENTS.md`）：仅放**本仓库维护规则**（边界、写入权限、变更流程）。
-- 共享流程入口（`~/.config/opencode/docs/agents/AGENTS.md`）：放可复用到其他项目/角色的**通用工作流与门禁规则**。
+项目工作目录下自 cwd 向上解析的 `AGENTS.md` / `CLAUDE.md`（OpenCode 本地 Rules）优先于本文件。
 
-## 本仓库边界
+## 护栏
 
-- `~/.config/opencode/` 是用户维护的全局配置目录，不是业务应用仓库。
-- 当检测到当前 `cwd` 为 `~/.config/opencode`（或其子目录）时，视为进入**本项目维护模式**：本次任务目标默认是维护当前配置仓库本身，而非外部业务仓库。
-- 仅在用户明确授权时修改本仓库内容；默认先读后改。
-- 业务项目执行时，仍以项目 cwd 下规则为准（项目 `AGENTS.md` / `CLAUDE.md` 可覆盖全局默认）。
+- 未经用户**明确同意**，不得修改 `~/.config/opencode/opencode.json`、凭据文件或 `secrets.env`。详见 `~/.config/opencode/docs/agents/opencode-config-secrets.md` 与 `~/.config/opencode/docs/agents/superpowers-skills.md`。
 
-## 维护原则
+## 适用范围
 
-- 入口保持短小：本文件不再承载完整流程细节。
-- 共享规则统一收敛到 `docs/agents/AGENTS.md`，避免重复与漂移。
-- 角色 prompt 中若涉及通用门禁，优先引用 `docs/agents/*.md`，不要复制整段规则。
+- 适用于使用 `~/.config/opencode/agents/*.md` 角色提示词的执行场景。
+- 与具体业务仓库无关的流程规则，专题细节写在 `docs/agents/*.md`；本文件给出优先级、最小循环、不变量与索引。
+- 与项目规则冲突时，按下方「信息源优先级」处理。
 
-## 快速指引
+## 信息源优先级
 
-1. 先读 `~/.config/opencode/docs/agents/AGENTS.md`（共享入口）。
-2. 再按需读 `~/.config/opencode/docs/agents/index.md` 与具体 harness 文档；若调整编排理念或选配工具，读 `docs/agents/open-harness-principles.md` 与 `docs/agents/optional-tooling-by-capability.md`。
-3. 若改动了路由/门禁规则，同步更新对应 docs 并做一致性检查。
+1. 当前任务中的用户指令
+2. 项目级 `AGENTS.md` / `CLAUDE.md`（自 cwd 向上解析）
+3. **本文件**（`~/.config/opencode/AGENTS.md`：全局 harness、索引与渐进式列表摘要）
+4. `docs/agents/` 下专题文档（`harness-loop.md`、`review-harness.md` 等）
+5. 角色提示词（`~/.config/opencode/agents/*.md`）
 
-## 库文档与宿主差异（单一入口）
+**冲突裁决**：同一事实在多层同时出现且仍无法一致解释时，以**当轮用户明确指令**为准；指令未覆盖或相互矛盾时，**暂停并升级人工**，不得擅自择一执行。
 
-涉及**第三方库 / API / CLI / 云服务**的语法、配置、版本迁移等问题时，不要只靠训练数据。完整协议（Context7 MCP 优先、ctx7 CLI 备用、OpenCode vs Cursor、会话降噪）见：
+## 渐进式读取（按需深入）
 
-`~/.config/opencode/docs/agents/library-docs-and-hosts.md`
+下列均为绝对路径；**本文件已含入口规则与文档映射**，下列为按任务深入的专题：
 
-维护本仓库时：若变更上述协议，请同步该文件，并检查 Cursor 等环境中的 Context7 规则是否仍指向该路径。
+1. `~/.config/opencode/docs/agents/harness-loop.md` — 生命周期与阶段门禁
+2. `~/.config/opencode/docs/agents/evaluation-harness.md` — 评估与基准
+3. `~/.config/opencode/docs/agents/review-harness.md` — QC 共享基线
+4. `~/.config/opencode/docs/agents/routing-harness.md` — PM 路由评估
+5. `~/.config/opencode/docs/agents/plan-convention.md` — plan 目录约定
+6. `~/.config/opencode/docs/agents/phase-gate-playbook.md` — Phase Gate 执行手册（Prepare/Execute）
+7. `~/.config/opencode/docs/agents/branch-collaboration.md` — 可写角色分支协作契约与 PM 确认话术
+8. `~/.config/opencode/docs/agents/superpowers-skills.md` — Superpowers 技能与角色映射；未装插件时见文内「未安装插件时」
+9. `~/.config/opencode/docs/agents/open-harness-principles.md` — 开源 harness 理念在本仓库的落点索引
+10. `~/.config/opencode/docs/agents/optional-tooling-by-capability.md` — 按能力可选的 MCP/skills
+11. `~/.config/opencode/docs/agents/library-docs-and-hosts.md` — 库文档检索单一协议（Context7 MCP / ctx7 CLI）、宿主差异、会话降噪
+12. `~/.config/opencode/docs/agents/opencode-config-secrets.md` — `opencode.json` 密钥占位 `{env:}` / `{file:}` 与变量名说明
+13. `~/.config/opencode/docs/agents/effort-estimation.md` — **工期与工作量**：**仅** agent 实施（会话/尺码）；**禁止**与人天、FTE、人类日历混在同一 Effort 字段
+
+## 最小交付循环（非平凡任务）
+
+1. 准备阶段：`specify -> clarify -> plan`
+2. 执行准备：`plan` 锁定后执行 `tasks` 拆解
+3. 分派到最匹配角色并 `implement`
+4. 审查与验证门禁（QC + QA）
+5. 复盘沉淀为可复用规则
+
+## 不变量
+
+- 保持边界显式，避免跨层隐式耦合。
+- 行为变更必须有对应验证证据。
+- 拒绝未记录的破坏性变更。
+- 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外。新开分支的**祖先**由 Assignment 写明（可从 `main`、已有 `feature/*`、或 `current` 叠分支；细则见 `harness-loop.md`）。
+- 语言约定（PM 编排场景）：Assignment 字段名保持既定英文键名；字段值中的任务描述正文默认可用中文。所有执行产出与报告默认英文，除非用户明确要求其他语言。
+- 执行 Superpowers `writing-plans` 时，计划文件路径必须遵循 `plan-convention.md` 的 `{PLAN_DIR}` 解析结果；不得默认写入 `docs/superpowers/plans/`。
+- **工作量与工期表述**：做计划、写 PRD/架构文档、Assignment 或 Status Update 时，遵循 `effort-estimation.md`：**只写 agent-oriented 预估**；**不得**在同一字段或同一段「预估」中纳入人类时间、人天、FTE 或日历等待（人类排期若有需要，须与 Effort 字段分离撰写）。
+
+## 升级触发
+
+以下情况应升级到人工决策：
+
+- 验收标准与系统约束冲突
+- 方案取舍存在重大风险或产品分歧
+- 两次完整实现尝试后仍失败
+
+## 知识库目标
+
+- 保持角色提示词聚焦且稳定。
+- 将可复用的流程知识从角色文件中抽离。
+- 使行为可审计、易演进。
+
+## 文档映射
+
+以下路径均相对于 `~/.config/opencode/`：
+
+- `docs/agents/harness-loop.md` — 端到端任务生命周期、归属与门禁流转；含 RCA、**Spec-Driven 双阶段门禁**、**Git 功能分支门禁**、可选前置门、与常见阶段化工作流的对照。
+- `docs/agents/evaluation-harness.md` — 如何评估和调优 agent 提示词与工作流。
+- `docs/agents/review-harness.md` — QC 共享审查清单、报告模板与门禁规则。
+- `docs/agents/routing-harness.md` — 如何验证 project-manager 的路由行为。
+- `docs/agents/routing-evals.json` — 路由评估场景集。
+- `docs/agents/plan-convention.md` — 计划目录发现、初始化、status.json 结构与状态规则。
+- `docs/agents/phase-gate-playbook.md` — Phase Gate 执行手册：各阶段角色动作与最小证据要求。
+- `docs/agents/branch-collaboration.md` — 可写角色的分支协作契约与统一确认话术模板。
+- `docs/agents/superpowers-skills.md` — Superpowers 与角色映射、与 harness 的对齐说明。
+- `docs/agents/open-harness-principles.md` — 意图门禁、Task category、可验证编辑、长任务纪律、可选分层 `AGENTS.md` 等理念索引。
+- `docs/agents/optional-tooling-by-capability.md` — 按能力可选的 MCP/skills。
+- `docs/agents/library-docs-and-hosts.md` — 库文档检索单一事实来源；OpenCode 与 Cursor 差异；大型插件降噪。
+- `docs/agents/opencode-config-secrets.md` — 全局 `opencode.json` 密钥占位约定；配合 `secrets.env.example`。
+- `docs/agents/effort-estimation.md` — Agent 语境下的工期预估口径。
+
+**重要**：上列文件位于全局配置目录；业务项目 cwd 下执行时，请用绝对路径读取 `~/.config/opencode/docs/agents/...`。
+
+## 归属
+
+- 系统编排行为：`~/.config/opencode/agents/project-manager.md`
+- 提示词与规则迭代：`~/.config/opencode/agents/prompt-engineer.md`
+- 角色执行：`~/.config/opencode/agents/{role}.md`
+
+跨角色工作流变更应先反映到 `docs/agents/` 专题文档，再同步角色提示词。**全局配置的落盘变更仅由用户本人执行**；agent 可提议，不得擅自代写敏感配置。
+
+## 更新规则（供维护全局配置的用户）
+
+- 角色路由变更时，在同一次提交中更新 `docs/agents/` 与相关角色文件。
+- 质量门禁变更时，优先更新 `harness-loop.md`。
+- 评审策略变更时，优先更新 `review-harness.md`。
+- 提示词调优流程变更时，优先更新 `evaluation-harness.md`。
+- 计划管理约定变更时，优先更新 `plan-convention.md`。
+- 工期/工作量口径变更时，优先更新 `effort-estimation.md`，并同步 PM / product-manager / architect 模板。
+- 编排理念变更时，同步 `harness-loop.md`、`open-harness-principles.md`、`agents/project-manager.md`、`phase-gate-playbook.md` 与 `routing-harness.md`。
+- 库文档协议或宿主说明变更时，同步 `library-docs-and-hosts.md`、**本文件**中的相关指针，以及 Cursor 侧 Context7 等规则。
+- 密钥约定变更时，同步 `opencode-config-secrets.md` 与 `secrets.env.example`。
+- **共享入口、优先级、渐进式列表、索引或维护清单**变更时：只改**根目录 `AGENTS.md`**，并检查 `docs/agents/AGENTS.md` / `docs/agents/index.md` 存根无需改（除非要调整重定向文案）。
+- 配置仓库维护边界变更时，同步 `.cursor/rules/opencode-config-repo-maintenance.mdc`。
+
+## Agent 设计变更审查清单
+
+- 根目录 `AGENTS.md`（全局入口）是否仍结构清晰、便于每会话加载？
+- 角色职责是否与工作流细节分离？
+- 每个阶段是否有可观察的具体产出？
+- 反复出现的失败是否已转化为可复用指引？
+
+## 维护本配置仓库
+
+`~/.config/opencode/` 是全局配置**仓库**。当 cwd 为本目录（或子目录）时，默认按**配置仓库维护**理解任务。
+
+- **Cursor**：`.cursor/rules/opencode-config-repo-maintenance.mdc`
+- **其他宿主**：用 Read 工具读取该文件（内容一致）。

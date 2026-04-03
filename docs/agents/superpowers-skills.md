@@ -179,7 +179,7 @@ Superpowers:
 
 ## 与 `docs/agents` 流程：张力与消解
 
-下列对照用于避免「harness 一套、Superpowers 一套」在执行时打架。**若仍不可裁决**：**用户显式指令** > **项目级 `AGENTS.md` / `CLAUDE.md`** > **`docs/agents` 中的不变量（状态机、门禁、路由）** > **Superpowers 技能的默认做法**。
+下列对照用于避免「harness 一套、Superpowers 一套」在执行时打架。**若仍不可裁决**：**用户显式指令** > **项目级 `AGENTS.md` / `CLAUDE.md`** > **根目录 `~/.config/opencode/AGENTS.md` 与 `docs/agents` 专题中的不变量（状态机、门禁、路由）** > **Superpowers 技能的默认做法**。
 
 | 主题 | `docs/agents` 约定 | Superpowers 相关技能 | 结论 |
 |------|-------------------|---------------------|------|

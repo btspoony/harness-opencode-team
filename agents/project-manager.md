@@ -60,15 +60,13 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 ### 上下文与 token 纪律（渐进式读取）
 
-- **极简任务**（单点小改、路由表已明确）：优先只读 `docs/agents/AGENTS.md`（优先级与最小循环）+ 本轮 Assignment；**勿**默认通读 `harness-loop.md` 全文。
+- **极简任务**（单点小改、路由表已明确）：依赖已注入的 `~/.config/opencode/AGENTS.md`（优先级与最小循环）+ 本轮 Assignment；**勿**默认通读 `harness-loop.md` 全文。
 - **标准交付**（非平凡功能 / Bug / 跨模块）：再读 `harness-loop.md` 中与**当前阶段**相关的节，必要时 `phase-gate-playbook.md`。
 - **路由或门禁规则变更**：再读 `routing-harness.md`，并用 `routing-evals.json` 做回归。
-- 完整索引：`docs/agents/index.md`。细节以专题文档为准，避免在对话中重复粘贴大段规则。
+- 完整索引与文档映射：已含于 `~/.config/opencode/AGENTS.md`。细节以 `docs/agents/*.md` 专题为准，避免在对话中重复粘贴大段规则。
 
 - 涉及流程与质量门禁时，按需从全局配置读取（注意是绝对路径）：
-  - `~/.config/opencode/AGENTS.md`（本配置仓库维护入口）
-  - `~/.config/opencode/docs/agents/AGENTS.md`（共享入口与优先级规则）
-  - `~/.config/opencode/docs/agents/index.md`
+  - `~/.config/opencode/AGENTS.md`（OpenCode 全局 Rules：共享入口、索引、优先级与最小循环；每会话已注入，仍可在回报中确认与任务相关段落）
   - `~/.config/opencode/docs/agents/harness-loop.md`
   - `~/.config/opencode/docs/agents/evaluation-harness.md`
   - `~/.config/opencode/docs/agents/review-harness.md`
@@ -329,9 +327,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 在任何分派或实现动作前，先完成上下文预加载并在回报中显式记录。
 
 - 必读（全局配置，绝对路径）：
-  - `~/.config/opencode/AGENTS.md`
-  - `~/.config/opencode/docs/agents/AGENTS.md`
-  - `~/.config/opencode/docs/agents/index.md`
+  - `~/.config/opencode/AGENTS.md`（OpenCode 每会话已注入；含原 `docs/agents/AGENTS.md` / `index.md` 合并后的入口与索引）
   - `~/.config/opencode/docs/agents/superpowers-skills.md`（`opencode.json` 启用 Superpowers 插件时：技能与角色映射）
 - 必读（项目工作目录，相对路径）：
   - 按优先级发现 plan 目录（`.agents/plans/` > `.plans/` > `plans/`），读取 `{PLAN_DIR}/status.json`（如果存在）
@@ -539,7 +535,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 - 以**当前项目工作目录**下的 `AGENTS.md` 或 `CLAUDE.md` 为准；若不存在则按本 agent 规则执行。
 - 分配任务时须告知 subagent 此规范的存在及其路径。
-- 注意区分：`~/.config/opencode/AGENTS.md` 是本配置仓库维护入口；`~/.config/opencode/docs/agents/AGENTS.md` 才是共享 agent 系统规则入口；项目目录下的 `AGENTS.md` 是项目特定规则。冲突时，项目规则优先。
+- 注意区分：`~/.config/opencode/AGENTS.md` 是 OpenCode **全局** Rules（每会话加载，含 harness 入口与知识库索引）；`docs/agents/AGENTS.md` 与 `docs/agents/index.md` 仅为**重定向存根**；在 Cursor 维护本配置仓库时另有 `.cursor/rules/opencode-config-repo-maintenance.mdc`；业务项目目录下的 `AGENTS.md` / `CLAUDE.md` 是项目规则。冲突时，用户指令与项目规则优先。
 
 ---
 

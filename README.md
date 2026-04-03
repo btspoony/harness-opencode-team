@@ -4,16 +4,15 @@
 
 ## Harness Engineering 结构
 
-为支持可持续迭代，本仓库采用“短入口 + 结构化知识库”：
+为支持可持续迭代，本仓库采用「**全局单一入口**（根目录 `AGENTS.md`，OpenCode 每会话加载）+ **`docs/agents/` 结构化专题知识库**」：
 
 > **注意**: 以下路径均相对于本全局配置目录 `~/.config/opencode/`。
 > Agent 运行时 cwd 是项目目录，agent prompt 中引用这些文件需使用**绝对路径**。
 > 全局配置（`~/.config/opencode/`）对 agent 只读：agent 只能读取和提出建议，实际写入由用户本人维护。
 
-- `AGENTS.md`：本配置仓库维护入口（边界与变更原则）
+- `AGENTS.md`：OpenCode **全局 Rules**（每会话加载；含共享 harness、优先级、索引与渐进式读取列表）；`docs/agents/AGENTS.md` 与 `docs/agents/index.md` 为重定向存根
 - `agents/*.md`：各角色 OpenCode agent 提示词（frontmatter + 正文），由 `opencode.json` 的 `agent` 引用加载
-- `docs/agents/AGENTS.md`：共享规则入口（跨角色/跨项目复用）
-- `docs/agents/index.md`：agents 知识库索引与维护规则
+- `docs/agents/AGENTS.md` / `docs/agents/index.md`：重定向至根目录 `AGENTS.md`（兼容旧链接）
 - `docs/agents/harness-loop.md`：任务生命周期与门禁流转（含 RCA、Git 功能分支门禁）
 - `docs/agents/branch-collaboration.md`：分支协作契约（仅 PM 决策开枝、Assignment 话术）
 - `docs/agents/evaluation-harness.md`：prompt / 流程迭代评估方法
@@ -25,7 +24,7 @@
 - `docs/agents/library-docs-and-hosts.md`：库文档检索单一协议（Context7 MCP / ctx7 CLI、禁止双跑）、OpenCode 与 Cursor 宿主差异、大型插件注入降噪
 - `docs/agents/opencode-config-secrets.md`：`opencode.json` 密钥占位 `{env:}` / `{file:}` 说明；配合根目录 `secrets.env.example`
 
-建议优先阅读 `AGENTS.md`（仓库维护入口），再读 `docs/agents/AGENTS.md`（共享规则入口），最后按需进入 `docs/agents/` 专题文档。
+建议：根目录 `AGENTS.md` 已在每会话加载（含入口与索引）；需要深度细节时再读 `docs/agents/` 下专题文档。在 Cursor 中维护本仓库时，同时受 `.cursor/rules/opencode-config-repo-maintenance.mdc` 约束。
 
 本仓库根目录还有 `opencode.json`（主配置；**密钥请用环境变量**，见 `opencode-config-secrets.md`）、`secrets.env.example`、`plugins/`（可选插件，如 OpenViking）、`package.json`（`@opencode-ai/plugin` 等本地依赖，按需安装）。
 

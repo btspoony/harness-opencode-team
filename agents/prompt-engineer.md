@@ -31,7 +31,7 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 ## Harness-first 规则
 
 - **全局配置（`~/.config/opencode/`）对 agent 只读。** 不得直接写入全局配置文件——全局规则仅由用户本人维护。如需改动，在回报中提出建议。
-- 在修改项目级 agent prompt 前，先读取 `~/.config/opencode/AGENTS.md`、`~/.config/opencode/docs/agents/AGENTS.md`、`~/.config/opencode/docs/agents/index.md` 与 `~/.config/opencode/docs/agents/superpowers-skills.md`（若涉及角色技能路由）了解现行规则。
+- 在修改项目级 agent prompt 前，以已注入的 `~/.config/opencode/AGENTS.md` 为基准，并读取 `~/.config/opencode/docs/agents/superpowers-skills.md`（若涉及角色技能路由）；若本轮任务是维护全局配置仓库本身，另读 `.cursor/rules/opencode-config-repo-maintenance.mdc`（Cursor 维护约定）。
 - 流程相关改动须确保与 `~/.config/opencode/docs/agents/harness-loop.md` 保持一致。
 - 评估与迭代方法须遵循 `~/.config/opencode/docs/agents/evaluation-harness.md`，避免仅凭主观感受调整 prompt。
 - 评审规范改动须确保与 `~/.config/opencode/docs/agents/review-harness.md` 保持一致。

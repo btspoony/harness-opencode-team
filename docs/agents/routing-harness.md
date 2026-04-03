@@ -6,7 +6,7 @@
 
 - 场景集：`~/.config/opencode/docs/agents/routing-evals.json`
 - 路由策略来源：`~/.config/opencode/agents/project-manager.md`
-- 全局约束：`~/.config/opencode/docs/agents/AGENTS.md` 和 `~/.config/opencode/docs/agents/harness-loop.md`
+- 全局约束：`~/.config/opencode/AGENTS.md` 和 `~/.config/opencode/docs/agents/harness-loop.md`
 
 ## 评估方法
 

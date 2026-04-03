@@ -37,4 +37,4 @@
 
 ## 维护
 
-变更本约定时：同步 `docs/agents/AGENTS.md` 引用、`docs/agents/index.md` 映射，以及 `agents/project-manager.md`、`agents/product-manager.md`、`agents/architect.md` 中的模板与指针。
+变更本约定时：同步根目录 `AGENTS.md` 中的相关段落，以及 `agents/project-manager.md`、`agents/product-manager.md`、`agents/architect.md` 中的模板与指针。
