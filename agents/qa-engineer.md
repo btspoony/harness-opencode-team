@@ -156,7 +156,7 @@ Critical / High / Medium / Low
 
 ## Plan 与文档规范
 
-- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。
+- Plan 目录和 status.json 的约定详见 `~/.config/opencode/docs/agents/plan-convention.md`。验收中若验证某 **residual finding（R#）** 已修复，在回报中写明证据；可与 @project-manager 协同将该条 **追加** 到 **`{PLAN_DIR}/archived/residuals/<plan-id>.json`** 并从 **`metadata.residual_findings`** 主列表**删除**（见同文档「Residual findings 生命周期」）。
 - Plan 目录由 @project-manager 在分派时告知实际路径（可能是 `.agents/plans/`、`.plans/` 或 `plans/`）。
 - 完成任务后：更新 plan 中的任务清单 `[x]` + Sign-off 表格 + `{PLAN_DIR}/status.json`。
 - **本 agent 与 @project-manager 为唯二可将 plan 状态更新为 Done 的角色**：验收通过后，可在 frontmatter 标记 `status: Done` 并同步 `{PLAN_DIR}/status.json`；其他 agent 禁止将状态更新为 Done。
