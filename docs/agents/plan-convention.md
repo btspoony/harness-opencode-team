@@ -361,6 +361,14 @@ jq '.metadata.residual_findings["01-data-infrastructure"]' .agents/plans/status.
 
 **QC 落盘与宿主权限**：`@qc-specialist` / `@qc-specialist-2` / `@qc-specialist-3` 使用 OpenCode **`permission.edit`** 路径白名单，**仅可** Write/Edit **`{PLAN_DIR}/reports/`** 下 **`.md`**（全局 agent 提示词中已配置 `.agents/plans/reports/**`、`.plans/reports/**`、`plans/reports/**` 相对路径）。报告文件**必须**以 YAML **frontmatter** 开头（键见各 QC agent 提示词）。**若** 项目的 `{PLAN_DIR}` 不落在上述三种根下，须在**项目级** OpenCode 配置中为 QC 角色追加对应的 `edit` allow 规则。
 
+### 主 plan 内任务清单（Markdown checkbox）
+
+- **谁应更新**：`@fullstack-dev` / `@frontend-dev` / `@fullstack-dev-2`、`@qa-engineer`、`@ops-engineer`、`@architect`、`@product-manager` 在**完成本人 Assignment 范围内的工作后**，须在主 plan（`<plan-id>-<plan-name>.md`）中把**对应条目**的 Markdown 任务标记为已完成（常见：`- [ ]` → `- [x]`；若项目用其它清单记号，保持同文件内一致）。与 Completion Report **并列**，作为跨会话可核对的**落盘痕迹**。
+- **范围**：**只勾选与当前任务直接对应、且已由本角色交付证据支撑的条目**；不得代为勾选他人负责或未完工项。若正文用分段、Owner 或角色标签区分任务，以 Assignment 与文内约定为准。
+- **与 `status.json` / frontmatter 的关系**：勾选任务**不**等于整条计划收口。`plans[].status` 及主 plan frontmatter 的 **`Done`** 仍**仅** `@project-manager` / `@qa-engineer`（见「状态更新权限」）。`@architect` / `@product-manager` **不得**擅自将整条计划标为 `Done`；是否将 `status.json` 推进为 `InReview` 等仍按下文「状态更新权限」与 Assignment。
+- **`@qc-specialist*`**：**不得**修改主 plan（宿主仅允许 `{PLAN_DIR}/reports/**/*.md`）；审查结论落在 `reports/<plan-id>/` 内。若主 plan 需新增或勾选与审查相关的条目，由 `@project-manager` 或 Assignment 明确授权的角色据报告回写。
+- **只读角色**（如 `@market-expert`）：不直接改主 plan；将建议交给 `@project-manager` 代为更新清单。
+
 Plan 正文与 `status.json` 必须保持一致；不一致时以 `status.json` 的条目状态为准并尽快纠正正文或登记 notes。
 
 ### Done 标记方式
@@ -390,10 +398,11 @@ Plan 正文与 `status.json` 必须保持一致；不一致时以 `status.json` 
 
 ## 状态更新权限
 
+- 主 plan 内 **Markdown 任务勾选**（checkbox）规则见上文「主 plan 内任务清单（Markdown checkbox）」；与 `status.json` 的**计划级**状态字段分离管理。
 - **Done** 只能由 @project-manager 或 @qa-engineer 设置。
 - 可写盘 agent（dev / qa / ops）完成任务后可将状态更新为 `InReview`。
-- **@product-manager**、**@architect** 可写 plan 文档中各自负责部分，但**不**应擅自将整条计划在 `status.json` 中改为 `InReview` 或 `Done`（除非 Assignment 明确授权且与 PM 对齐）； **`Done` 仍仅限** PM/QA。
-- **@qc-specialist** / **@qc-specialist-2** / **@qc-specialist-3**：可按宿主白名单**直接写入** `{PLAN_DIR}/reports/**/*.md`；**其它路径**仍转达 @project-manager。
+- **@product-manager**、**@architect** 可写 plan 文档中各自负责部分（含本人任务 checkbox），但**不**应擅自将整条计划在 `status.json` 中改为 `InReview` 或 `Done`（除非 Assignment 明确授权且与 PM 对齐）； **`Done` 仍仅限** PM/QA。
+- **@qc-specialist** / **@qc-specialist-2** / **@qc-specialist-3**：可按宿主白名单**直接写入** `{PLAN_DIR}/reports/**/*.md`；**不得**改主 plan checkbox；**其它路径**仍转达 @project-manager。
 - **@market-expert** 等只读角色：将更新内容转达 @project-manager 代为写盘。
 
 ## 未启用 Plan 管理时的工作方式
@@ -409,9 +418,9 @@ Plan 正文与 `status.json` 必须保持一致；不一致时以 `status.json` 
 
 - **@project-manager**：负责发现 plan 目录、创建/登记 plan、分配任务、推进状态、Done 收口。分配时须告知 subagent plan 目录的实际路径；涉及业务 Git 仓库写操作时须在 Assignment 中写明 **`Working branch`** 或 **`Branch policy`**（见 `harness-loop.md`「Git 功能分支门禁」）。启用 **`knowledge/`** 时维护索引 README，并在 Assignment 中点名 **`primary_spec` / `spec_refs`**（若本轮依赖知识库）。
 - **@architect** / **@product-manager**：产出规格或评审结论若适合跨会话复用，写入 **`{PLAN_DIR}/knowledge/`** 并更新 **`knowledge/README.md`**，建议由 PM 在 `plans[].metadata` 挂接路径。
-- **可写盘 agent**（dev / qa / ops）：完成任务后直接更新 plan 文档 + `status.json`。**实现前**若 `plans[].metadata` 含 `primary_spec` / `spec_refs`，须先阅读对应文件（见上文「knowledge 专节」）。
-- **@product-manager**：可更新 plan 文档中需求/验收/用户故事等产品负责部分；**不得**将 `status.json` 中计划状态设为 `Done`；如需改 `progress`/`notes`，以 Assignment 为准或交由 PM 收口。
-- **@architect**：可更新 plan 文档中架构、接口契约、技术里程碑等章节；**不得**将 `status.json` 中计划状态设为 `Done`；一般不擅自将整条计划改为 `InReview`（与 PM 对齐）。
-- **@qc-specialist\***：仅可写 **`{PLAN_DIR}/reports/**/*.md`**（见「状态更新权限」）；其它落盘转达 @project-manager。
+- **可写盘 agent**（dev / qa / ops）：完成任务后更新主 plan 中**本人负责**的任务 checkbox（见「主 plan 内任务清单」）、相关 Sign-off 栏位，并更新 `status.json`（权限见「状态更新权限」）。**实现前**若 `plans[].metadata` 含 `primary_spec` / `spec_refs`，须先阅读对应文件（见上文「knowledge 专节」）。
+- **@product-manager**：可更新 plan 文档中需求/验收/用户故事等产品负责部分，并在交付后勾选**与之对应**的主 plan 任务 checkbox；**不得**将 `status.json` 中计划状态设为 `Done`；如需改 `progress`/`notes`，以 Assignment 为准或交由 PM 收口。
+- **@architect**：可更新 plan 文档中架构、接口契约、技术里程碑等章节，并在交付后勾选**与之对应**的主 plan 任务 checkbox；**不得**将 `status.json` 中计划状态设为 `Done`；一般不擅自将整条计划改为 `InReview`（与 PM 对齐）。
+- **@qc-specialist\***：仅可写 **`{PLAN_DIR}/reports/**/*.md`**（见「状态更新权限」）；**不**修改主 plan checkbox；其它落盘转达 @project-manager。
 - **@market-expert**（只读）：将更新内容转达 @project-manager 代为写盘。
 - **所有 agent**：完成后提醒 @project-manager 同步 plan 状态。

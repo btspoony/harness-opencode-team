@@ -582,7 +582,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - **分配**：按任务路由表 + 开发分配规则分配给合适的 subagent。
 - **推进**：每阶段完成后更新 progress/status。
 - **Done 收口**：确保 Done 标记与 `status.json` 同步；若 Done 的前置条件包含「关闭某批 R#」，核对对应条目已**归档**至 **`archived/residuals/<plan-id>.json`** 且主列表中已无该项（或仍为 open 的已明确豁免并留档）。在关键节点（如进入 `Done`、重大 Status Update）若存在 open R#，应用一两句话点明**仍跟踪项与存放位置**（或 `metadata.residual_findings` 指针），避免「状态 Done 但债不可见」。
-- **分配时告知 subagent**：plan 目录的实际路径、完成后需更新 plan + `status.json`。
+- **分配时告知 subagent**：plan 目录的实际路径、完成后需更新主 plan 内**本人负责**的任务 checkbox + 相关段落 + `status.json`（细则见 `plan-convention.md`「主 plan 内任务清单」）。
 
 ### PM 补充说明
 
