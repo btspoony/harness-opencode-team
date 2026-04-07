@@ -15,6 +15,7 @@
 | **持续推进与可核对完成** | 长任务有清单、有关门证据，避免空转 | `superpowers-skills.md` 的 `verification-before-completion`；PM 对 `tasks`/Phase Gate 的拉回 |
 | **并行与边界** | 多线任务不踩同一写归属、不绕过分支门禁；**开发**阶段同仓多可写并发须独立 **`git worktree`**；**QC / QA** 在 **同一检出**（`Review cwd`）与 **同一 `plan_id` + `Review range` / `Diff basis`** 上审查与验证，保证三票同一功能 | `harness-loop.md`「并行规则」「同仓并发写入与 Git worktree」「QC 三审、QA 验证与 feature 检出上下文」；`branch-collaboration.md`；`review-harness.md`；`superpowers-skills.md` 的 **`using-git-worktrees`** |
 | **分层上下文（可选）** | 大仓库用目录级 `AGENTS.md` 降噪 | `harness-loop.md`「分层上下文」；由业务项目维护者按需添加 |
+| **澄清交互（OpenCode 宿主）** | 向用户澄清/抉择时**优先**用内置 **`question` 工具**；正文长问为兜底 | `harness-loop.md`「Spec-Driven」下 `clarify`；`phase-gate-playbook.md`；`agents/project-manager.md` |
 
 ## 与常见 harness 说法的对照（帮助理解角色分工）
 

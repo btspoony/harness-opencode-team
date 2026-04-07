@@ -73,6 +73,7 @@ OpenCode 将会以本文件作为**全局规则**在每个会话加载。
 - 语言约定（PM 编排场景）：Assignment 字段名保持既定英文键名；字段值中的任务描述正文默认可用中文。所有执行产出与报告默认英文，除非用户明确要求其他语言。
 - 执行 Superpowers `writing-plans` 时，计划文件路径必须遵循 `plan-convention.md` 的 `{PLAN_DIR}` 解析结果；不得默认写入 `docs/superpowers/plans/`。
 - **工作量与工期表述**：做计划、写 PRD/架构文档、Assignment 或 Status Update 时，遵循 `effort-estimation.md`：**只写 agent-oriented 预估**；**不得**在同一字段或同一段「预估」中纳入人类时间、人天、FTE 或日历等待（人类排期若有需要，须与 Effort 字段分离撰写）。
+- **OpenCode 澄清交互**：需要用户补充信息或做取舍时，**优先调用内置 `question` 工具**（结构化题干 + 选项；用户仍可输入自定义答案）。仅当不适于结构化提问（例如需要大段叙述、或连续开放式访谈）时，再用对话正文提问。细则见 `docs/agents/harness-loop.md`（`clarify` 小节）、`docs/agents/phase-gate-playbook.md` 与 `agents/project-manager.md`。全局 `permission` 须允许 `question`（由用户在 `opencode.json` 落盘；本仓库 agent 不得擅自改密钥类配置）。
 
 ## 升级触发
 
