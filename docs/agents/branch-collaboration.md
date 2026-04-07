@@ -38,7 +38,7 @@
 
 当多个可写 subagent **并发**修改 **同一仓库** 时，**不得**共用同一检出目录作为写入 cwd。PM 在分派前应规划 **`git worktree`** 隔离（Superpowers **`using-git-worktrees`**），并在各承接方 Assignment 中写明 **`Working branch`** / **`Branch policy`** 及 **检出路径约定**（或要求回报实际 worktree 路径）。单分支决策权仍仅属 PM；worktree 只解决「目录与工作区隔离」，不替代分支授权。
 
-**QC / QA 与 feature**：开发常在 **feature 分支的 worktree** 中完成；进入 **QC 三审**与随后的 **QA 验证**时，PM 须在 Assignment 中写明 **`Review cwd` / `Worktree path`**（优先沿用开发 Completion Report 中的实现路径）与 **`Working branch`**，使审查与验证针对 **该 feature 的同一检出上下文**（QC 与 QA **共用同一套字段**即可），而非未对齐的默认分支或 cwd。见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。
+**QC / QA 与 feature**：开发常在 **feature 分支的 worktree** 中完成；进入 **QC 三审**与随后的 **QA 验证**时，PM 须在 Assignment 中写明 **`Review cwd` / `Worktree path`**、**`Working branch`**、**`plan_id`**（无 plan 流程时 `N/A` + 不可歧义 **Feature / scope label**）与 **`Review range` / `Diff basis`**；**三份 QC Assignment 与 QA Assignment 中 `plan_id` 与 `Review range` / `Diff basis` 须逐字相同**，保证三票审 **同一 plan/feature 与同一 diff 范围**。见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。
 
 ## Assignment 要求（PM）
 

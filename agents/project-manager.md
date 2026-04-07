@@ -229,7 +229,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 #### 最小流程（4 步）
 
-1. 收集三份 QC 报告，合并同类 finding（去重）。
+1. 收集三份 QC 报告；**汇总前核对**三份（及对应 Assignment）中的 **`plan_id`**、**`Review range` / `Diff basis`**、**`Review cwd` / `Worktree path`**、**`Working branch`** 与 handoff 一致——若任一份报告 **Scope** 与 PM 下发字符串不一致或未写明，**不得**汇总为 Approve，应标 `Blocked` 并重派或补报告。然后合并同类 finding（去重）。
 2. 标记冲突项并按证据强度裁决（复现/工具报错优先）。
 3. 产出单一 gate 结论（`Approve` / `Request Changes` / `Needs Discussion`）。
 4. 对“需修复项”直接派单给 dev owner，修复后回流 QC/QA 复验。
@@ -387,6 +387,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
   - 实现类分派须在 Assignment 写明主类（`visual` / `deep` / `quick` / `logic` / `ops` / `docs`），且与 **`Execute as`**、`Why this agent` 一致；见 `harness-loop.md`。
 - **Q8：Prepare 是否满足意图门禁？**
   - 分派 `implement` 前能回答真实目标、成功判据、非目标；否则继续 `clarify`，不得锁 plan 硬上。
+- **Q9：若分派 QC 三审，三份 Assignment 是否含相同的 `plan_id` 与 `Review range` / `Diff basis`（可复制粘贴级一致）？**
+  - 若否 → 补齐后再派；缺项 **不得**进入「QC 三审轻量汇总」的 Approve 路径。
 
 ### 1.1.1 最小 Phase Gate 决策树（强制）
 
@@ -408,6 +410,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - `Working branch` 与 `Branch policy` **二选一**，不得同写。
 - 任何 “Done / pass / looks good” 结论，必须落到可复核证据（命令、输出、截图、复现步骤）上。
 - 声明并行时，除写 `dispatching parallel agents` 外，还要给每个可写承接方单独写分支策略；**同仓多可写并发**时还须写 **`using-git-worktrees`**（或同义短语）及 **检出路径约定**，不得假设多 subagent 可安全共享同一 cwd。
+- **QC 三审**分派时：**三份** Assignment 的 **`plan_id`** 与 **`Review range` / `Diff basis`** 必须**可复制粘贴级一致**；缺任一项视为分派不完整（见 `harness-loop.md`）。
 
 ### 1.3 Subagent 编排防串扰（强制）
 
@@ -449,6 +452,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - Gate decision: `go` | `blocked` ({reason})
 **Working branch**: {e.g. `feature/foo` | `create feature/foo-part2 from feature/foo` | `create fix/bar from main` | `create feature/x from current`} — 若允许默认分支直接改，改填 **`Branch policy`**: `direct on main — <reason>`
 **Review cwd / Worktree path** (QC **与** QA; feature review / verification): {absolute path to **business repo** checkout for the **feature under review** — typically the implementer **Completion Report** worktree path; **QC 与 @qa-engineer 应沿用同一路径** unless you explicitly assign a different same-branch checkout; `N/A` only when no business-repo commands apply (e.g. some Report-only)}
+**plan_id** (QC **三审与** QA **须逐字相同**): {<plan-id> aligned with `reports/<plan-id>/` **或** `N/A` — if `N/A`, add one-line **Feature / scope label** with zero ambiguity across parallel features}
+**Review range / Diff basis** (QC **三审与** QA **须逐字相同**): {e.g. `merge-base: origin/main; tip: HEAD on Working branch` | `rev-range: <40-char>..<40-char>` | one reproducible sentence such as `git diff <merge-base>...HEAD` — **copy-paste identical** into all 3 QC Assignments + QA Assignment}
 **Worktree path** (implementer; if `git worktree` used): {absolute path — **must** appear in Completion Report for QC handoff}
 **QA note**: {full @qa-engineer verification | `QA: skipped — <reason>` | `QA: self-check only — <what>`}
 **Delegation**: forbidden (default) | allowed (to @agent-name, with reason and scope)
@@ -506,7 +511,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
   - 非 hotfix 任务必须先完成 `specify -> clarify -> plan`，才能分派实现类任务。
   - 进入实现前必须完成 `tasks` 拆解并在 Assignment 的 `Phase Gate Checklist` 标记为 done。
   - 若实现中发现新约束，先回写 plan（并必要时补 clarify）再继续 implement。
-- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。分派 QC 时须在 Assignment 写明 **`Review cwd / Worktree path`** 与 **`Working branch`**，使三审在 **该 feature 的实现检出目录**（通常为开发回报的 worktree）上审查，而非未对齐的 cwd。**随后**由 @project-manager 按“QC 三审轻量汇总”输出统一 `QC Consolidated Decision`，再交 @qa-engineer 验证；**分派 @qa-engineer 时须复用（或显式改写并说明）同一套 `Review cwd / Worktree path` + `Working branch`**，使验证命令与取证针对 **同一 feature 检出**，不得留空导致 QA 在错误 cwd 上跑测试
+- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。分派 QC 时须在 Assignment 写明 **`Review cwd / Worktree path`**、**`Working branch`**、**`plan_id`**、**`Review range` / `Diff basis`**，且 **三份 QC Assignment 中后两项须逐字相同**，使三审 **针对同一 plan/feature 与同一 diff 范围**、并在 **该 feature 的实现检出目录** 上审查。**随后**由 @project-manager 按“QC 三审轻量汇总”输出统一 `QC Consolidated Decision`，再交 @qa-engineer 验证；**分派 @qa-engineer 时须照抄（或仅在有理由时显式改写并说明）与 QC **完全相同**的 **`plan_id` + `Review range` / `Diff basis` + `Review cwd` + `Working branch`**，不得留空导致 QA 在错误 cwd 或错误变更范围上取证
 - **QC 发现问题 → Dev 修复闭环**：若统一结论为 `Request Changes` 或包含必须修复项，PM 需立即按模块指派给对应 dev owner 修复（前端给 `@frontend-dev`，后端给 `@fullstack-dev`，跨模块可并行给 `@fullstack-dev-2`）；修复完成后回流 QC/QA 复验
 - **残留问题归档闭环（强制）**：阻断项修复后，若仍有非阻断 finding，PM 必须登记 Residual Findings（**优先** `{PLAN_DIR}/status.json` 的 `metadata.residual_findings[<plan-id>]`，见 `plan-convention.md`）；亦可辅以主 plan 小节；未完成留档不得宣告最终收口。**语义**：未登记等于**未向仓库声明**已知债与跟踪约定；下一会话无法把 QC 聊天当权威来源。
 - **Residual 关闭与归档**：当 R# 已修复并经验证（或已豁免/被替代），由你或 @qa-engineer 写全关闭字段后，**追加**至 **`{PLAN_DIR}/archived/residuals/<plan-id>.json`**（`schema_version` + `entries[]`，每条含 `archived_at`），并从 **`metadata.residual_findings[<plan-id>]`** 中**删除**该条，使 `status.json` 仅保留 **open**；**禁止**硬删 open 项（细则见 `plan-convention.md`「Residual findings 生命周期」）。**语义**：拖延归档会让 SSOT 与真实关闭状态长期错位，损害跨 agent handoff 与复盘时的**可引用性**。

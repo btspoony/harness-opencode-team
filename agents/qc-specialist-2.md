@@ -93,7 +93,7 @@ description: 质量控制专家（Reviewer #2）- 代码审查和质量保证。
 
 ## Feature 审查检出上下文（强制）
 
-与 `~/.config/opencode/agents/qc-specialist.md` 同名节一致：在 **`Review cwd` / `Worktree path`** + **`Working branch`** 对齐后再审查；见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」与 `review-harness.md`。
+与 `~/.config/opencode/agents/qc-specialist.md` 同名节一致：在 **`Review cwd` / `Worktree path`** + **`Working branch`** + **`plan_id`** + **`Review range` / `Diff basis`** 对齐后再审查；报告 **Scope** 须逐字回写 PM 下发的 `plan_id` 与 `Review range` / `Diff basis`。见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」与 `review-harness.md`。
 
 ## 职责
 

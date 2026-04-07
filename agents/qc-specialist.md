@@ -93,7 +93,7 @@ description: 质量控制专家（Reviewer #1）- 代码审查和质量保证。
 
 ## Feature 审查检出上下文（强制）
 
-你审查的是 **开发已完成的那条 feature**，通常对应 **该 feature 的 worktree / 分支**。在跑 `git diff`、读文件或 lint **之前**：进入 Assignment 中的 **`Review cwd` / `Worktree path`**（若已写明），核对 `git` 顶层目录与当前分支与 **`Working branch`** 一致。细则与 PM 义务见 `~/.config/opencode/docs/agents/harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」与 `~/.config/opencode/docs/agents/review-harness.md` 工作流第 1 步。
+你审查的是 **开发已完成的那条 feature**，通常对应 **该 feature 的 worktree / 分支**。在跑 `git diff`、读文件或 lint **之前**：进入 Assignment 中的 **`Review cwd` / `Worktree path`**（若已写明），核对 `git` 顶层目录与当前分支与 **`Working branch`** 一致；并确认 Assignment 含 **`plan_id`**（或 `N/A` + **Feature / scope label**）与 **`Review range` / `Diff basis`** —— **三审同伴应收到逐字相同的这两行**；你的报告 **Scope** 须 **原样抄录**它们。`git diff` / `git log` 必须 **可复现地**覆盖该 **`Review range` / `Diff basis`**。细则见 `~/.config/opencode/docs/agents/harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」与 `~/.config/opencode/docs/agents/review-harness.md` 工作流第 1 步。
 
 ## 职责
 

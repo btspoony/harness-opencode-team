@@ -10,10 +10,11 @@
 - 阻塞级安全或数据一致性风险是否已被识别
 - 变更行为的测试覆盖是否充分
 - 若启用功能分支策略：变更分支与 Assignment 的 **`Working branch` / `Branch policy`** 是否一致；且审查在 Assignment 写明的 **`Review cwd` / `Worktree path`**（feature 检出上下文）上执行，而非未核对的默认 cwd
+- **三审对齐**：Assignment 已写明 **`plan_id`**（或 `N/A` + **Feature / scope label**）与 **`Review range` / `Diff basis`**；报告 **Scope** 须 **逐字回写** PM 下发的这两字段，**禁止**与同伴 reviewer 使用不同范围或不同 plan 锚点（见 `harness-loop.md`）
 
 ## 标准审查工作流
 
-1. **对齐待审检出（feature 上下文）**：在动手审查前，按 Assignment 进入 **`Review cwd` / `Worktree path`**（若已写明）；执行 `git rev-parse --show-toplevel`、`git branch --show-current`（或等价）确认 **当前目录即待审 feature 的检出**，且分支与 **`Working branch`** 一致。若 Assignment 未写 `Review cwd` / `Worktree path` 但开发回报了实现用 worktree，应先向 `@project-manager` 申请补全 Assignment，**禁止**在未核对路径与分支的情况下假设在审 `main` 或其它提交。细则见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。**@qa-engineer** 对同一 feature 做验证时须使用 Assignment 中 **同一 `Review cwd` / `Worktree path`**（见该节 QA 条款）。
+1. **对齐待审检出（feature 上下文）**：在动手审查前，按 Assignment 进入 **`Review cwd` / `Worktree path`**（若已写明）；执行 `git rev-parse --show-toplevel`、`git branch --show-current`（或等价）确认 **当前目录即待审 feature 的检出**，且分支与 **`Working branch`** 一致。核对 Assignment 中的 **`plan_id`**（或 `N/A` + **Feature / scope label**）与 **`Review range` / `Diff basis`** 已填写；缺任一项应向 `@project-manager` 申请补全，**禁止**自行假设审查范围。后续 **`git diff` / `git log`** 必须 **按 `Review range` / `Diff basis` 可复现地覆盖待审变更**（若与本地 `HEAD` 不一致，先回报 `Blocked`）。若 Assignment 未写 `Review cwd` / `Worktree path` 但开发回报了实现用 worktree，应先向 `@project-manager` 申请补全 Assignment，**禁止**在未核对路径与分支的情况下假设在审 `main` 或其它提交。细则见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。**@qa-engineer** 对同一 feature 做验证时须使用 Assignment 中 **同一 `Review cwd` / `Worktree path`** 及 **同一 `plan_id` + `Review range` / `Diff basis`**（见该节 QA 条款）。
 2. 用 `git diff` / `git show` 与内置 `glob` / `grep` / `read` 构建变更上下文；仅在跨模块或陌生路径需要快速导航时**可选**短调用 `@explore`。**禁止**把审查步骤、结论或清单执行外包给 `@explore`（见 `harness-loop.md`「内置 `@explore` 能力边界」）。
 3. 检查 `git diff` 及相关历史；若 Assignment 启用功能分支策略，再次核对当前分支与 **`Working branch` / `Branch policy`** 一致（无授权则不应在默认分支上堆功能改动）。
 4. 运行对应语言的 lint 和静态分析。
@@ -64,8 +65,12 @@
 - Report Timestamp: {ISO-8601}
 
 ## Scope
+- plan_id: {same as Assignment — or `N/A` + Feature / scope label from Assignment}
+- Review range / Diff basis: {exact copy from Assignment}
+- Working branch (verified): {name}
+- Review cwd (verified): {path from git rev-parse --show-toplevel}
 - Files reviewed: {count}
-- Commit range: {hash..hash}
+- Commit range (if not identical to Review range line, explain): {hash..hash}
 - Tools run: {list}
 
 ## Findings

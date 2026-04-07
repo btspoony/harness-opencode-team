@@ -13,7 +13,7 @@
 | **按任务类别选能力与模型** | 视觉/深读/快改/硬逻辑等用不同强项 | `harness-loop.md`「任务类别」；Assignment 字段 **`Task category`**；`opencode.json` 的 `agent.*.model` |
 | **可验证编辑** | 减少「凭记忆 Patch」导致的漂移与损坏 | `harness-loop.md`「可验证编辑与上下文纪律」：读后再改、失败则重读 |
 | **持续推进与可核对完成** | 长任务有清单、有关门证据，避免空转 | `superpowers-skills.md` 的 `verification-before-completion`；PM 对 `tasks`/Phase Gate 的拉回 |
-| **并行与边界** | 多线任务不踩同一写归属、不绕过分支门禁；**开发**阶段同仓多可写并发须独立 **`git worktree`**；**QC / QA** 在 **feature 完成后的同一检出上下文**（`Review cwd` / 开发 worktree）上审查与验证 | `harness-loop.md`「并行规则」「同仓并发写入与 Git worktree」「QC 三审、QA 验证与 feature 检出上下文」；`branch-collaboration.md`；`review-harness.md`；`superpowers-skills.md` 的 **`using-git-worktrees`** |
+| **并行与边界** | 多线任务不踩同一写归属、不绕过分支门禁；**开发**阶段同仓多可写并发须独立 **`git worktree`**；**QC / QA** 在 **同一检出**（`Review cwd`）与 **同一 `plan_id` + `Review range` / `Diff basis`** 上审查与验证，保证三票同一功能 | `harness-loop.md`「并行规则」「同仓并发写入与 Git worktree」「QC 三审、QA 验证与 feature 检出上下文」；`branch-collaboration.md`；`review-harness.md`；`superpowers-skills.md` 的 **`using-git-worktrees`** |
 | **分层上下文（可选）** | 大仓库用目录级 `AGENTS.md` 降噪 | `harness-loop.md`「分层上下文」；由业务项目维护者按需添加 |
 
 ## 与常见 harness 说法的对照（帮助理解角色分工）

@@ -111,6 +111,7 @@ Superpowers:
 - 当任务进入 **gate / sign-off / merge decision**，若未出现 `verification-before-completion` 或等价证据要求，视为门禁不完整。
 - 当任务声明 **并行分派**，`Superpowers` 中应显式包含 `dispatching-parallel-agents`（或同义触发短语），并为每个可写承接方写清 `Working branch`。
 - 当 **并行分派** 且 **≥2 个可写承接方** 针对 **同一 Git 仓库** 可能并发落盘时，`Superpowers` 中还 **必须** 显式包含 **`using-git-worktrees`**（或同义触发短语），并在 Assignment 中写清各流 **检出路径约定**（或要求 Completion Report 回报实际 worktree 路径）；**禁止**依赖「多 subagent 共享同一工作目录」完成并发写入。
+- **QC 三审**：三份 Assignment 除 `Review cwd`、`Working branch` 外，**必须**含 **相同**的 **`plan_id`** 与 **`Review range` / `Diff basis`**（可复制粘贴）；**@qa-engineer** 同 feature 验证时 **照抄**同一组字符串。缺任一项视为 PM 分派不完整（`harness-loop.md`）。
 
 ### @product-manager
 
@@ -145,7 +146,7 @@ Superpowers:
 | 场景 | 技能 |
 |------|------|
 | 必用 | `verification-before-completion`（报告通过/阻塞、Done sign-off 前须有可复现命令与输出） |
-| 必用（验证 feature / 跑业务仓测试或提交测试工件时） | 在 PM 写明的 **`Review cwd` / `Worktree path`** 与 **`Working branch`** 下执行（通常与 QC 同源）；先核对路径与分支（见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」） |
+| 必用（验证 feature / 跑业务仓测试或提交测试工件时） | 在 PM 写明的 **`Review cwd` / `Worktree path`**、**`Working branch`**、**`plan_id`**、**`Review range` / `Diff basis`** 下执行（与 QC **逐字相同**）；先核对路径、分支与审查范围（见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」） |
 | 必用（与同仓其他可写 subagent 并发写仓库时） | `using-git-worktrees` |
 | 宜用 | `using-git-worktrees`（需与既有目录分离、但在**同一 `Working branch`** 上另开检出专供 QA 写入时） |
 | 宜用 | `systematic-debugging`（flaky、环境、不可稳定复现） |
@@ -156,7 +157,7 @@ Superpowers:
 | 场景 | 技能 |
 |------|------|
 | 必用 | `verification-before-completion`（审查结论须指向证据：diff、lint、日志） |
-| 必用（审查 feature 实现时） | 在 PM 写明的 **`Review cwd` / `Worktree path`** 与 **`Working branch`** 下执行审查（通常即开发完成所用的 **feature worktree**）；先核对路径与分支再跑 diff/lint（见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」、`review-harness.md`） |
+| 必用（审查 feature 实现时） | 在 PM 写明的 **`Review cwd` / `Worktree path`**、**`Working branch`**、**`plan_id`**、**`Review range` / `Diff basis`** 下执行审查（**`plan_id` 与 `Review range` 三份 QC Assignment 须一致**）；先核对再按 **`Review range` / `Diff basis`** 跑 diff/lint（见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」、`review-harness.md`） |
 | 宜用 | `using-git-worktrees`（需与开发目录分离、但在**同一待审分支**上另开检出专供审查时） |
 | 宜用 | `systematic-debugging`（对“疑似缺陷但证据不足”的条目追根） |
 
@@ -201,7 +202,7 @@ Superpowers:
 | Plan 形态 | `plan-convention.md`：`{PLAN_DIR}`、`status.json`（open residual）、`archived/residuals/<plan-id>.json`、`reports/<plan-id>/` | `writing-plans` | **互补**：convention 管**存放位置与结构**；writing-plans 管**多步任务如何写成可执行计划**；PM 维护时两者同时满足。**路径门限**：提示词 + **`plan-convention.md`** 约束 **`{PLAN_DIR}`** 优先于技能默认的 `docs/superpowers/plans/`（无本地同名技能覆盖）。 |
 | 并行开发 | `harness-loop.md`：独立模块可并行；**先锁接口契约**再并行编码；**同仓多可写并发须 `git worktree` 隔离检出目录** | `dispatching-parallel-agents`、`subagent-driven-development`、**`using-git-worktrees`**（同仓并发写入时） | **叠加约束**：并行**不免除** `branch-collaboration.md` 分支门禁——每个**可写**承接方 Assignment 仍须含 PM 批准的 **`Working branch`** / **`Branch policy`**，禁止多人各自假设 base；**且** ≥2 可写流同仓并发时 **禁止**共用同一 cwd，**必须** worktree（或等价独立检出）+ Assignment 写明检出约定。 |
 | TDD | 全局流程**未**强制 TDD | `test-driven-development` | **项目/用户优先**：项目或用户禁止 TDD 时，不得因技能强行 TDD。 |
-| `git worktree` / 多工作目录 | `branch-collaboration.md` + `harness-loop.md`：**开发**阶段同仓多可写 **并发**须独立 worktree；**QC / QA** 须在 **该 feature 的检出上下文**（通常 `Review cwd` = 开发所用 worktree，或同分支另开检出）上审查与验证；仅 `@project-manager` 决定分支策略、`Assignment` 须写明 **`Working branch`** / **`Branch policy`** 与 **检出路径约定**（含 **`Review cwd` / `Worktree path`**，**QA 与 QC 共用**） | `using-git-worktrees` | **不冲突，但须叠同一门禁**：worktree 是「同一仓库多个检出目录」；**分支授权**仍须与 PM 一致。开发并发写入若不用 worktree 易导致互相覆盖；QC/QA 若错用 cwd/分支会审错、验错对象——见 harness **「QC 三审、QA 验证与 feature 检出上下文」**。若在 worktree 里擅自 `checkout -b` 或未授权切换分支，即违规。 |
+| `git worktree` / 多工作目录 | `branch-collaboration.md` + `harness-loop.md`：**开发**阶段同仓多可写 **并发**须独立 worktree；**QC / QA** 须在 **该 feature 的检出上下文**（通常 `Review cwd` = 开发所用 worktree，或同分支另开检出）上审查与验证，且 **三份 QC + QA** 共用 **`plan_id`** 与 **`Review range` / `Diff basis`**（逐字相同）；仅 `@project-manager` 决定分支策略、`Assignment` 须写明 **`Working branch`** / **`Branch policy`** 与 **检出路径约定**（含 **`Review cwd` / `Worktree path`**） | `using-git-worktrees` | **不冲突，但须叠同一门禁**：worktree 是「同一仓库多个检出目录」；**分支授权**仍须与 PM 一致。开发并发写入若不用 worktree 易导致互相覆盖；QC/QA 若错用 cwd/分支/**diff 范围**会审错、验错对象——见 harness **「QC 三审、QA 验证与 feature 检出上下文」**。若在 worktree 里擅自 `checkout -b` 或未授权切换分支，即违规。 |
 | 升级与重复失败 | `AGENTS.md` / `harness-loop.md`：多次失败升级人工等 | `systematic-debugging`、`verification-before-completion` | **一致**：技能减少「无根因重复改」；**达不到 harness 升级条件**时仍以文档为准。 |
 
 **小结**：Superpowers 主要填充各阶段**如何做**的细节；**阶段顺序、Done 权限、QC/QA 路由、分支唯一决策人**仍以 `docs/agents` 与 `@project-manager` 路由表为准。
@@ -212,3 +213,4 @@ Superpowers:
 - `Hotfix` 与 `RCA complete before code changes` 互斥：热修可先最小修复，但必须补“事后 RCA”项。
 - `QC: skipped` 只用于已定义例外（product-docs only / tech-spec only）；否则默认进入 QC 路径。
 - `Working branch` 与 `Branch policy` 只能二选一；两者同写时，以 PM 明确改写为准后再执行。
+- **`QC 三审`**：三份 Assignment 的 **`plan_id`** 与 **`Review range` / `Diff basis`** 必须 **完全一致**（可复制粘贴）；缺一项则 **不得**将 gate 汇总为 `Approve`，须 `Blocked` 后补 Assignment 或补报告（见 `harness-loop.md`）。
