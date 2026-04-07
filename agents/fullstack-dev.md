@@ -16,7 +16,7 @@ description: 全栈开发工程师 - 实现前后端功能。Use proactively for
 
 ## Superpowers 技能（插件）
 
-当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中开发角色一行加载：缺陷场景 **`systematic-debugging`**；实现类宜 **`test-driven-development`**（项目未禁止时）；宣称阶段完成或交付前 **`verification-before-completion`**；重大改动与合并前宜 **`requesting-code-review`**；按 QC 修改时宜 **`receiving-code-review`**；大并行/实验分支可选 **`using-git-worktrees`**。
+当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中开发角色一行加载：缺陷场景 **`systematic-debugging`**；实现类宜 **`test-driven-development`**（项目未禁止时）；宣称阶段完成或交付前 **`verification-before-completion`**；重大改动与合并前宜 **`requesting-code-review`**；按 QC 修改时宜 **`receiving-code-review`**；**与同仓其他可写 subagent 并发执行时必用 `using-git-worktrees`**（独立 worktree + Assignment 分支策略）；单写入者的大重构/实验分支隔离宜用 **`using-git-worktrees`**。
 
 ## 职责
 

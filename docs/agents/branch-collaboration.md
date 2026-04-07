@@ -34,6 +34,12 @@
 未确认前，我不会切回 `main`/`master` 或新开分支。
 ```
 
+## 并发 subagent 与同仓工作树（与 `harness-loop` 对齐）
+
+当多个可写 subagent **并发**修改 **同一仓库** 时，**不得**共用同一检出目录作为写入 cwd。PM 在分派前应规划 **`git worktree`** 隔离（Superpowers **`using-git-worktrees`**），并在各承接方 Assignment 中写明 **`Working branch`** / **`Branch policy`** 及 **检出路径约定**（或要求回报实际 worktree 路径）。单分支决策权仍仅属 PM；worktree 只解决「目录与工作区隔离」，不替代分支授权。
+
+**QC / QA 与 feature**：开发常在 **feature 分支的 worktree** 中完成；进入 **QC 三审**与随后的 **QA 验证**时，PM 须在 Assignment 中写明 **`Review cwd` / `Worktree path`**（优先沿用开发 Completion Report 中的实现路径）与 **`Working branch`**，使审查与验证针对 **该 feature 的同一检出上下文**（QC 与 QA **共用同一套字段**即可），而非未对齐的默认分支或 cwd。见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。
+
 ## Assignment 要求（PM）
 
 每个可写 Assignment 必须且只能包含以下之一：

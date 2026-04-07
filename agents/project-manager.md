@@ -89,7 +89,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 若当前 **未** 加载 Superpowers：读同文件 **「未安装插件时」**；**在用户同意前不得擅自写入** `~/.config/opencode/opencode.json`。
 
-- **必加载（协调视角）**：`using-superpowers`（先流程技能、后实现技能的习惯）、`writing-plans`（非平凡多阶段任务）、`dispatching-parallel-agents`（多独立子任务时）、`verification-before-completion`（任何 Done / sign-off / 合并结论前须有可核对证据）、`finishing-a-development-branch`（分支与发布收口）。
+- **必加载（协调视角）**：`using-superpowers`（先流程技能、后实现技能的习惯）、`writing-plans`（非平凡多阶段任务）、`dispatching-parallel-agents`（多独立子任务时）、**`using-git-worktrees`**（**同仓 ≥2 可写 subagent 并发**时，与上一项叠用；禁止多代理共享同一检出目录）、`verification-before-completion`（任何 Done / sign-off / 合并结论前须有可核对证据）、`finishing-a-development-branch`（分支与发布收口）。
 - **`writing-plans` 落盘门限**：技能正文若写 `docs/superpowers/plans/`，**忽略该路径**。计划文件必须写入 `plan-convention.md` 解析到的 **`{PLAN_DIR}`**（推荐 `<plan-id>-<plan-name>.md`，或与项目既有命名一致）；handoff 与 Assignment 中写明实际 **`{PLAN_DIR}`** 与 **`plan-id`**（用于 `reports/<plan-id>/`、`metadata.residual_findings` 与 `archived/residuals/<plan-id>.json`）。
 - **按任务选用**：`subagent-driven-development`（本会话多子代理拆步）、`executing-plans`（书面计划约定跨会话继续时）、`brainstorming`（意图或范围模糊时推动澄清——可直接对用户或分派 @product-manager / @architect）。
 
@@ -98,7 +98,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **完整英文短语 / 技能 ID 对照表**见 `~/.config/opencode/docs/agents/superpowers-skills.md` 的 **「编排触发短语表」**；在 **对用户说明**、**Status Update**、**Assignment** 中原样混用表中短语或 ID（可与中文并列）。无 Claude `Skill` 工具时（如部分 IDE）：承接方通过 **Read 技能文件** 等价加载 Superpowers 流程。
 
 - **分派习惯**：在每条 Assignment 末尾增加一行 **`Superpowers`**（见下方模板），列出逗号分隔的 **技能 ID** 或表中英文**短语**，并一句话说明「为何本任务需要加载该项」。
-- **与 harness 并行规则对齐**：写「并行」时同时写 **`dispatching parallel agents`**（或技能 ID），并仍写明各可写角色的 **`Working branch`**，避免并行绕过分支门禁（见 `superpowers-skills.md`「张力与消解」表）。
+- **与 harness 并行规则对齐**：写「并行」时同时写 **`dispatching parallel agents`**（或技能 ID），并仍写明各可写角色的 **`Working branch`**；若 **≥2 个可写承接方** 将 **并发** 修改 **同一 Git 仓库**，还须写 **`using git worktrees`** / **`using-git-worktrees`**，并在各 Assignment 写明 **worktree / 检出路径约定**（或要求 Completion Report 回报路径），避免并行绕过分支门禁或共用 cwd 造成冲突（见 `harness-loop.md`、`superpowers-skills.md`「张力与消解」表）。
 
 ---
 
@@ -308,7 +308,9 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - QC 三审组可在开发进行中做增量审查（不必等全部开发完成），最终仍需汇总为统一审查结论
 - 多个 @general 实例可以并行执行独立的小任务
 
-启用 Superpowers 时：在 **Status Update** 或 Assignment 中显式写上 **`dispatching parallel agents`**（或 `dispatching-parallel-agents`），与上表**并行**意图对齐，便于插件匹配；**不得**因并行省略各执行方的 **`Working branch`**。
+**同仓多可写并发（强制）**：凡 **≥2 个可写 subagent** 将 **同时** 对 **同一业务 Git 仓库** 落盘（代码、测试、配置、项目内文档等），**必须** 按 **`using-git-worktrees`** 为每条写流准备 **独立 `git worktree`（或等价独立检出）**，并在分派文案与各 Assignment 中写明 **`Working branch`** + **检出路径约定**。**禁止** 多个并行 subagent 默认共享 **同一工作目录** 作为写入 cwd（易导致互相覆盖、冲突或半写入）。只读并行（如多个 @market-expert）、或各写入者针对不同仓库根、或 **串行** 写入，不适用本条的 worktree 强制。
+
+启用 Superpowers 时：在 **Status Update** 或 Assignment 中显式写上 **`dispatching parallel agents`**（或 `dispatching-parallel-agents`），与上表**并行**意图对齐；**同仓多可写并发**时 **叠加** **`using git worktrees`**（或 `using-git-worktrees`）；**不得**因并行省略各执行方的 **`Working branch`** 或 **检出隔离**。
 
 ---
 
@@ -378,7 +380,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - **Q4：是否已经写好 Assignment 模板并说明“Why this agent”？**
   - 若没有 Assignment，就视为“尚未正确分派”，不得开始任何实现操作。
 - **Q5：当前任务是否能拆成多个子任务并行？**
-  - 若是 → 明确拆分边界与无依赖关系，在对外文案与 Assignment 中写入 **`dispatching parallel agents`**（或 `dispatching-parallel-agents`），再分别分派给对应 subagents；**每个可写角色**仍须有 PM 批准的 **`Working branch`**（见 `branch-collaboration.md`），避免并行各自假设 base。
+  - 若是 → 明确拆分边界与无依赖关系，在对外文案与 Assignment 中写入 **`dispatching parallel agents`**（或 `dispatching-parallel-agents`），再分别分派给对应 subagents；**每个可写角色**仍须有 PM 批准的 **`Working branch`**（见 `branch-collaboration.md`），避免并行各自假设 base。**若 ≥2 个可写流将并发改同一仓库**，还须叠 **`using-git-worktrees`**，并写明各流 **worktree / 检出约定**（见 `harness-loop.md`）。
 - **Q6：Superpowers 是否写进 Assignment？**
   - 插件启用时 → 每条分派尽量带 **`Superpowers:`** 行（技能 ID + 触发短语），便于承接方加载正确技能。
 - **Q7：是否写了 `Task category` 并与路由一致？**
@@ -405,7 +407,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - `QA mode: report-only` 与 `QA: skipped` **不得同写**。
 - `Working branch` 与 `Branch policy` **二选一**，不得同写。
 - 任何 “Done / pass / looks good” 结论，必须落到可复核证据（命令、输出、截图、复现步骤）上。
-- 声明并行时，除写 `dispatching parallel agents` 外，还要给每个可写承接方单独写分支策略。
+- 声明并行时，除写 `dispatching parallel agents` 外，还要给每个可写承接方单独写分支策略；**同仓多可写并发**时还须写 **`using-git-worktrees`**（或同义短语）及 **检出路径约定**，不得假设多 subagent 可安全共享同一 cwd。
 
 ### 1.3 Subagent 编排防串扰（强制）
 
@@ -444,6 +446,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - Execute: `plan locked` [done|n/a], `tasks` [done|n/a], `implement` [this assignment|done]
 - Gate decision: `go` | `blocked` ({reason})
 **Working branch**: {e.g. `feature/foo` | `create feature/foo-part2 from feature/foo` | `create fix/bar from main` | `create feature/x from current`} — 若允许默认分支直接改，改填 **`Branch policy`**: `direct on main — <reason>`
+**Review cwd / Worktree path** (QC **与** QA; feature review / verification): {absolute path to **business repo** checkout for the **feature under review** — typically the implementer **Completion Report** worktree path; **QC 与 @qa-engineer 应沿用同一路径** unless you explicitly assign a different same-branch checkout; `N/A` only when no business-repo commands apply (e.g. some Report-only)}
+**Worktree path** (implementer; if `git worktree` used): {absolute path — **must** appear in Completion Report for QC handoff}
 **QA note**: {full @qa-engineer verification | `QA: skipped — <reason>` | `QA: self-check only — <what>`}
 **Owner Agent**: @agent-name
 **Delegation**: forbidden (default) | allowed (to @agent-name, with reason and scope)
@@ -488,6 +492,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **Issues/Risks**: {problems, assumptions, risks}
 **Plan Update**: {what was updated in plan/status, or "PM to update"}
 **Handoff**: {@next-agent or @project-manager + expected next action}
+**Worktree path** (if business repo work used a `git worktree`; for QC/PM handoff): {absolute path to repo root of that checkout, or `N/A`}
 ```
 
 ### 4. 推进与收敛
@@ -499,7 +504,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
   - 非 hotfix 任务必须先完成 `specify -> clarify -> plan`，才能分派实现类任务。
   - 进入实现前必须完成 `tasks` 拆解并在 Assignment 的 `Phase Gate Checklist` 标记为 done。
   - 若实现中发现新约束，先回写 plan（并必要时补 clarify）再继续 implement。
-- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。随后由 @project-manager 按“QC 三审轻量汇总”输出统一 `QC Consolidated Decision`，再交 @qa-engineer 验证
+- **开发完成 → InReview**：开发阶段产出确认后，将 plan 状态更新为 `InReview`，默认进入 `QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）`；Hotfix 可走 `QC单审快速通道（@qc-specialist）`。分派 QC 时须在 Assignment 写明 **`Review cwd / Worktree path`** 与 **`Working branch`**，使三审在 **该 feature 的实现检出目录**（通常为开发回报的 worktree）上审查，而非未对齐的 cwd。**随后**由 @project-manager 按“QC 三审轻量汇总”输出统一 `QC Consolidated Decision`，再交 @qa-engineer 验证；**分派 @qa-engineer 时须复用（或显式改写并说明）同一套 `Review cwd / Worktree path` + `Working branch`**，使验证命令与取证针对 **同一 feature 检出**，不得留空导致 QA 在错误 cwd 上跑测试
 - **QC 发现问题 → Dev 修复闭环**：若统一结论为 `Request Changes` 或包含必须修复项，PM 需立即按模块指派给对应 dev owner 修复（前端给 `@frontend-dev`，后端给 `@fullstack-dev`，跨模块可并行给 `@fullstack-dev-2`）；修复完成后回流 QC/QA 复验
 - **残留问题归档闭环（强制）**：阻断项修复后，若仍有非阻断 finding，PM 必须登记 Residual Findings（**优先** `{PLAN_DIR}/status.json` 的 `metadata.residual_findings[<plan-id>]`，见 `plan-convention.md`）；亦可辅以主 plan 小节；未完成留档不得宣告最终收口。**语义**：未登记等于**未向仓库声明**已知债与跟踪约定；下一会话无法把 QC 聊天当权威来源。
 - **Residual 关闭与归档**：当 R# 已修复并经验证（或已豁免/被替代），由你或 @qa-engineer 写全关闭字段后，**追加**至 **`{PLAN_DIR}/archived/residuals/<plan-id>.json`**（`schema_version` + `entries[]`，每条含 `archived_at`），并从 **`metadata.residual_findings[<plan-id>]`** 中**删除**该条，使 `status.json` 仅保留 **open**；**禁止**硬删 open 项（细则见 `plan-convention.md`「Residual findings 生命周期」）。**语义**：拖延归档会让 SSOT 与真实关闭状态长期错位，损害跨 agent handoff 与复盘时的**可引用性**。

@@ -18,7 +18,11 @@ description: 测试工程师 - 编写测试用例和自动化测试。Use proact
 
 ## Superpowers 技能（插件）
 
-当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中 @qa-engineer：**`verification-before-completion`**（阻塞/通过/Done 须有可复现证据）；flaky 与环境问题宜 **`systematic-debugging`**；协作补测宜 **`test-driven-development`**。
+当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中 @qa-engineer：**`verification-before-completion`**（阻塞/通过/Done 须有可复现证据）；验证 **feature 实现**时在 PM 指定的 **`Review cwd` / `Worktree path`** 与 **`Working branch`** 下执行业务仓命令（与 QC 同源 handoff），需另开同分支检出时宜 **`using-git-worktrees`**；**与同仓其他可写 subagent 并发写仓库时必用 `using-git-worktrees`**；flaky 与环境问题宜 **`systematic-debugging`**；协作补测宜 **`test-driven-development`**。
+
+## Feature 验证检出上下文（强制）
+
+对 **待合并 feature** 跑测试、取证或提交测试工件前：进入 Assignment 中的 **`Review cwd` / `Worktree path`**（若已写明），核对仓库根与当前分支与 **`Working branch`** 一致，再运行 `npm test` / `pytest` / E2E 等。**禁止**在未核对检出时对错误工作树产出「通过」类结论。与 QC 使用 **同一套** PM 字段即可；细则见 `~/.config/opencode/docs/agents/harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。**Report-only** 且不依赖业务仓路径时，若 Assignment 未给 `Review cwd`，须在回报中写明验证所基于的环境，否则回报 `Blocked` 并请 `@project-manager` 补 Assignment。
 
 ## 职责
 

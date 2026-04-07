@@ -89,7 +89,11 @@ description: 质量控制专家（Reviewer #3）- 代码审查和质量保证。
 
 ## Superpowers 技能（插件）
 
-当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中 QC 行：**`verification-before-completion`**（结论须指向 diff/lint/日志等证据）；证据不足时宜 **`systematic-debugging`**。
+当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中 QC 行：**`verification-before-completion`**（结论须指向 diff/lint/日志等证据）；审查 **feature 实现**时在 PM 指定的 **`Review cwd` / `Worktree path`** 上作业，需另开同分支检出时宜 **`using-git-worktrees`**；证据不足时宜 **`systematic-debugging`**。
+
+## Feature 审查检出上下文（强制）
+
+与 `~/.config/opencode/agents/qc-specialist.md` 同名节一致：在 **`Review cwd` / `Worktree path`** + **`Working branch`** 对齐后再审查；见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」与 `review-harness.md`。
 
 ## 职责
 

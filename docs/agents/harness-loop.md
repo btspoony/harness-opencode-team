@@ -220,6 +220,30 @@ OpenCode 的 **`@explore`** 是**只读**、偏快速的代码库导航 subagent
 - 独立模块可并行；避免写操作归属重叠。
 - 跨领域变更时，先锁定接口契约再并行编码。
 - QC 审查员并行运行，完成后统一汇总。
+- **QC 三审**在 **feature 开发完成之后**执行，审查对象仍是 **该 feature 在 `Working branch` 上的状态**；三名 reviewer 须在 **PM 指定的同一「待审检出」上下文**（通常为 **开发回报的实现用 worktree 路径**，见下文「QC 三审、QA 验证与 feature 检出上下文」）上读 diff、跑检查，**禁止**默认用错分支或未对齐的 cwd 代审。
+- **@qa-engineer** 做 **验证、跑测试、取证或向业务仓提交测试工件**时，须在 **与待验 feature 一致的检出上下文**进行：使用 Assignment 中的 **`Review cwd` / `Worktree path`**（与 QC handoff 同源，通常为 **同一 feature worktree**）及 **`Working branch`**，**禁止**在未核对路径与分支时在错误目录上宣称通过或产出证据。细则见同下节。
+
+### 同仓并发写入与 Git worktree（强制）
+
+**首要场景是开发阶段**：多条可写流 **并发** 改 **同一仓库** 时，用 worktree 做 **写入侧目录隔离**。下列规则针对该类开发并发；**QC / QA 阶段的检出约定**见下一小节。
+
+当 **`@project-manager` 在同一调度轮次内并发启动多个** subagent（含宿主侧「并行 Task / 并行 subagent」），且 **≥2 个承接方**可能对 **同一 Git 仓库的同一工作区（同一 cwd 检出目录）**产生写文件或 `git commit` 级改动时：
+
+- **必须**为每条并发写流使用 **独立检出目录**：以 **`git worktree`** 隔离（流程与目录安全要求见 Superpowers **`using-git-worktrees`**；未安装插件时仍须达到同等隔离效果，可 Read 该技能文件并按 `git worktree` 手册执行）。
+- **必须**与既有分支门禁一致：每个可写承接方的 Assignment 仍须含 PM 已批准的 **`Working branch`** / **`Branch policy`**；在某一 worktree 内 **不得**擅自 `checkout` 到未授权分支或私自新建分支（细则见 `branch-collaboration.md`）。
+- **PM 须在 Assignment 中写清**各并发写流的 **检出约定**（例如预期 **`Worktree path`** / 命名规则，或「由承接方按 `using-git-worktrees` 创建并在 Completion Report 回报路径」），避免多代理默认共享同一目录导致互相覆盖、冲突或半写入状态。
+
+**可不强制新开 worktree** 的情形包括：并发流 **全部为只读**；各写入者针对 **不同 Git 仓库根**；或写入 **串行**（同一时刻仅一个代理持有该仓工作区）。
+
+### QC 三审、QA 验证与 feature 检出上下文（强制）
+
+开发在 **feature 分支**上完成（往往在 **独立 worktree** 中实现）后，**QC 审查与 QA 验证针对的都是这份 feature**，而不是 `main` 或任意未对齐的默认 cwd。
+
+- **`@project-manager`** 分派 **QC** 时须在 Assignment 写明与待审实现一致的 **`Working branch`**，并写明 **`Review cwd` / `Worktree path`**：**优先**沿用开发 **Completion Report** 中回报的业务仓 **实现检出路径**（即「该 feature 的 worktree」）；若开发未用 worktree，则写明单一明确的业务仓根路径。若审查需与开发目录 **物理分离** 但仍审 **同一分支**，可指示按 **`using-git-worktrees`** 在 **`Working branch`** 上 **另加** 一个 worktree 专供审查（只读使用业务仓）。
+- **三审并行**时，三名 reviewer **共用同一组 `Review cwd` / `Worktree path` + `Working branch` 约定**即可（对业务仓只读分析）；**一般不必**为每位 reviewer 各开一个 worktree，除非宿主或执行环境要求进程级隔离。
+- QC 的 **报告落盘**仍仅限 `{PLAN_DIR}/reports/`；上述约定保证 `git diff`、`git log`、lint 与所读文件与 **待合并 feature** 一致。
+- **`@project-manager`** 分派 **`@qa-engineer`** 做 **本 feature 的验证**（跑测试、复现、可观察取证、或向业务仓提交测试/配置）时，须在 Assignment 中写明 **同一套** **`Review cwd` / `Worktree path`** 与 **`Working branch`**（可与 QC 分派复用同一字段；若 QC 已用某路径，QA 应 **沿用**，除非 PM 显式改为另一 **同分支** 检出并说明原因）。**@qa-engineer** 在执行业务仓命令前须核对当前目录与分支与 Assignment 一致；**Report-only**、且本轮 **不涉及** 业务仓内命令/路径依赖时，若 Assignment 未写 `Review cwd`，须在回报中说明验证所基于的检出或环境，缺失则 `Blocked` 并请 PM 补全。
+- 若 **QA 与同仓其他可写角色并发**提交测试代码，仍须遵守上文「同仓并发写入」的 **worktree** 规则（可为 QA 单开一条写入 worktree，**同一 `Working branch`**，由 PM 在 Assignment 写明）。
 
 ### 调度防串扰（强制）
 

@@ -26,7 +26,7 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 
 ## Superpowers 技能（插件）
 
-当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中 @prompt-engineer：**`writing-skills`**（新建或大改技能）；新行为设计宜 **`brainstorming`**；宣称技能可用或 eval 通过前 **`verification-before-completion`**。
+当 Superpowers 插件启用时，按 `~/.config/opencode/docs/agents/superpowers-skills.md` 中 @prompt-engineer：**`writing-skills`**（新建或大改技能）；新行为设计宜 **`brainstorming`**；**与同仓其他可写 subagent 并发落盘项目仓库时必用 `using-git-worktrees`**；宣称技能可用或 eval 通过前 **`verification-before-completion`**。
 
 ## Harness-first 规则
 

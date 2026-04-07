@@ -16,7 +16,7 @@ description: 前端开发工程师 - UI/前端架构与体验优化。Use proact
 
 ## Superpowers 技能（插件）
 
-当 Superpowers 插件启用时，与 `superpowers-skills.md` 中 @fullstack-dev 一致：**`systematic-debugging`**、**`test-driven-development`**（未禁止时）、**`verification-before-completion`**、**`requesting-code-review`** / **`receiving-code-review`**、可选 **`using-git-worktrees`**。
+当 Superpowers 插件启用时，与 `superpowers-skills.md` 中 @fullstack-dev 一致：**`systematic-debugging`**、**`test-driven-development`**（未禁止时）、**`verification-before-completion`**、**`requesting-code-review`** / **`receiving-code-review`**；**与同仓其他可写 subagent 并发执行时必用 `using-git-worktrees`**；单写入者隔离大重构/实验分支宜用 **`using-git-worktrees`**。
 
 ## 职责
 
