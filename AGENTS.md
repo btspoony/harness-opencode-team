@@ -1,6 +1,6 @@
 # Code agent harness（全局入口）
 
-本文件是**代码智能体（code agent）多角色工作流**的共享规则与专题索引入口。具体**宿主**（OpenCode、Cursor 等）如何自动加载本文件、是否提供子代理或 `question` 工具，见 **`docs/agents/host-opencode.md`** 与 **`docs/agents/host-cursor.md`**。
+本文件是**代码智能体（code agent）多角色工作流**的共享规则与专题索引入口。具体**宿主**（OpenCode、Cursor 等）如何自动加载本文件、是否提供子代理或 `question` 工具，见 `**docs/agents/host-opencode.md`** 与 `**docs/agents/host-cursor.md**`。
 
 **单一权威**：执行向规则与专题索引以本文件为准（在未被项目规则覆盖的范围内）。
 
@@ -8,10 +8,12 @@
 
 ## 宿主入口（先读对应小节，避免能力假设错误）
 
-| 宿主 | 说明 |
-|------|------|
-| **OpenCode** | 每会话注入本文件；支持内置 `question`、可调 subagent；见 `docs/agents/host-opencode.md` |
-| **Cursor** | 通常需通过规则或手动 Read 加载本文件；`/pm` 等指令走 PM 提示词；**多数场景无真实 subagent 队列**，见 `docs/agents/host-cursor.md` |
+
+| 宿主           | 说明                                                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| **OpenCode** | 每会话注入本文件；支持内置 `question`、可调 subagent；见 `docs/agents/host-opencode.md`                                                      |
+| **Cursor**   | 通常需通过规则或手动 Read 加载本文件；`/pm` 等指令走 PM 提示词；可用 **Task** 并行拉起子代理（如 QC 三审）；会话工具与落盘路径与 OpenCode 不同，见 `docs/agents/host-cursor.md` |
+
 
 库文档检索与宿主差异的共用协议：`docs/agents/library-docs-and-hosts.md`。
 
@@ -45,15 +47,15 @@
 2. `docs/agents/evaluation-harness.md` — 如何评估和调优 agent 提示词与工作流。
 3. `docs/agents/review-harness.md` — QC 共享审查清单、报告模板与门禁规则。
 4. `docs/agents/routing-harness.md` — 如何验证 project-manager 的路由行为；配套场景集 `docs/agents/routing-evals.json`。
-5. `docs/agents/plan-convention.md` — 计划目录发现、初始化、`status.json`（**open** residual、空 **`plan-id` 键移除**、可选 **`metadata.tech_debt_summary`** 技术债一览）、**`{PLAN_DIR}/archived/residuals/<plan-id>.json`**、可选 **`{PLAN_DIR}/archived/plans/<plan-id>.json`**（Done 行冷快照与热文件**极简**行）、可选 **`{PLAN_DIR}/notes.json`**（程序时间线，减轻 `status.json`）、`reports/<plan-id>/`、`knowledge/` 与 `docs/` 分工、**已提交文档可到达性**（禁仓库外路径、禁仅本机路径）、Git 策略、合并前 SSOT 与事实一致。
+5. `docs/agents/plan-convention.md` — 计划目录发现、初始化、`status.json`（**open** residual、空 `**plan-id` 键移除**、可选 `**metadata.tech_debt_summary`** 技术债一览）、`**{PLAN_DIR}/archived/residuals/<plan-id>.json**`、可选 `**{PLAN_DIR}/archived/plans/<plan-id>.json**`（Done 行冷快照与热文件**极简**行）、可选 `**{PLAN_DIR}/notes.json`**（程序时间线，减轻 `status.json`）、`reports/<plan-id>/`、`knowledge/` 与 `docs/` 分工、**已提交文档可到达性**（禁仓库外路径、禁仅本机路径）、Git 策略、合并前 SSOT 与事实一致。
 6. `docs/agents/phase-gate-playbook.md` — Phase Gate 执行手册：各阶段角色动作与最小证据要求。
 7. `docs/agents/branch-collaboration.md` — 可写角色的分支协作契约与统一确认话术模板。
-8. `docs/agents/superpowers-skills.md` — Superpowers 映射与 harness 对齐（冲突以 harness / Assignment 为准；**`Delegation` 与 `Superpowers` 清单一致**见该文专节）；未装插件见文内「未安装插件时」。
+8. `docs/agents/superpowers-skills.md` — Superpowers 映射与 harness 对齐（冲突以 harness / Assignment 为准；`**Delegation` 与 `Superpowers` 清单一致**见该文专节）；未装插件见文内「未安装插件时」。
 9. `docs/agents/open-harness-principles.md` — 意图门禁、Task category、可验证编辑、长任务纪律、可选分层 `AGENTS.md`、**项目根 `AGENTS.md` 维护边界与典型信息源层级（模板）**等理念索引。
 10. `docs/agents/optional-tooling-by-capability.md` — 按能力可选的 MCP/skills。
 11. `docs/agents/library-docs-and-hosts.md` — 库文档检索单一协议（Context7 MCP / ctx7 CLI）、宿主差异、会话降噪。
 12. `docs/agents/host-opencode.md` — OpenCode 加载方式、`question`、subagent 等。
-13. `docs/agents/host-cursor.md` — Cursor、`/pm`、无子代理时的执行降级模式。
+13. `docs/agents/host-cursor.md` — Cursor、`/pm`、Task 子代理与 QC 三审对齐、补充编排模式。
 14. `docs/agents/opencode-config-secrets.md` — 全局 `opencode.json` 密钥占位 `{env:}` / `{file:}` 与变量名说明；配合 `secrets.env.example`。
 15. `docs/agents/effort-estimation.md` — Agent 语境下的工期与工作量口径：**仅** agent 实施（会话/尺码）；**禁止**与人天、FTE、人类日历混在同一 Effort 字段。
 
@@ -80,8 +82,8 @@
 - 拒绝未记录的破坏性变更。
 - 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外。新开分支的**祖先**由 Assignment 写明（可从 `main`、已有 `feature/*`、或 `current` 叠分支；细则见 `harness-loop.md`）。
 - **PM 开发分派（Dev 三角）**：`@fullstack-dev` 后端主导；用户可见 UI / 多文件前端默认由 `@frontend-dev` 主责；独立第二实现轨用 `@fullstack-dev-2`。勿在无 `Dev routing: single-stream — …` 时把「API + 实质 UI」默认单点塞给 `@fullstack-dev`。全文见 `agents/project-manager.md`「Dev 三角平衡」。
-- **同仓并行写入**：当 **≥2 个可写 subagent** 可能 **并发** 修改 **同一 Git 仓库** 时，**必须** 使用 **`git worktree`**（或等价独立检出）隔离目录，禁止多代理共用同一工作区 cwd；PM 须在 Assignment 写明分支策略与各流检出约定。细则见 `harness-loop.md`「同仓并发写入与 Git worktree」与 `superpowers-skills.md` 中 **`using-git-worktrees`**。（在 Cursor 等**无独立 subagent** 的宿主上，仍须遵守：要么顺序执行，要么等价多目录隔离，见 `host-cursor.md`。）
-- **QC / QA 与 feature 检出**：QC 三审与 QA 验证针对 **已完成的 feature**；须在 PM 写明的 **`Review cwd / Worktree path`**、**`Working branch`**、**`plan_id`** 与 **`Review range` / `Diff basis`** 上对齐（**三份 QC 与 QA 的 `plan_id`、`Review range` 须逐字相同**）。**同一 plan 多 batch 时**，完整三审**默认在整 plan dev 完成后一次**（非每 batch），见 `plan-convention.md`。见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。
+- **同仓并行写入**：当 **≥2 个可写 subagent** 可能 **并发** 修改 **同一 Git 仓库** 时，**必须** 使用 `**git worktree`**（或等价独立检出）隔离目录，禁止多代理共用同一工作区 cwd；PM 须在 Assignment 写明分支策略与各流检出约定。细则见 `harness-loop.md`「同仓并发写入与 Git worktree」与 `superpowers-skills.md` 中 `**using-git-worktrees**`。（在 Cursor 使用 Task 并行多代理时，仍须遵守各流 **检出与工作区** 约定，禁止多可写者无隔离地共用一个 cwd，见 `host-cursor.md`。）
+- **QC / QA 与 feature 检出**：QC 三审与 QA 验证针对 **已完成的 feature**；须在 PM 写明的 `**Review cwd / Worktree path`**、`**Working branch**`、`**plan_id**` 与 `**Review range` / `Diff basis**` 上对齐（**三份 QC 与 QA 的 `plan_id`、`Review range` 须逐字相同**）。**同一 plan 多 batch 时**，完整三审**默认在整 plan dev 完成后一次**（非每 batch），见 `plan-convention.md`。见 `harness-loop.md`「QC 三审、QA 验证与 feature 检出上下文」。
 - 语言约定（PM 编排场景）：Assignment 字段名保持既定英文键名；字段值中的任务描述正文默认可用中文。所有执行产出与报告默认英文，除非用户明确要求其他语言。
 - 执行 Superpowers `writing-plans` 时，计划文件路径必须遵循 `plan-convention.md` 的 `{PLAN_DIR}` 解析结果；不得默认写入 `docs/superpowers/plans/`。
 - **工作量与工期表述**：做计划、写 PRD/架构文档、Assignment 或 Status Update 时，遵循 `effort-estimation.md`：**只写 agent-oriented 预估**；**不得**在同一字段或同一段「预估」中纳入人类时间、人天、FTE 或日历等待（人类排期若有需要，须与 Effort 字段分离撰写）。

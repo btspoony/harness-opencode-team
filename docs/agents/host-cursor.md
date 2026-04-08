@@ -6,30 +6,38 @@
 
 1. **全局规则与索引**：`~/.config/opencode/AGENTS.md`（与 OpenCode 共用同一份**中性** harness；Cursor 不会自动注入，需通过规则或手动 Read）。
 2. **项目经理行为**：`~/.config/opencode/agents/project-manager.md`（用户可通过 `**/pm`** 等指令让主代理按 PM 角色执行时读取）。
-3. **本文件**：明确 Cursor 与 OpenCode 的能力差，避免假设「一定能 `@` 起子代理」。
+3. **本文件**：对齐 Cursor 上 **Task 子代理**、**单会话多帽**等可行编排，避免把宿主差异误读成「不能走 harness」。
 
-## 重要限制：通常没有“真·子代理”队列
+## Task 工具与并行子代理（QC 三审）
 
-在 Cursor 中，**主 Composer/Agent 会话**往往**不能**像 OpenCode 那样稳定地 `**@role` 唤起独立 subagent 会话**并行执行 Assignment。
+在 **Cursor 当前环境**中，主代理可以使用 `**Task` 工具**并行拉起子代理，**能够**落实与 OpenCode harness 同构的 **QC 三审**分派。
 
-因此 PM 编排需降级为以下**可执行模式**（择一或组合，并在 Status Update 中说明你用的是哪种）：
+- `**subagent_type`** 可选用 `qc-specialist`、`qc-specialist-2`、`qc-specialist-3`，语义上对应 PM 下发的 **三条独立 Assignment**（三名 reviewer）。
+- **与 harness 对齐的硬性字段**：三份子任务中的 `**plan_id`**、`**Review cwd` / Worktree path**、`**Review range` / Diff basis`** 必须与 OpenCode 流程 **逐字相同**（见` harness-loop.md`、`plan-convention.md`、`review-harness.md`）。
+- **和 OpenCode 的差别**：主要在 **宿主能力**——会话工具集、`question` 等交互、日志与 **artifact / 报告落盘路径** 的约定，**不是**「不能派三审」或「必须降级为单人扮演三票」。
 
-### 模式 A — 单会话多帽（默认）
+PM 在 Status Update 中可简要注明本次三审是 **Task 并行子代理** 执行，便于审计与复盘。
+
+## 何时仍用单会话或多窗口（补充模式）
+
+下列情况可作为 **Task 并行** 的补充或备选（在 Status Update 中说明所用模式）：
+
+### 模式 A — 单会话多帽
 
 同一对话中由**主代理**顺序执行：先以 PM 规划并写出 Assignment，再在同一会话用**显式声明**切换执行身份，例如：
 
 - `Acting as role: fullstack-dev — executing Assignment …`
-- 执行前 **Read** 对应 `~/.config/opencode/agents/<role>.md`，严格按该文件的产出与门禁执行，视同「被派工的专责代理」。
+- 执行前 **Read** 对应 `~/.config/opencode/agents/<role>.md`，严格按该文件的产出与门禁执行。
 
-QC/QA 等多视角审查也可在同一会话内分轮次进行，每轮开始前 Read 对应 `agents/qc-specialist*.md` / `agents/qa-engineer.md`，并保持 `**plan_id` / `Review range` 与 OpenCode 流程逐字一致**（见 `harness-loop.md`、`plan-convention.md`）。
+若在未使用 Task 子代理时做 QC/QA，可在同一会话内分轮次 Read `agents/qc-specialist*.md` / `agents/qa-engineer.md`，字段对齐要求不变。
 
 ### 模式 B — 多窗口 / 多会话扮演
 
-将每条 Assignment 放到**新聊天**，在首轮消息中粘贴 Assignment 并要求代理 Read 对应 `agents/<role>.md`。适合长实现，避免单会话上下文挤压；PM 在主线会话汇总证据与状态。
+将某条 Assignment 放到**新聊天**，在首轮消息中粘贴 Assignment 并要求代理 Read 对应 `agents/<role>.md`。适合长实现、避免单会话上下文挤压；PM 在主线会话汇总证据与状态。
 
-### 模式 C — 宿主并行能力（若可用）
+### 模式 C — 与 worktree / 写入并发的关系
 
-若当前 Cursor 版本提供 **并行 Task / 多代理** 且行为与「独立上下文」等价，**且**满足 harness 对 **worktree**、**分支策略**的要求，可按 Assignment 分拆并行；否则不要因为「看起来像能并行」而绕过 `harness-loop.md` 里对同仓并发写入的约束。
+即使用 Task 并行子代理，仍须遵守 `harness-loop.md`：**同仓 ≥2 可写者并发修改** 时 `**git worktree`**（或等价隔离）与 Assignment 中的分支/路径约定；不要将「能并行跑 QC」与「能多代理共用一个可写 cwd」混为一谈。
 
 ## 澄清交互
 
