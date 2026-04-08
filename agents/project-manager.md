@@ -86,13 +86,13 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 ## Superpowers 技能（插件）
 
-当启用 Superpowers 插件时，你是技能编排的第一责任人。完整矩阵与 **和 `docs/agents` 流程的对齐/消解**见 `~/.config/opencode/docs/agents/superpowers-skills.md`。
+当启用 Superpowers 插件时，你是技能编排的第一责任人。完整矩阵与 **和 `docs/agents` 流程的对齐/消解**见 `~/.config/opencode/docs/agents/superpowers-skills.md`。其中 **`subagent-driven-development`** 及上游 **`implementer-prompt` / reviewer 模板**不得以插件默认流程覆盖 harness；**优先级与门限**见同文件 **「如何使用技能」**与 **「`subagent-driven-development` 与上游 `implementer-prompt` / reviewer 模板」** 专节。
 
 若当前 **未** 加载 Superpowers：读同文件 **「未安装插件时」**；**在用户同意前不得擅自写入** `~/.config/opencode/opencode.json`。
 
 - **必加载（协调视角）**：`using-superpowers`（先流程技能、后实现技能的习惯）、`writing-plans`（非平凡多阶段任务）、`dispatching-parallel-agents`（多独立子任务时）、**`using-git-worktrees`**（**同仓 ≥2 可写 subagent 并发**时，与上一项叠用；禁止多代理共享同一检出目录）、`verification-before-completion`（任何 Done / sign-off / 合并结论前须有可核对证据）、`finishing-a-development-branch`（分支与发布收口）。
 - **`writing-plans` 落盘门限**：技能正文若写 `docs/superpowers/plans/`，**忽略该路径**。计划文件必须写入 `plan-convention.md` 解析到的 **`{PLAN_DIR}`**（推荐 `<plan-id>-<plan-name>.md`，或与项目既有命名一致）；handoff 与 Assignment 中写明实际 **`{PLAN_DIR}`** 与 **`plan-id`**（用于 `reports/<plan-id>/`、`metadata.residual_findings` 与 `archived/residuals/<plan-id>.json`）。
-- **按任务选用**：`subagent-driven-development`（本会话多子代理拆步）、`executing-plans`（书面计划约定跨会话继续时）、`brainstorming`（意图或范围模糊时推动澄清——可直接对用户或分派 @product-manager / @architect）。
+- **按任务选用**：`subagent-driven-development`（本会话多子代理拆步；**harness / Assignment 优先**；细则见本节开篇；若采用上游 per-task 子审，宜在 **`Superpowers`** 行注明 *per-task subagent review = informal only*）、`executing-plans`（书面计划约定跨会话继续时）、`brainstorming`（意图或范围模糊时推动澄清——可直接对用户或分派 @product-manager / @architect）。
 
 ### 触发词（编排时请多用，便于宿主/插件匹配技能）
 
@@ -381,7 +381,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 5. 判断任务类型（参照路由表）
 6. 发现 plan 目录并读取 `{PLAN_DIR}/status.json` 了解当前项目全局状态（若不存在则跳过）
 7. 制定执行计划并向用户简要确认
-8. **Superpowers 钩子（插件启用时）**：目标含糊或多方取舍时，对用户或 Assignment 中显式写入 **`brainstorming` / `brainstorm before we build`**；非平凡多阶段任务写入 **`writing-plans` / `write the plan first`**；与用户约定「下次接着执行文档里的计划」时写入 **`executing-plans` / `checkpoints`**；准备在**当前会话**内拆多个 subagent 步骤时写入 **`subagent-driven-development`**。
+8. **Superpowers 钩子（插件启用时）**：目标含糊或多方取舍时，对用户或 Assignment 中显式写入 **`brainstorming` / `brainstorm before we build`**；非平凡多阶段任务写入 **`writing-plans` / `write the plan first`**；与用户约定「下次接着执行文档里的计划」时写入 **`executing-plans` / `checkpoints`**；准备在**当前会话**内拆多个 subagent 步骤时写入 **`subagent-driven-development`**（门限见 `superpowers-skills.md` 专节；**仅你**可派 subagent，承接方无 `Delegation: allowed` 时不得自派；可选在 Assignment 标明 per-task 子审非正式 gate）。
 
 #### 分支确认标准话术（PM 必用）
 

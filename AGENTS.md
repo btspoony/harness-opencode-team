@@ -39,7 +39,7 @@ OpenCode 将会以本文件作为**全局规则**在每个会话加载。
 5. `docs/agents/plan-convention.md` — 计划目录发现、初始化、`status.json`（**open** residual、空 **`plan-id` 键移除**、可选 **`metadata.tech_debt_summary`** 技术债一览）、**`{PLAN_DIR}/archived/residuals/<plan-id>.json`**、可选 **`{PLAN_DIR}/archived/plans/<plan-id>.json`**（Done 行冷快照与热文件**极简**行）、可选 **`{PLAN_DIR}/notes.json`**（程序时间线，减轻 `status.json`）、`reports/<plan-id>/`、`knowledge/` 与 `docs/` 分工、**已提交文档可到达性**（禁仓库外路径、禁仅本机路径）、Git 策略、合并前 SSOT 与事实一致。
 6. `docs/agents/phase-gate-playbook.md` — Phase Gate 执行手册：各阶段角色动作与最小证据要求。
 7. `docs/agents/branch-collaboration.md` — 可写角色的分支协作契约与统一确认话术模板。
-8. `docs/agents/superpowers-skills.md` — Superpowers 与角色映射、与 harness 的对齐说明；未装插件时见文内「未安装插件时」。
+8. `docs/agents/superpowers-skills.md` — Superpowers 与角色映射、与 harness 的对齐说明（**技能正文与 `docs/agents` 冲突时以 harness / PM Assignment 为准**，含 `subagent-driven-development` 与上游 `implementer-prompt` 类模板的门限）；未装插件时见文内「未安装插件时」。
 9. `docs/agents/open-harness-principles.md` — 意图门禁、Task category、可验证编辑、长任务纪律、可选分层 `AGENTS.md`、**项目根 `AGENTS.md` 维护边界与典型信息源层级（模板）**等理念索引。
 10. `docs/agents/optional-tooling-by-capability.md` — 按能力可选的 MCP/skills。
 11. `docs/agents/library-docs-and-hosts.md` — 库文档检索单一协议（Context7 MCP / ctx7 CLI）、宿主差异、会话降噪；OpenCode 与 Cursor 差异。

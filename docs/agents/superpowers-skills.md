@@ -16,9 +16,9 @@
 ## 如何“使用”技能
 
 - 各角色在对应任务阶段应 **显式加载并遵循** 相应技能的完整内容（在支持 `/skill-name` 或少样本名称的环境中，通过技能名调用；以 OpenCode / 宿主客户端实际能力为准）。
-- **优先级**：用户显式指令（含项目 `AGENTS.md` / `CLAUDE.md`）> Superpowers 技能中的流程要求 > 一般惯例。若用户禁止 TDD，则不得强制 `test-driven-development`。
+- **优先级（本仓库强制）**：**用户显式指令**（含项目 `AGENTS.md` / `CLAUDE.md`）> **`~/.config/opencode/AGENTS.md` 与 `docs/agents/*.md` 中的 harness 不变量**（`harness-loop.md` 状态机与门禁、`plan-convention.md`、`review-harness.md`、`branch-collaboration.md` 等）> **Superpowers 技能正文中的流程、阶段划分与审查模型** > 一般惯例。当技能描述的顺序、谁可派 subagent、何时审查与 **harness 不一致**时，**以 harness 与 PM Assignment 为准**，技能仅保留**不冲突**的技巧（例如自检清单、模型分档、提问纪律）。若用户禁止 TDD，则不得强制 `test-driven-development`。
 - **`writing-plans` 保存路径（门限）**：**`plan-convention.md`** 中的 **`{PLAN_DIR}`** 优先于上游技能正文中的 `docs/superpowers/plans/`；执行该技能时仍须将计划落在 **`{PLAN_DIR}`**（见 `plan-convention.md`「与 Superpowers writing-plans」及 PM / product-manager / architect 提示词中的短门限）。
-- **与 harness 的关系**：不改变 `harness-loop.md` 的阶段顺序；技能规定的是**每个阶段内的做法**（例如排障前先走系统化调试、宣称完成前先有验证证据）。
+- **与 harness 的关系**：不改变 `harness-loop.md` 的阶段顺序；技能规定的是**每个阶段内的做法**（例如排障前先走系统化调试、宣称完成前先有验证证据）——**但不得用技能覆盖 harness 的门禁**（见下节「`subagent-driven-development` 与上游模板」）。
 
 ## 最小技能声明契约（减少歧义）
 
@@ -78,7 +78,7 @@ Superpowers:
 | `brainstorming` | 创造性工作之前澄清意图、范围与设计 |
 | `writing-plans` | 多步任务在动代码前先写可执行计划 |
 | `executing-plans` | 在**另一次会话**按书面计划执行并设检查点 |
-| `subagent-driven-development` | **本会话**内用子代理执行计划中的独立任务 |
+| `subagent-driven-development` | **本会话**内按任务拆步执行；**审查与分派仍以 harness 为准**（见下文专节），上游 per-task 双审与 `implementer-prompt` 模板**不替代** QC 三审与 PM Assignment |
 | `dispatching-parallel-agents` | 多个互不依赖任务并行分派 |
 | `test-driven-development` | 实现前先写/tests 失败再过绿（若适用） |
 | `systematic-debugging` | Bug / 异常行为：先调查再修 |
@@ -190,6 +190,20 @@ Superpowers:
 - **摸底**：由 `@project-manager` 在分派前调用 `@explore` 并写入 Assignment 为推荐模式；**已分派的承接方**不得用 `@explore` 代做实现/测试/审查/文档等交付，仅可短只读导航（见 `harness-loop.md`「内置 `@explore` 能力边界」）。Superpowers 不改变路由表。
 - `dispatching-parallel-agents` / `subagent-driven-development` 用于 **PM 拆分子任务** 或 **多代理并行**，与 `@explore` 可并列使用。
 
+## `subagent-driven-development` 与上游 `implementer-prompt` / reviewer 模板
+
+Superpowers 插件内该技能附带 **`implementer-prompt.md`**、**`spec-reviewer-prompt.md`**、**`code-quality-reviewer-prompt.md`** 等模板（部分宿主以 `/implementer-prompt` 等名称暴露）。正文还描述 **「每任务后 spec 审 + code quality 审」** 与示例路径 **`docs/superpowers/plans/`**。在本仓库中须按下述方式 **降权为可选技巧**，**不得覆盖 harness**。
+
+- **权威上下文**：实现与审查的 **分支、检出路径、plan、状态机** 以 **`harness-loop.md`**、**`plan-convention.md`**、**`review-harness.md`** 及 **`@project-manager` 的 Assignment** 为准；**不要用上游模板替代 Assignment 结构**（`Execute as: @role`、`Working branch`、`Review cwd` / `Worktree path`、`plan_id`、`Review range` / `Diff basis` 等）。
+- **谁可以派 subagent**：仅 **`@project-manager`** 可增加或并行 subagent；Assignment 未写 **`Delegation: allowed (...)`** 时，承接方 **不得** 依该技能自行连续派发「implementer / reviewer」子代理（见 `harness-loop.md`「调度防串扰」）。
+- **正式审查门禁**：**QC 三审 + @qa-engineer 验证** 在 **feature / 整 plan 开发完成后**按默认节奏执行（多 batch 默认不每 batch 全套三审）；上游技能的 **per-task 双 reviewer 子代理** 若使用，**最多视为作者侧或会话内自检**，**不可替代** **`{PLAN_DIR}/reports/<plan-id>/`** 下按 **`review-harness.md`** 产出的 QC 报告，也不得绕过 **`plan_id` / `Review range` 三份逐字相同** 的约定。
+- **完成态**：实现方将工作置 **`InReview`**；**`Done`** 仅 **`@project-manager` 或 `@qa-engineer`** 设定（`harness-loop.md`）。上游模板中的「任务完成」**不等于** harness 的 **Done / sign-off**。
+- **并行**：上游技能默认 **不并行多个 implementer**；若 PM 已按 harness 分配 **多写入流** 且 **同仓并发**，则 **必须** **`using-git-worktrees`** + Assignment 检出约定（见「张力与消解」表）。**以 Assignment 与 harness 为准**，不因上游「禁止并行 implementer」而拒绝已批准的并行分派。
+- **计划路径**：一律以 **`{PLAN_DIR}`** 为准，**禁止**把示例 **`docs/superpowers/plans/`** 当作落盘位置。
+- **澄清**：需要结构化取舍时，优先 **OpenCode `question` 工具**（`harness-loop.md`），与上游「自由提问」可并存，**宿主约定优先**。
+
+PM 在 Assignment 的 `Superpowers` 中引用 `subagent-driven-development` 时，建议加一行 **Expected evidence** 或备注，标明 **「per-task 子代理审查非正式 gate；正式 QC/QA 仍按 harness」**，避免承接方把上游流程当作 SSOT。
+
 ## 与 `docs/agents` 流程：张力与消解
 
 下列对照用于避免「harness 一套、Superpowers 一套」在执行时打架。**若仍不可裁决**：**用户显式指令** > **项目级 `AGENTS.md` / `CLAUDE.md`** > **根目录 `~/.config/opencode/AGENTS.md` 与 `docs/agents` 专题中的不变量（状态机、门禁、路由）** > **Superpowers 技能的默认做法**。
@@ -201,6 +215,7 @@ Superpowers:
 | 完成与证据 | `harness-loop.md` 反模式：无测试或行为证据即宣称完成 | `verification-before-completion` | **一致**：表述不同，目标相同（gate 前可核对证据）。 |
 | Plan 形态 | `plan-convention.md`：`{PLAN_DIR}`、`status.json`（open residual）、`archived/residuals/<plan-id>.json`、`reports/<plan-id>/` | `writing-plans` | **互补**：convention 管**存放位置与结构**；writing-plans 管**多步任务如何写成可执行计划**；PM 维护时两者同时满足。**路径门限**：提示词 + **`plan-convention.md`** 约束 **`{PLAN_DIR}`** 优先于技能默认的 `docs/superpowers/plans/`（无本地同名技能覆盖）。 |
 | 并行开发 | `harness-loop.md`：独立模块可并行；**先锁接口契约**再并行编码；**同仓多可写并发须 `git worktree` 隔离检出目录** | `dispatching-parallel-agents`、`subagent-driven-development`、**`using-git-worktrees`**（同仓并发写入时） | **叠加约束**：并行**不免除** `branch-collaboration.md` 分支门禁——每个**可写**承接方 Assignment 仍须含 PM 批准的 **`Working branch`** / **`Branch policy`**，禁止多人各自假设 base；**且** ≥2 可写流同仓并发时 **禁止**共用同一 cwd，**必须** worktree（或等价独立检出）+ Assignment 写明检出约定。 |
+| `subagent-driven-development` 与 `implementer-prompt` | **PM Assignment**、具名角色 **`Execute as: @role`**、**仅 PM 可派 subagent**；**QC 三审 + QA** 在 feature / plan 完成后，**`plan_id` + `Review range` 三审与 QA 逐字对齐**；**`{PLAN_DIR}`**；**`InReview` / `Done` 权限** | 上游：**每任务**后 **spec + code-quality 子代理审**；**泛化 implementer** 模板；示例 **`docs/superpowers/plans/`**；默认不并行多个 implementer | **以 harness 为准**：上游模板与 per-task 双审**不替代** Assignment 与 **QC/`review-harness.md`**；per-task 审查**仅可作非正式自检**（若 PM 未另授权 `Delegation`）；并行以 **PM + worktree** 为准。细则见上文 **「`subagent-driven-development` 与上游 implementer-prompt / reviewer 模板」**。 |
 | TDD | 全局流程**未**强制 TDD | `test-driven-development` | **项目/用户优先**：项目或用户禁止 TDD 时，不得因技能强行 TDD。 |
 | `git worktree` / 多工作目录 | `branch-collaboration.md` + `harness-loop.md`：**开发**阶段同仓多可写 **并发**须独立 worktree；**QC / QA** 须在 **该 feature 的检出上下文**（通常 `Review cwd` = 开发所用 worktree，或同分支另开检出）上审查与验证，且 **三份 QC + QA** 共用 **`plan_id`** 与 **`Review range` / `Diff basis`**（逐字相同）；仅 `@project-manager` 决定分支策略、`Assignment` 须写明 **`Working branch`** / **`Branch policy`** 与 **检出路径约定**（含 **`Review cwd` / `Worktree path`**） | `using-git-worktrees` | **不冲突，但须叠同一门禁**：worktree 是「同一仓库多个检出目录」；**分支授权**仍须与 PM 一致。开发并发写入若不用 worktree 易导致互相覆盖；QC/QA 若错用 cwd/分支/**diff 范围**会审错、验错对象——见 harness **「QC 三审、QA 验证与 feature 检出上下文」**。若在 worktree 里擅自 `checkout -b` 或未授权切换分支，即违规。 |
 | 升级与重复失败 | `AGENTS.md` / `harness-loop.md`：多次失败升级人工等 | `systematic-debugging`、`verification-before-completion` | **一致**：技能减少「无根因重复改」；**达不到 harness 升级条件**时仍以文档为准。 |
