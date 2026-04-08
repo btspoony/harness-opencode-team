@@ -125,9 +125,10 @@
 ## Residual Findings 留档门禁
 
 - 当阻断项（`Critical`）修复后仍有未关闭 `Warning`/`Suggestion`/技术债，不得仅在对话中口头说明，必须留档。
-- **启用 plan 管理且存在 `plan-id` 时**：**待跟踪（open）** residual 写入 **`status.json`** 的 **`metadata.residual_findings[<plan-id>]`**；**已关闭**条目归档至 **`{PLAN_DIR}/archived/residuals/<plan-id>.json`**（字段与严重等级见 `plan-convention.md`），与 QC 报告目录 **`{PLAN_DIR}/reports/<plan-id>/`** 交叉引用。
+- **启用 plan 管理且存在 `plan-id` 时**：**待跟踪（open）** residual 的 **SSOT** 为 **`status.json`** → **`metadata.residual_findings[<plan-id>]`**；PM 在 consolidated 决策中分配 **稳定 `id`（R1…）** 后须**写入该数组**（`source` 指回 `-qc*.md` 等）。**已关闭**条目归档至 **`{PLAN_DIR}/archived/residuals/<plan-id>.json`**（字段与严重等级见 `plan-convention.md`），与 **`{PLAN_DIR}/reports/<plan-id>/`** 交叉引用。
+- **主 plan**：仅作**人类可读索引**（可选）——复述 `id` 与摘要并指向 `status.json`；**不得**作为与 SSOT 脱钩的唯一登记处（见 `plan-convention.md`「Residual findings：权威在哪」）。
 - 可选：@project-manager 维护 **`metadata.tech_debt_summary`** 作为跨 plan 聚合视图（与 `residual_findings` 互补，见 `plan-convention.md`）。
-- 备选：写入对应主 plan 文档（`Plan Path`）的固定小节；若无 `{PLAN_DIR}`，则写入项目认可的进度载体或 `notes`（结构化条目）。
+- 若无 `{PLAN_DIR}`：写入项目认可的进度载体或根级 `notes`（结构化条目），仍须含 `id` 与跟踪字段。
 - 每条 residual finding 至少包含：`id`、`title`、`severity`、`source`、`scope`、`decision`（defer/accept/risk-accepted）、`owner`、`target milestone/date`、`tracking link`。
 - `Approve with residuals` 仅在无未关闭 `Critical` 时允许，且 PM 汇总结论中必须包含 residual 清单与跟踪位置。
 - 未完成 residual 留档，不应进入最终 `Done` 收口。

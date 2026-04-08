@@ -238,10 +238,11 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 #### Residual Findings 留档（强制）
 
 - 当 `Critical`/阻断项修复后，仍存在 `Warning`/`Suggestion`/技术债等**非阻断问题**时，不得口头带过，必须留档。
-- 留档位置优先：对应 `Plan Path` 指向的 plan 文档；若无独立 plan 文件，则写入 `{PLAN_DIR}/status.json` 的 `notes`（含结构化条目）。
+- **权威落盘（与 `plan-convention.md` / `review-harness.md` 一致）**：**优先**写入 **`{PLAN_DIR}/status.json`** 的 **`metadata.residual_findings[<plan-id>]`**（open 列表 SSOT）。在汇总中**分配稳定 `id`（R1…）后，同一轮次内写入该 JSON**，`source` 须能指回具体 QC 报告文件名或 reviewer。
+- **主 plan 文档**：**可选**——在 `Plan Path` 对应主 plan 增加「Residual findings（索引）」小节，**复述** `id` + 标题 + 一句摘要，并**显式指向** `status.json` 中的同键；**禁止**仅写 plan、不写 `metadata.residual_findings`（会导致 SSOT 缺失）。若无结构化 `{PLAN_DIR}`，再退化为项目认可的进度载体或根级 `notes`（仍须含同等字段意图）。
 - 每条留档至少包含：`id`、`title`、`severity`、`source`（哪位 QC/哪轮）、`scope`（影响范围）、`decision`（defer/accept/risk-accepted）、`owner`、`target milestone/date`、`tracking link`（issue/plan section）。
-- `Approve with residuals` 仅在**无未关闭阻断项**时允许；且必须附带 Residual Findings 清单与后续跟踪安排。
-- PM 负责在 `Status Update` 的 `Evidence Snapshot` 或 `Next` 中明确“剩余问题已留档 + 跟踪位置”。
+- `Approve with residuals` 仅在**无未关闭阻断项**时允许；且必须附带 Residual Findings 清单与后续跟踪安排（清单与 **`metadata.residual_findings[<plan-id>]`** 一致或可解析对齐）。
+- PM 负责在 `Status Update` 的 `Evidence Snapshot` 或 `Next` 中明确「剩余问题已写入 **`metadata.residual_findings`**（及可选主 plan 索引）」。
 
 #### 快速判定规则
 

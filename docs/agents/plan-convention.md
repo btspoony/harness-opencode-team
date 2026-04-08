@@ -359,6 +359,20 @@ jq '.metadata.residual_findings["01-data-infrastructure"]' .agents/plans/status.
 | QC 并行报告 | `<plan-id>-qc1.md`、`-qc2.md`、`-qc3.md` |
 | QC 汇总结论 | `<plan-id>-qc-consolidated.md` |
 
+### QC 分报告与 consolidated：可否只留一份？
+
+- **不要删除** `<plan-id>-qc1.md`、`-qc2.md`、`-qc3.md`**只因为**已写入 `<plan-id>-qc-consolidated.md`。`reports/` 在此约定下是**只读历史 / 审计链**：分 reviewer 原文保留**证据出处、分歧与独立视角**；**consolidated** 是 PM 的**门控摘要**，二者**叠加**，**不互为替代**。
+- **极窄例外**（须团队显式采纳并承担审计缺口）：例如仓库体积极敏感时，仅保留 consolidated + 指向外部归档的链接——**不在**本默认 harness 中推荐；默认仍保留三份 `-qc*.md`。
+
+### Residual findings（R#）：权威在哪、和主 plan 谁先谁后？
+
+- **Open 条目的单一事实来源（SSOT）**是 **`{PLAN_DIR}/status.json`** → **`metadata.residual_findings[<plan-id>]`**（字段结构见上文 JSON 示例）。跨会话 handoff、关闭与归档流程**以该数组为准**。
+- **推荐操作顺序**（避免 plan 与 JSON 两套 ID 漂移）：
+  1. @project-manager 读完三份 QC 报告并完成「QC 三审轻量汇总」：对 finding **去重合并**，为每条待跟踪项分配**稳定 `id`**（如 `R1`、`R2`，全 plan 内唯一）。
+  2. **立即**将上述条目写入 **`metadata.residual_findings[<plan-id>]`**（含 `source` 指向哪位 QC / 哪份报告文件名，便于回溯）。
+  3. **可选**：在主 plan 中增加 **「Residual findings（索引）」** 小节，**仅复述** `id` + 短标题 + 决策摘要，并写明「**权威列表见** `status.json` → `metadata.residual_findings[<plan-id>]`」。**不要**只在主 plan 里「发明」R# 而不写回 SSOT。
+- **不要**反过来把主 plan 当作唯一登记处：若仅更新 plan、`status.json` 未同步，下一任 agent **无法**依赖 SSOT 继承债务状态。
+
 ### QC 三审触发时机（单 plan · 多 batch）
 
 - **默认（推荐）**：同一 **`plan_id`** 下，**完整 QC 三审**（`qc1` + `qc2` + `qc3` 并行）**仅在 dev team 按该 plan 约定范围全部交付之后**执行**一次**，再进入 @project-manager 汇总与 @qa-engineer 验证。**不要**在每个中间 **batch** / 子里程碑都跑全套三审：否则 `reports/<plan-id>/` 会堆积多套并列报告，**`Review range` / `Diff basis` 与结论**易混淆，handoff 成本高。
