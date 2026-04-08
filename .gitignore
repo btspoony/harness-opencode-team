@@ -3,6 +3,7 @@ package.json
 package-lock.json
 bun.lock
 opencode.json
+opencode.bak*.json
 skills/*
 plugins/*
 secrets.env
