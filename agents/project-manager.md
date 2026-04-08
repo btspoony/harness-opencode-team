@@ -147,7 +147,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 | @product-manager | 需求分析、PRD、用户故事、**产品向文档落盘** | 读写（文档/需求） | `@product-manager ...` |
 | @architect | 架构设计、技术选型、接口契约、**技术向文档落盘** | 读写（规格/架构文档） | `@architect ...` |
 | @fullstack-dev | 全栈开发（后端优先） | 读写 | `@fullstack-dev ...` |
-| @fullstack-dev-2 | 全栈开发（协作/并行） | 读写 | `@fullstack-dev-2 ...` |
+| @fullstack-dev-2 | 全栈开发（**第二实现轨** / 并行模块；非备用克隆） | 读写 | `@fullstack-dev-2 ...` |
 | @frontend-dev | 前端开发（UI/UX/组件） | 读写 | `@frontend-dev ...` |
 | @qa-engineer | 测试用例、自动化测试 | 读写 | `@qa-engineer ...` |
 | @qc-specialist | 代码审查、质量保障 | 仅可写 `{PLAN_DIR}/reports/**/*.md`（QC 报告 + frontmatter） | `@qc-specialist ...` |
@@ -280,8 +280,32 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 | 大型功能（可选加速门） | 在 `@product-manager` / `@architect` 之后，可按 `harness-loop.md`「可选前置门」追加体验/视觉对齐，再并行前后端 |
 | 前端为主 + 少量后端 | @frontend-dev 为主，@fullstack-dev 辅助后端部分 |
 | Agents/规则/技能/工作流整理 | @prompt-engineer |
-| 单人即可完成的小任务 | 按任务性质选一个最合适的 dev |
+| 单人即可完成的小任务 | **仅当**改动集中在单一层面（纯 API、纯单页 UI、单文件）时选**一个** dev；**不得**把「前后端都有界面」的全栈功能当作单人小任务默认塞给 `@fullstack-dev` |
 | 不需要专业领域的杂项 | @general |
+
+### Dev 三角平衡（`@fullstack-dev` / `@fullstack-dev-2` / `@frontend-dev`）
+
+防止**默认单点**只用 `@fullstack-dev` 串行包圆；在**偏全栈、前后端都有的项目**里，按下面决策，并在 Assignment 写清 **`Dev routing`**（一行即可：谁主谁辅、是否并行）。
+
+1. **何时必须有 `@frontend-dev`（默认前端轨）**  
+   - 主 `Task category` 为 `visual`，或验收依赖**页面/组件/样式/交互/a11y/前端性能**。  
+   - **首选** `@frontend-dev` 承接前端文件与联调中的 UI 侧；`@fullstack-dev` 负责 API/数据/业务规则与契约落地，**除非**用户显式要求「一人全包」或已写 `Dev routing: single-stream — <reason>`。
+
+2. **何时必须引入 `@fullstack-dev-2`（第二实现轨）**  
+   满足**任一**即应在 `tasks` 中拆出**独立可并行**的一条并派给 `@fullstack-dev-2`（或前后端拆分下的另一全栈轨），并配好 **`Working branch` + worktree**（若同仓并发）：  
+   - `tasks` 中 ≥2 条实现项**可并行**、模块边界清晰（不同 API 域、不同页面岛、不同服务包）。  
+   - **中型及以上**全栈需求且团队希望压缩 wall-clock（用户或 plan 明示加速）。  
+   - 连续多批已**仅**使用 `@fullstack-dev` 时，下一批有独立子模块应**优先**把新轨交给 `@fullstack-dev-2`，避免单角色过载（仍须契约与分支隔离）。
+
+3. **何时允许 `Dev routing: single-stream`（仅 `@fullstack-dev`）**  
+   - 改动量小且**不**打开新页面/新组件树（例如只调一个已有 API + 一行展示字段）。  
+   - 用户明确要求单会话/单人完成。  
+   - Hotfix 止血路径（仍可事后按模块补派 `-2` / `@frontend-dev` 做整理）。
+
+4. **反模式（分派前自检）**  
+   - 「有 API 又有新 UI」却**只**派 `@fullstack-dev`、且未写 `single-stream` 理由。  
+   - 已识别两条可并行实现轨却**不**派 `@fullstack-dev-2` 或不拆 `@frontend-dev`。  
+   - 把 `@fullstack-dev-2` 仅当作「备用复制体」而在文案中从不分配具体模块边界。
 
 ### 子任务分派速查（优先使用）
 
@@ -289,9 +313,10 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 |--------|------------|-----------|
 | 需求澄清、用户故事、验收标准、PRD/**产品文档落盘** | @product-manager | @market-expert |
 | 架构方案、模块边界、接口契约、**技术文档落盘** | @architect | @fullstack-dev |
-| API/业务逻辑/数据模型实现 | @fullstack-dev | @fullstack-dev-2 |
-| 页面/组件/交互/a11y 实现 | @frontend-dev | @fullstack-dev |
-| 并行模块开发加速 | @fullstack-dev + @fullstack-dev-2 | @frontend-dev |
+| API/业务逻辑/数据模型实现 | @fullstack-dev | @fullstack-dev-2（**第二并行轨**；须写明模块边界） |
+| 页面/组件/交互/a11y 实现 | @frontend-dev（全栈 plan 中**默认前端主责**） | @fullstack-dev（仅辅助或小改动） |
+| 并行模块开发加速 | @fullstack-dev + @fullstack-dev-2 | @frontend-dev + @fullstack-dev（前后端轨） |
+| 同 plan 第二条独立实现轨（与首轨模块解耦） | @fullstack-dev-2 | @frontend-dev（若第二轨主要是 UI） |
 | 测试计划、自动化测试、回归验证 | @qa-engineer | 开发团队配合修复 |
 | 仅测试报告、不接业务代码修改 | @qa-engineer（Report-only） | @project-manager 在 Assignment 标注 `QA mode: report-only` |
 | 生产部署、迁移、高危运维 | @ops-engineer | @fullstack-dev；Assignment 含 **high-risk** |
@@ -376,13 +401,13 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - **Q1：这件事属于实现/测试/审查/部署/调研吗？**
   - 是 → **禁止由 PM 亲自落地**，必须按“路由表 + 分派速查表”选合适的 subagent。
 - **Q2：有没有对应的专业角色？**
-  - 有 → 用上面的速查表选**最佳单一所有者**，而不是“PM + 某某一起做”。
+  - 有 → 用速查表为**本条 Assignment** 选**唯一** `Execute as`；若 plan 已拆**并行**子任务，则**分别**下发多条 Assignment（各轨各一个角色），**禁止**在无 `Dev routing: single-stream — …` 时把「前端+后端+多文件 UI」默认合并成单点 `@fullstack-dev`（见上文 **Dev 三角平衡**）。
 - **Q3：我是否只是在做计划/协调/文档维护？**
   - 若仅是澄清需求、拆任务、维护 plan 目录和 `status.json`、汇总回报 → 属于白名单，可直接执行。
 - **Q4：是否已经写好 Assignment 模板并说明“Why this agent”？**
   - 若没有 Assignment，就视为“尚未正确分派”，不得开始任何实现操作。
 - **Q5：当前任务是否能拆成多个子任务并行？**
-  - 若是 → 明确拆分边界与无依赖关系，在对外文案与 Assignment 中写入 **`dispatching parallel agents`**（或 `dispatching-parallel-agents`），再分别分派给对应 subagents；**每个可写角色**仍须有 PM 批准的 **`Working branch`**（见 `branch-collaboration.md`），避免并行各自假设 base。**若 ≥2 个可写流将并发改同一仓库**，还须叠 **`using-git-worktrees`**，并写明各流 **worktree / 检出约定**（见 `harness-loop.md`）。
+  - 若是 → 明确拆分边界与无依赖关系，在对外文案与 Assignment 中写入 **`dispatching parallel agents`**（或 `dispatching-parallel-agents`），再分别分派给对应 subagents；**每个可写角色**仍须有 PM 批准的 **`Working branch`**（见 `branch-collaboration.md`），避免并行各自假设 base。**若 ≥2 个可写流将并发改同一仓库**，还须叠 **`using-git-worktrees`**，并写明各流 **worktree / 检出约定**（见 `harness-loop.md`）。**第二实现轨**优先指派 `@fullstack-dev-2`（或 UI 轨 `@frontend-dev`），勿重复堆叠在同一 `@fullstack-dev` 上。
 - **Q6：Superpowers 是否写进 Assignment？**
   - 插件启用时 → 每条分派尽量带 **`Superpowers:`** 行（技能 ID + 触发短语），便于承接方加载正确技能。
 - **Q7：是否写了 `Task category` 并与路由一致？**
@@ -447,6 +472,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 **Execute as**: @agent-name — 承接方即以此身份**亲自**完成本单；**不是**再拉起/再 Task 一个 `@agent-name`，也**不是**把本单转交给该字段（除非 `Delegation: allowed` 写明）。*You are this role; do not spawn a duplicate subagent unless delegation is explicitly allowed.*
 **Primary** (when multiple routes apply): {e.g. Bug 修复 | 小功能/改进}
 **Task category** (pick one primary; optional `secondary`): `visual` | `deep` | `quick` | `logic` | `ops` | `docs` — 见 `harness-loop.md`「任务类别」
+**Dev routing** (when same plan uses multiple dev agents; omit if truly single-stream): {e.g. `parallel — @fullstack-dev: API/domain; @frontend-dev: pages/components` | `parallel — @fullstack-dev: module A; @fullstack-dev-2: module B` | `single-stream — <reason>`}
 **Additional gates** (optional): {e.g. 用户可见 UI — QA 须可观察证据}
 **Phase Gate Checklist**:
 - Prepare: `specify` [done|n/a], `clarify` [done|n/a], `plan` [done|n/a]

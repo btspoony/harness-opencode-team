@@ -1,7 +1,7 @@
 {
   "harness_name": "pm-routing-evals",
-  "version": 3,
-  "updated_at": "2026-03-31",
+  "version": 4,
+  "updated_at": "2026-04-08",
   "cases": [
     {
       "id": "small-ui-tweak",
@@ -86,6 +86,20 @@
       "expected_route": ["@project-manager", "@architect", "@fullstack-dev"],
       "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "plan update before further implementation", "re-open clarify when new constraints change acceptance"],
       "hard_fail_if": ["missing Context Loaded declaration", "continues implementation with known plan drift and no plan update", "acceptance-impacting change without clarify refresh", "assignment uses non-English field keys", "report is non-English without user override"]
+    },
+    {
+      "id": "fullstack-board-api-and-ui",
+      "prompt": "做项目看板：后端加分页列表 API，前端新页面表格+筛选，和现有设计系统对齐",
+      "expected_route": ["@explore", "@architect", "@fullstack-dev", "@frontend-dev", "QC-3-reviewers", "@qa-engineer"],
+      "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "Dev routing or explicit parallel Assignments splitting API vs UI", "API contract alignment", "QA evidence in English"],
+      "hard_fail_if": ["missing Context Loaded declaration", "only @fullstack-dev assigned for both substantial API and new UI with no single-stream reason", "assignment uses non-English field keys", "report is non-English without user override"]
+    },
+    {
+      "id": "two-parallel-backend-modules",
+      "prompt": "并行开发两块独立功能：用户通知 API 和活动审计日志 API，模块之间无共享状态",
+      "expected_route": ["@explore", "@architect", "@fullstack-dev", "@fullstack-dev-2", "QC-3-reviewers", "@qa-engineer"],
+      "must_have_artifacts": ["Context Loaded declaration", "assignment language contract (EN keys + CN task body)", "parallel split across two implementers or explicit single-stream reason", "distinct Working branch or worktree per concurrent writer if same repo", "QA evidence in English"],
+      "hard_fail_if": ["missing Context Loaded declaration", "two parallel modules collapsed into one dev without single-stream justification", "assignment uses non-English field keys", "report is non-English without user override"]
     },
     {
       "id": "hotfix-exception-with-post-rca",

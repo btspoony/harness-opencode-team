@@ -71,6 +71,7 @@
 - Assignment 语言契约不一致（字段名漂移为中文、或要求英文报告却回报为中文且无用户豁免）
 - 实现类 Assignment **缺少 `Task category`** 或与 **`Execute as`**、`Why this agent` 明显矛盾（或缺少 **`Execute as`**）
 - **意图门禁**缺失：Prepare 未书面收敛真实目标/成功判据/非目标即进入开发分派
+- **Dev 三角失衡**：在「新 API + 多文件/用户可见 UI」或**可并行的双模块**场景下，长期**仅**派 `@fullstack-dev`、从不派 `@frontend-dev` / `@fullstack-dev-2`，且 Assignment 未写明 `Dev routing: single-stream — …`
 
 ## 迭代规则
 
