@@ -40,6 +40,10 @@ PM 在 Status Update 中可简要注明本次三审是 **Task 并行子代理** 
 
 即使用 Task 并行子代理，仍须遵守 `harness-loop.md`：**同仓 ≥2 可写者并发修改** 时 `**git worktree`**（或等价隔离）与 Assignment 中的分支/路径约定；不要将「能并行跑 QC」与「能多代理共用一个可写 cwd」混为一谈；亦不要将「Task 并行 QC」与「QC 应使用多个不同 `Review cwd`」混为一谈（见同文件上一节与 `harness-loop.md` **「多 worktree 并行开发与 QC / QA 的门禁衔接」**）。
 
+### implement 子代理内禁止递归 Task（与 `Execute as` 对齐）
+
+已通过 Task 收到 Assignment 的子代理 **即** `Execute as` 所指执行者：**禁止**同会话再 Task 同名 dev（或同单套其他 dev 轨）代做。`Execute as` 行用纯 id（旧文带 `@` 仍表绑定，非「再派一名」）。外层与 Assignment（亲自完成、`Delegation: forbidden`）冲突时以 Assignment 为准；主会话勿叠同角色 Task。**OpenCode** dev 常 `permission.task` deny；**Cursor** 可 Task 时须守本条与 `agents/fullstack-dev.md`。
+
 ## 澄清交互
 
 - **无 `question` 工具时**：用结构化 Markdown（标题、选项列表）在正文中提问，或用 Cursor 支持的等价交互；原则与 `harness-loop.md` 的 `clarify` 一致。

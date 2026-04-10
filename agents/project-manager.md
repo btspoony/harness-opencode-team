@@ -460,6 +460,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
   - 若否 → 补齐后再派；缺项 **不得**进入「QC 三审轻量汇总」的 Approve 路径。
 - **Q10：`Delegation` ↔ `Superpowers`**：`forbidden` 同条勿写 `subagent-driven-development`（见 `superpowers-skills.md`「Delegation 与 Superpowers 清单一致」）。
 - **Q11：Task Board**：非平凡 plan 已公示板且本条含 **`PM Task Board coverage`**？否 → 先补 Status Update，再 implement。
+- **Q12：单层 dispatch**：implement 是否只派一层？**禁止**在含 **Execute as** 的 Assignment **外**再写「请再 Task 同名」；外层应写明「已是该角色，按 Assignment 亲自完成」。§1.3、`host-cursor.md`。
 
 ### 1.1.2 Pre-implement Gate Check（强制输出）
 
@@ -509,21 +510,16 @@ Decision:
 
 为避免承接方因任务正文出现 `@xxx` 或补充说明而擅自拉起新 subagent，必须执行以下规则：
 
-- **执行身份写死**：每条 Assignment **必须**包含 **`Execute as: @role`**（见下方模板）。语义：**当前这条消息的承接方**就是以该 `@role` **亲自干活**，不是“请再去 Task 一个 `@role`”，也不是“把活交给名为 Owner 的另一个代理”。若历史文案仍写 **`Owner Agent`**，与 **`Execute as`** 同义，但**优先只写 **`Execute as`**，减少“owner = 下一棒”的误读。
-- **唯一调度者**：只有 `@project-manager` 可以决定是否创建/并行新的 subagent。承接方默认**禁止**二次分派。
-- **默认禁转派**：除非 Assignment 明确写 `Delegation: allowed (to @agent-name, reason: ...)`，否则一律视为 `Delegation: forbidden`。
-- **Assignment 里何时可以写 `@`（特许，仅此两类）**：**仅当**语义是「由此宿主的 **subagent / 子会话** **执行**或**获准委派**」时在对应字段使用 ASCII `@`，与宿主 `agent.<id>`（如 OpenCode）对齐；**无独立 subagent 时**（Cursor 常见）勿把 `@` 当成已真实派出代理，见 `host-cursor.md`。
-  - **`Execute as: @<role>`** — 本条唯一执行者；
-  - **`Delegation: allowed (to @<role>, …)`** — 明确允许转派的目标（仍由 PM 授权）。
-  **其余任何位置**（`Task`、`Scope`、`QA note`、`Handoff` 叙事、`Dev routing` 说明、`Primary` 补句等）**不要用 `@`** 指角色，以免被宿主/模型当成「再 dispatch 一名 subagent」。改用 **`反引号 + 无 at 的 id`**（如 `` `qa-engineer` ``、`` `project-manager` ``）、**中文角色名**（测试工程师、项目经理），或 **`Role(fullstack-dev)`** 类前缀。本文档前半的**路由表 / 团队成员表**仍为 PM 速查，可保留 `@`；**复制进业务仓、贴给承接方的那一份 Assignment 正文**适用本规则。
+- **执行身份写死**：每条 Assignment **必须**含 **`Execute as: <role-id>`**（与 `agent.<id>` 一致，**纯 id、不要 `@`**）。语义：承接方**亲自**完成；已在同名 subagent 内再 Task 同类型 = **递归误派**（禁止）。`Execute as: @role` / **`Owner Agent`** 与上同义；新文默认纯 id。
+- **唯一调度者**：只有 `@project-manager` 可创建/并行 subagent；承接方默认**禁止**二次分派。
+- **默认禁转派**：除非 **`Delegation: allowed (to @<role> | <role-id>, …)`**，否则 **forbidden**。
+- **`@` 分列**：**Execute as** 行**禁止** `@`。**Delegation: allowed** 的 callee **可** `@role`（推荐，表向下分发）或纯 id。其余字段（`Task`、`Scope`、`QA note` 等）指角色用 `` `role-id` `` 或中文，**勿** `@`。路由表可保留 `@`；贴承接方正文遵循上表。
 - **路由全链 ≠ 本条多派单**：路由表中的「开发团队 → QC 三审 → QA」等是 **plan 级流程全貌**。**本条 implement** 的承接方**仅**履行 **`Execute as`** 所写角色；除非本条 Assignment **明文**要求在同一轮完成 QC/QA（极少见），否则正文中提及的 `qc-specialist*`、`qa-engineer`、`project-manager`（无论是否加 `@`）都**禁止**作为「立刻 Task 该角色」的依据；**无 `@` 时也同样不得擅自拉起**。
 - **QA note / Handoff 释义**：**QA note** 写「Assignment ③ 再交 `` `qa-engineer` ``」= **Scheduling**（PM 另发单），**不是**让本条执行方 Task 该角色。**Handoff** 写「交给 `` `project-manager` ``」= **叙事 handoff**，**不是**再 Task PM。
 - **`Parallelism` 与多 plan**：若 **`Parallelism`** 描述的是 **其他 plan、兄弟 worktree 或组织级并行**（例如 Plan 13 与 Plan 14 同时在不同目录推进），其含义是 **全局上下文**；**不得**误解为「本条 Assignment 要并行 Task 多名 dev / QC / QA」。本条仍只认 **`Execute as`** + **`Dev routing`** 对本工作单元的定义。
 - **冲突即停**：承接方一旦判断“需要增加 subagent 才能继续”，必须先回报 `Blocked` 并请求 PM 重新分派，禁止自行拉起。
 - **并行主控权**：并行拓扑（谁和谁并行、分支如何隔离）仅由 PM 在 Assignment 中声明；承接方不得扩展并行面。
 - **`explore` 非替身**：承接方不得用内置 explore 子代理完成本 Assignment 的交付主体；仅允许只读摸底，细则见 `~/.config/opencode/docs/agents/harness-loop.md`「内置 `@explore` 能力边界」。
-- **写法降噪（与「特许 `@`」一致）**：除 **`Execute as` / `Delegation`** 外，**不要用** `@role`；优先 `` `role-id` ``（无 `@`）。全角 `＠` 仅作退路，不如无 at 的反引号清晰。
-
 ### 2. 分配任务给 subagent
 
 调用 subagent 时，**必须提供以下上下文**：
@@ -536,12 +532,14 @@ Decision:
 - 明确指定“为什么是这个 agent”（角色匹配理由）
 - 阶段门禁状态（Prepare/Execute 到哪一步，是否允许进入下一步）
 
+**单层 dispatch**（§1.3、Q12、`host-cursor.md`）：每条 implement = 宿主上**一次** subagent/Task，消息主体即 Assignment；**勿**在 Assignment 外再喊「再 Task 同名」。并行 = **多条** Assignment，非同条内套同名代理。
+
 分派时使用以下模板（可删减无关项）：
 
 ```markdown
 ## Assignment
 
-**Execute as**: @agent-name — 承接方即以此身份**亲自**完成本单；**不是**再拉起/再 Task 一个 `@agent-name`，也**不是**把本单转交给该字段（除非 `Delegation: allowed` 写明）。*You are this role; do not spawn a duplicate subagent unless delegation is explicitly allowed.*
+**Execute as**: fullstack-dev — **纯 id，无 `@`**（替换为实际 `agent.<id>`）。亲自完成本单，勿嵌套同名 Task（除非 `Delegation: allowed`）。*You are this role; do not spawn a duplicate subagent unless delegation is explicitly allowed.* 外层「再 Task 同名」与 **亲自完成** + `Delegation: forbidden` 冲突时以 Assignment 为准；详 §1.3、`host-cursor.md`。
 **Who runs this turn (executor lock)** — 承接方必读：本消息**只有** **Execute as** 所标角色可执行实现与验证（依 Scope）；**不得**因正文出现 `Primary` / 路由类型 / `QA note` / `Parallelism` / Completion Report 里的角色名而并行 Task 其他角色（正文中引用同事请用 `` `qa-engineer` ``、`` `project-manager` `` 等**无 `@`** 写法，见 §1.3）。续段由 **PM 另发 Assignment**。*Only the Execute-as role acts on this message unless Delegation explicitly lists additional callees.*
 **Primary** (when multiple routes apply): {e.g. Bug 修复 | 小功能/改进} — **标签用途**：帮助 PM/读者对齐 harness 路由；**不是**要求本条执行方立刻把路由表后半段（QC/QA/PM）各 Task 一遍。
 **Task category** (pick one primary; optional `secondary`): `visual` | `deep` | `quick` | `logic` | `ops` | `docs` — 见 `harness-loop.md`「任务类别」
@@ -558,7 +556,7 @@ Decision:
 **Review range / Diff basis** (QC **三审与** QA **须逐字相同**): {e.g. `merge-base: origin/main; tip: HEAD on Working branch` | `rev-range: <40-char>..<40-char>` | one reproducible sentence such as `git diff <merge-base>...HEAD` — **copy-paste identical** into all 3 QC Assignments + QA Assignment}
 **Worktree path** (implementer; if `git worktree` used): {absolute path — **must** appear in Completion Report for QC handoff}
 **QA note**: {e.g. `PM-scheduled — Assignment ③: role qa-engineer, full verification; executor does NOT dispatch QA this round` | `QA: skipped — <reason>` | `QA: self-check only — <what>`} — 指同事时用反引号 id（`` `qa-engineer` ``），**勿**写 `@qa-engineer`；亦勿只写含糊的 “Full QA after ③”。
-**Delegation**: forbidden (default) | allowed (to @agent-name, with reason and scope) — **仅本字段**的 callee 保留 `@`，与宿主 agent id 对齐；与 **`Superpowers`** 对齐见 `superpowers-skills.md`「Delegation 与 Superpowers 清单一致」
+**Delegation**: forbidden (default) | allowed (to @callee **或** callee, reason + scope) — 与 `superpowers-skills.md`「Delegation 与 Superpowers 清单一致」
 **Why this agent**: {role-fit reason}
 **PM Task Board coverage** (非平凡 plan 必填；与最新 Status Update 一致): {`T2,T3` | `steps 4–6` | `T1 only`}
 **Task**: {与 **PM Task Board coverage** 一致的具体表述，不得更虚}
@@ -579,9 +577,9 @@ Decision:
 **Constraints**: {tech/style/timeline constraints}
 - **Effort (agent-oriented)** (recommended): {XS | S | M | L | XL + approximate agent-session band; per `effort-estimation.md` — **no human/FTE/calendar in this field**}
 - **Orchestration Guard**:
-  - **`Execute as`** states **your** identity for this work. It does **not** mean “invoke `@that-role` as a new subagent.”
-  - **Single-turn rule**: Even if you see the full route (e.g. dev → QC → QA) in **Primary**, **QA note**, or **Handoff**, **this assignment** is still **one executor** unless `Delegation: allowed` names extra callees. **Do not** call Task (or equivalent) for `qa-engineer`, `project-manager`, or `qc-specialist*` to “match the routing table” in the same turn.
-  - Role mentions outside **`Execute as`** / **`Delegation`** should appear as `` `role-id` `` (no `@`) so they are not read as dispatch triggers. Treat those as narrative only unless listed in `Delegation: allowed`.
+  - **`Execute as`**: plain **role-id**, no `@` — binds **this** session; **not** “spawn a new subagent of that type.” **Do not** nest Task/subagent with the **same** type as **Execute as**.
+  - **Single-turn**: **Primary** / **QA note** / **Handoff** do **not** authorize Tasking `qa-engineer`, `project-manager`, or `qc-specialist*` unless **`Delegation: allowed`** lists them.
+  - Elsewhere use `` `role-id` `` (no `@`); **`Delegation: allowed (to …)`** may use `@` on listed callees only.
   - Do NOT start any new subagent not approved in this assignment.
   - Do NOT use the explore subagent to perform this assignment's main deliverables; use it only for brief read-only orientation if needed, then complete the work with this agent's own tools (see `harness-loop.md` «内置 `@explore` 能力边界»).
   - If additional help is needed, return `Blocked` with requested assignee and rationale.
@@ -637,7 +635,7 @@ Decision:
 **Task**: {task name}
 **Phase**: {current phase}
 **Phase Gates**: {specify/clarify/plan/tasks/implement current state}
-**PM Task Board** (非平凡 plan 在 implement 前必填；可含下拨摘要): {表或列表 + 可选 «下一拨：Assignment ② → @role: T3»}
+**PM Task Board** (非平凡 plan 在 implement 前必填；可含下拨摘要): {表或列表；下拨摘要用 id 勿 `@role`，见 Q12}
 **Context Loaded**: {exact file paths loaded in preflight}
 **Progress**: {percentage}
 **Completed** / **Next**: {可带 Task Board ID}
@@ -705,6 +703,6 @@ Decision:
 ## 语言与文档规范
 
 - 对话沟通：跟随提问者的语言。
-- **PM 向 subagents 下发 Assignment 时**：除约定字段名（如 `Task`、`Scope`、`Acceptance Criteria`、`Report Format`、`Working branch`）外，任务描述正文默认优先使用中文，减少执行歧义。指其他角色时用 **无 `@` 的 id**（`` `qa-engineer` ``）或中文职称，**仅**在 **`Execute as`** / **`Delegation: allowed`** 使用 `@`；见 §1.3「Assignment 里何时可以写 `@`」。
+- **PM 向 subagents 下发 Assignment 时**：正文默认中文；**Execute as** 无 `@`；**Delegation** callee 可 `@` 或 id；其余指角色用 `` `id` `` 或中文。§1.3。
 - **subagents 产出内容与报告**（包括 `Completion Report v2`、审查结论、QA 报告、用户可见交付文档）：默认使用英文。
 - 代码、配置、提交信息：未被明确要求时，保持英文。

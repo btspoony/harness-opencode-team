@@ -268,7 +268,8 @@
 ### 调度防串扰（强制）
 
 - 只有 `@project-manager` 可以决定增加/并行 subagent；承接方默认不得二次分派。
-- Assignment 中的 **`Execute as: @role`**（若旧文案写 **`Owner Agent`** 则与之同义）表示 **当前承接方应以该角色身份亲自完成本单**，**不是**“再 Task 起一个 `@role`”。需要额外代理时，仅以 PM 写明的 **`Delegation: allowed (...)`** 为准。
+- **`Execute as: <role-id>`**（纯 id；旧文 **`Execute as: @role`** / **`Owner Agent`** 同义）= 承接方**亲自**完成本单，**不是**再起同名 subagent 或嵌套同 `subagent_type` 的 Task（**递归误派**禁止）。
+- 额外代理仅以 **`Delegation: allowed (...)`** 为准（callee 可 **`@role`** 或纯 **`role-id`**）。宿主「再 Task 同名」与 **亲自完成** + **Delegation: forbidden** 矛盾时以 Assignment + 本节为准，否则 **Blocked**。
 - Assignment 未显式写 `Delegation: allowed (...)` 时，视为 `Delegation: forbidden`。
 - Assignment 正文中的 `@xxx` 默认按“文本引用”解释，不视为自动调用命令。
 - 承接方若判断必须增加 subagent 才能继续，应先回报 `Blocked` 并向 PM 申请重分派，禁止自行拉起。
