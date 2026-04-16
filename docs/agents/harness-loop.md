@@ -221,6 +221,7 @@
 
 - 独立模块可并行；避免写操作归属重叠。
 - 跨领域变更时，先锁定接口契约再并行编码。
+- **易混淆（dev 调度）**：**串行多批**、计划写「单轨 / 不并行」指的是 **不在同一时刻开多条并行实现轨**（及同仓多可写并发时的 worktree 等），**不**表示 PM Task Board 上只能出现一个 dev **角色 id**。纯后端多单元仍可按 `agents/project-manager.md` **Dev 三角 §6** 在 `fullstack-dev` / `fullstack-dev-2` 间 **串行** round-robin；与 **`dispatching-parallel-agents`**（多轨**同时**推进）不是一回事。
 - QC 审查员并行运行，完成后统一汇总。
 - **QC 三审**在 **feature 开发完成之后**执行，审查对象仍是 **该 feature 在 `Working branch` 上的状态**；三名 reviewer 须在 **PM 指定的同一「待审检出」上下文**（通常为 **开发回报的实现用 worktree 路径**，**且**该路径须已能代表 **含全部待审提交的** 分支 `HEAD`）上读 diff、跑检查，且 **三份 Assignment 的 `plan_id` 与 `Review range` / `Diff basis` 须逐字相同**（见下文「QC 三审、QA 验证与 feature 检出上下文」及 **「多 worktree 并行开发与 QC / QA 的门禁衔接」**），**禁止**默认用错分支、未对齐 cwd 或不同 diff 范围代审；**禁止**在曾多 worktree 并行、多分支未集成时，只选一个开发目录却声称审查覆盖整 plan。
 - **启用 `{PLAN_DIR}` 且同一 plan 分多 batch 实现时**：**默认只对「整 plan 交付完成」跑一轮完整 QC 三审**，**不在**每个 batch 重复全套三审（避免 `reports/<plan-id>/` 混乱）；中间阶段用自检与 PM 协调替代。**Request Changes** 后的再审视为**新波次**，落盘文件名与汇总口径见 `plan-convention.md`「QC 三审触发时机」。**显式增量三审**须 PM 在 Assignment 写明例外与范围。

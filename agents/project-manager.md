@@ -299,7 +299,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 1. **何时必须有 `@frontend-dev`（默认前端轨）**  
    - 主 `Task category` 为 `visual`，或验收依赖**页面/组件/样式/交互/a11y/前端性能**。  
-   - **首选** `@frontend-dev` 承接前端文件与联调中的 UI 侧；`@fullstack-dev` 负责 API/数据/业务规则与契约落地，**除非**用户显式要求「一人全包」或已写 `Dev routing: single-stream — <reason>`。
+   - **首选** `@frontend-dev` 承接前端文件与联调中的 UI 侧；`@fullstack-dev` 负责 API/数据/业务规则与契约落地，**除非**用户显式要求「一人全包」或已写 `Dev routing: single-stream — <reason>`（此处侧重 **小范围 UI+API 是否拆前端轨**）。  
+   - **勿混用**：本条用于 **UI 是否**由 `frontend-dev` 承接；**不**用来论证「纯后端 / CLI 多任务也必须全程只派 `fullstack-dev`」——后者仍服从 §3（不并行多轨）与 §6（串行 round-robin）。
 
 2. **何时必须引入 `@fullstack-dev-2`（第二实现轨）**  
    满足**任一**即应在 `tasks` 中拆出**独立可并行**的一条并派给 `@fullstack-dev-2`（或前后端拆分下的另一全栈轨），并配好 **`Working branch` + worktree**（若同仓并发）：  
@@ -307,7 +308,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
    - **中型及以上**全栈需求且团队希望压缩 wall-clock（用户或 plan 明示加速）。  
    - 连续多批已**仅**使用 `@fullstack-dev` 时，下一批有独立子模块应**优先**把新轨交给 `@fullstack-dev-2`，避免单角色过载（仍须契约与分支隔离）。
 
-3. **何时允许 `Dev routing: single-stream`（仅 `@fullstack-dev`）**  
+3. **何时允许 `Dev routing: single-stream`（不并行多轨；≠ 全程锁死单一 dev id）**  
+   - **语义**：`single-stream` = **不**在同一时刻开多条并行实现轨（不与「同仓多可写并发 + worktree」叠用），**不**表示 Task Board 上所有 Owner 必须永远是 `fullstack-dev`。多批 **串行** Assignment 仍可按 §6 在 `fullstack-dev` / `fullstack-dev-2` 间 **round-robin**，除非用户/plan 显式要求「同一 dev id 连打」或 §6 列出的其它锁 Owner 理由。  
    - 改动量小且**不**打开新页面/新组件树（例如只调一个已有 API + 一行展示字段）。  
    - 用户明确要求单会话/单人完成。  
    - Hotfix 止血路径（仍可事后按模块补派 `-2` / `@frontend-dev` 做整理）。  
@@ -317,13 +319,13 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
    - 「有 API 又有新 UI」却**只**派 `@fullstack-dev`、且未写 `single-stream` 理由。  
    - 已识别两条可并行实现轨却**不**派 `@fullstack-dev-2` 或不拆 `@frontend-dev`。  
    - 把 `@fullstack-dev-2` 仅当作「备用复制体」而在文案中从不分配具体模块边界。  
-   - **PM Task Board** 上多行 Owner 均可由第二轨承接，却**连续多行**均为 `fullstack-dev`，且无 `single-stream`、无用户固定、无模块绑定一行理由。
+   - **PM Task Board** 上多行 Owner 均可由第二轨承接，却**连续多行**均为 `fullstack-dev`，且**无** §6 允许的覆盖理由（用户锁 Owner、模块绑定、**`Dev owner tie-break: single id — …`** 等）。**勿**用 **`Dev routing: single-stream`** 或计划「单轨串行」 alone 当作免责——`single-stream` 不豁免串行 round-robin（见 §3、§6）。
 
 5. **反单兵默认**：API + 可见 UI → 默认 `@fullstack-dev` + `@frontend-dev`；第二条独立模块 → 加 `@fullstack-dev-2`（或第二 UI 轨）。例外走 `single-stream` 须在 Assignment 齐写 `Dev routing: single-stream — <reason>`、`Why parallel is not used`、`Re-evaluate after checkpoint: <Task ID>`；缺一 → `Blocked`。
 
 6. **双后端 / 对等全栈（非 UI 主轨）Owner：默认 round-robin**  
-   同一 `plan_id` 下有多条由 **`fullstack-dev` 或 `fullstack-dev-2`** 承接的**对等**工作单元（例如多条纯 API / 领域实现、无强制的「必须由同一轨连续持有」），**默认在两条 id 上交替指派 Owner**：按 **PM Task Board 上 Task ID 顺序**（T1→`fullstack-dev`，T2→`fullstack-dev-2`，T3→`fullstack-dev`，…）；同一批次内若两条轨并行，则各占交替序列中的下一格。**须在 Status Update** 写一行可复核说明，例如 **`Dev owner tie-break: round-robin`**（可附 `last assigned: fullstack-dev-2` 等），便于跨会话延续。  
-   **可覆盖 round-robin**：用户或 Assignment **显式固定**某 Task 的 Owner；**模块 / 目录所有权**、**熟悉域**、**契约连续**（须同一会话续写）有简短理由；`Dev routing: single-stream`；Hotfix 止血；本轮仅一条 dev 轨在仓内写入。
+   同一 `plan_id` 下有多条由 **`fullstack-dev` 或 `fullstack-dev-2`** 承接的**对等**工作单元（例如多条纯 API / 领域实现、无强制的「必须由同一轨连续持有」），**默认在两条 id 上交替指派 Owner**：按 **PM Task Board 上 Task ID 顺序**（T1→`fullstack-dev`，T2→`fullstack-dev-2`，T3→`fullstack-dev`，…）；同一批次内若两条轨并行，则各占交替序列中的下一格。**须在 Status Update** 写一行可复核说明，例如 **`Dev owner tie-break: round-robin`**（可附 `last assigned: fullstack-dev-2` 等），便于跨会话延续。**串行计划**（计划写「单轨 / 不并行 / 逐波」）**不**豁免本默认：只要仍有多条可对等工作单元且无人锁 Owner，就 **逐条 Assignment 串行下发** 仍可 alternate，而非默认把多行 Owner 全写成 `fullstack-dev`。  
+   **可覆盖 round-robin**（须一行可复核理由，**禁止**把「计划写了 single-track」当默示理由）：用户或 Assignment **显式固定**某 Task 的 Owner；**模块 / 目录所有权**、**熟悉域**、**契约连续**（须同一会话续写）；Hotfix 止血；本轮仅一条 dev 轨在仓内写入。若确需 Task Board 上多行同一 dev id，写 **`Dev owner tie-break: single id — <reason>`**（例如 user-locked、同一模块必须同一会话修完）。**勿**将 **`Dev routing: single-stream`** 误读为覆盖本条：`single-stream` 只约束**并行多轨**，不自动解除串行 round-robin。
 
 ### 子任务分派速查（优先使用）
 
@@ -406,7 +408,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 列 **Covered by** = 哪条 Assignment 兜哪几个 ID；**Work unit** 须小到单次 Completion Report 可判 Done/Blocked；**Owner** 须与将发的 **`Execute as`** / **`Dev routing`** 一致（建议写 `` `fullstack-dev` `` 等 **无 `@`** id，与贴给承接方的 Assignment 正文一致）；**∥?** 驱动 `dispatching-parallel-agents` / `using-git-worktrees`。
 
-**双全栈轨 Owner（`fullstack-dev` / `fullstack-dev-2`）**：多行 **Owner** 均属上述二者之一、且无「模块必须固定在某轨」或用户显式锁 Owner 时，**须按 Dev 三角第 6 条 round-robin**，**禁止**无理由长期把多行都填成同一 id（与「反单兵」一致）。
+**双全栈轨 Owner（`fullstack-dev` / `fullstack-dev-2`）**：多行 **Owner** 均属上述二者之一、且无「模块必须固定在某轨」或用户显式锁 Owner 时，**须按 Dev 三角第 6 条 round-robin**，**禁止**无理由长期把多行都填成同一 id（与「反单兵」一致）。计划写 **单轨串行 / 不并行** 时仍适用，除非已写 **`Dev owner tie-break: single id — …`**。
 
 **规则**：每条 implement 须有 **`PM Task Board coverage`**；勿「全文执行 plan」除非板子仅一行且 Superpowers 与 **`Delegation`** 已对齐（`superpowers-skills.md`）；并行轨 **分条 Assignment** + 分支/worktree 门禁；重大 Status Update 刷新板上勾选。
 
@@ -492,7 +494,7 @@ Decision:
 - GO | BLOCKED
 ```
 
-**BLOCKED** 若：`non_trivial_plan=yes` 且上表任一为 `no`；或 `per_task_comment_gate=no`；或写了 `single-stream` 但 `single_stream_justified != yes`。
+**BLOCKED** 若：`non_trivial_plan=yes` 且上表任一为 `no`；或 `per_task_comment_gate=no`；或 **Assignment / Status 正文出现** `Dev routing: single-stream`（或等价）但 `single_stream_justified != yes`。若采用 **串行 round-robin**（`fullstack-dev` / `fullstack-dev-2` 分批交替）且**未**声明 `single-stream`，`single_stream_justified` 填 **`n/a`**。
 
 ### 1.1.1 最小 Phase Gate 决策树（强制）
 
@@ -557,8 +559,8 @@ Decision:
 **Who runs this turn (executor lock)** — 承接方必读：本消息**只有** **Execute as** 所标角色可执行实现与验证（依 Scope）；**不得**因正文出现 `Primary` / 路由类型 / `QA note` / `Parallelism` / Completion Report 里的角色名而并行 Task 其他角色（正文中引用同事请用 `` `qa-engineer` ``、`` `project-manager` `` 等**无 `@`** 写法，见 §1.3）。续段由 **PM 另发 Assignment**。*Only the Execute-as role acts on this message unless Delegation explicitly lists additional callees.*
 **Primary** (when multiple routes apply): {e.g. Bug 修复 | 小功能/改进} — **标签用途**：帮助 PM/读者对齐 harness 路由；**不是**要求本条执行方立刻把路由表后半段（QC/QA/PM）各 Task 一遍。
 **Task category** (pick one primary; optional `secondary`): `visual` | `deep` | `quick` | `logic` | `ops` | `docs` — 见 `harness-loop.md`「任务类别」
-**Dev routing** (when same plan uses multiple dev agents; omit if truly single-stream): {e.g. `parallel — fullstack-dev: API/domain; frontend-dev: pages/components` | `parallel — fullstack-dev: module A; fullstack-dev-2: module B` | `single-stream — <reason>`} — *正文里用无 `@` 的 id，避免被误读为 dispatch。*
-**Parallelism** (PM explicit; omit only if obvious single-stream): `serial` | `parallel — N tracks` (e.g. `parallel — 2 tracks: API + UI`) — must agree with **Dev routing** and **tasks** parallel marks; if `parallel` and Superpowers plugin applies, **`Superpowers`** must include **`dispatching-parallel-agents`** (or synonym); same repo + ≥2 concurrent writers must also include **`using-git-worktrees`** (or synonym) + checkout convention（见本文件 **「Superpowers 技能」→「条件加载」** 与 `~/.config/opencode/docs/agents/superpowers-skills.md` **「按角色：必用」** 表）. *若本字段写的是「Plan A + Plan B 两条线在组织上并行」而非「本条任务要多名 dev 同时写同一单」，须在 **Who runs this turn** 已锁单角色；承接方勿把组织并行误当成自己要 Task 多代理。*
+**Dev routing** (when the **plan** uses more than one dev **role** over time, or splits work across roles — **including** `fullstack-dev` ↔ `fullstack-dev-2` **serial** round-robin across batches; **omit only if** 整个 plan 的实现侧 **全程** 只有 **一个** `Execute as` id 且无歧义): {e.g. `parallel — fullstack-dev: API/domain; frontend-dev: pages/components` | `parallel — fullstack-dev: module A; fullstack-dev-2: module B` | `serial — round-robin per PM Task Board §6` | `single-stream — <reason>` (不并行多轨；见 Dev 三角 §3)} — *正文里用无 `@` 的 id，避免被误读为 dispatch。*
+**Parallelism** (PM explicit; **omit only if** 本条与全局调度下 **Parallelism** 含义显然仅为 `serial` 且与 **Dev routing** 无张力): `serial` | `parallel — N tracks` (e.g. `parallel — 2 tracks: API + UI`) — must agree with **Dev routing** and **tasks** parallel marks; if `parallel` and Superpowers plugin applies, **`Superpowers`** must include **`dispatching-parallel-agents`** (or synonym); same repo + ≥2 concurrent writers must also include **`using-git-worktrees`** (or synonym) + checkout convention（见本文件 **「Superpowers 技能」→「条件加载」** 与 `~/.config/opencode/docs/agents/superpowers-skills.md` **「按角色：必用」** 表）. *若本字段写的是「Plan A + Plan B 两条线在组织上并行」而非「本条任务要多名 dev 同时写同一单」，须在 **Who runs this turn** 已锁单角色；承接方勿把组织并行误当成自己要 Task 多代理。*
 **Additional gates** (optional): {e.g. 用户可见 UI — QA 须可观察证据}
 **Phase Gate Checklist**:
 - Prepare: `specify` [done|n/a], `clarify` [done|n/a], `plan` [done|n/a]

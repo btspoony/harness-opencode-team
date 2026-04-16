@@ -72,6 +72,7 @@
 - 实现类 Assignment **缺少 `Task category`** 或与 **`Execute as`**、`Why this agent` 明显矛盾（或缺少 **`Execute as`**）
 - **意图门禁**缺失：Prepare 未书面收敛真实目标/成功判据/非目标即进入开发分派
 - **Dev 三角失衡**：在「新 API + 多文件/用户可见 UI」或**可并行的双模块**场景下，长期**仅**派 `@fullstack-dev`、从不派 `@frontend-dev` / `@fullstack-dev-2`，且 Assignment 未写明 `Dev routing: single-stream — …`
+- **误把「单轨串行」当「全程仅 fullstack-dev」**：计划写不并行 / 逐波串行，但 PM Task Board 上多行可对等 dev 单元却**无理由**全部 `fullstack-dev`、未按 `project-manager.md` Dev 三角 §6 round-robin，也未写 `Dev owner tie-break: single id — …`
 - **并行技能标签缺失**：已下发 **≥2 条并行实现 Assignment**（或 `Dev routing: parallel` / tasks 并行标记）且走 Superpowers 工作流时，**Status Update 或 Assignment 的 `Superpowers` 未**出现 **`dispatching-parallel-agents`**（或表中同义短语）；或 **同仓 ≥2 可写并发** 却未叠 **`using-git-worktrees`** 与检出约定
 
 ## 迭代规则
