@@ -11,3 +11,5 @@ secrets.env
 # Cursor workspace noise; keep team-shared rules tracked
 .cursor/*
 !.cursor/rules/
+*.jsonc
+!.markdownlint-cli2.jsonc
