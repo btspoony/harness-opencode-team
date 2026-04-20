@@ -58,6 +58,7 @@
 13. `docs/agents/host-cursor.md` — Cursor、`/pm`、Task 子代理与 QC 三审对齐、补充编排模式。
 14. `docs/agents/opencode-config-secrets.md` — 全局 `opencode.json` 密钥占位 `{env:}` / `{file:}` 与变量名说明；配合 `secrets.env.example`。
 15. `docs/agents/effort-estimation.md` — Agent 语境下的工期与工作量口径：**仅** agent 实施（会话/尺码）；**禁止**与人天、FTE、人类日历混在同一 Effort 字段。
+16. `docs/agents/coding-behavior-guidelines.md` — 跨角色通用编码行为准则（Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution），用于减少静默假设、过度设计与不可验证完成声明。
 
 ### **角色文件**
 
@@ -79,6 +80,7 @@
 
 - 保持边界显式，避免跨层隐式耦合。
 - 行为变更必须有对应验证证据。
+- 编码行为准则（跨角色共享）遵循 `docs/agents/coding-behavior-guidelines.md`；角色提示词应尽量引用而非重复粘贴长段行为条款。
 - 拒绝未记录的破坏性变更。
 - 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需在 Assignment 显式写 `Branch policy` 例外。新开分支的**祖先**由 Assignment 写明（可从 `main`、已有 `feature/*`、或 `current` 叠分支；细则见 `harness-loop.md`）。
 - **PM 开发分派（Dev 三角）**：`@fullstack-dev` 后端主导；用户可见 UI / 多文件前端默认由 `@frontend-dev` 主责；独立第二实现轨用 `@fullstack-dev-2`。勿在无 `Dev routing: single-stream — …` 时把「API + 实质 UI」默认单点塞给 `@fullstack-dev`。**`single-stream` 表示不并行多轨，不表示** Task Board 上全程只能 `fullstack-dev`：多批串行仍可按该专题 §6 在双后端轨间 round-robin，除非有锁 Owner 理由。全文见 `agents/project-manager.md`「Dev 三角平衡」。

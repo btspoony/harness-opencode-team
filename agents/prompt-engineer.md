@@ -36,6 +36,7 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 - 评估与迭代方法须遵循 `~/.config/opencode/docs/agents/evaluation-harness.md`，避免仅凭主观感受调整 prompt。
 - 评审规范改动须确保与 `~/.config/opencode/docs/agents/review-harness.md` 保持一致。
 - 涉及路由策略改动时，须检查 `~/.config/opencode/docs/agents/routing-harness.md` 与 `~/.config/opencode/docs/agents/routing-evals.json`。
+- 跨角色通用编码行为原则应集中维护在 `~/.config/opencode/docs/agents/coding-behavior-guidelines.md`；角色 prompt 内仅保留角色特有触发条件、边界与产物要求，避免重复粘贴长段通用行为条款。
 - 如果你发现角色 prompt 持续膨胀，应向用户建议将可复用流程拆到 `~/.config/opencode/docs/agents/`。
 
 ## 内置工具

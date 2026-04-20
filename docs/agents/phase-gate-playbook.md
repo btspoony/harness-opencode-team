@@ -40,6 +40,7 @@
 - `implement`
   - 目标：按任务执行并提交证据，进入审查。
   - 最小产物：实现 diff、自检证据、回报与 handoff。
+  - **行为准则**：执行中遵循 `coding-behavior-guidelines.md`（不静默假设、优先简单方案、只做与任务直接相关的手术式改动、按 `Step -> verify` 推进）。
   - **编辑纪律**：改文件前以磁盘为准重读；Patch 失败则重读、缩小步长，禁止盲试（见 `harness-loop.md`「可验证编辑与上下文纪律」）。
   - **知识库**：若项目启用 `{HARNESS_DIR}/knowledge/` 且当前计划在 **`{HARNESS_DIR}/status.json`** 的 `plans[].metadata` 中登记了 `primary_spec` / `spec_refs`，**开工前**须阅读并在回报中说明已对齐；规则见 `plan-convention.md`「`{HARNESS_DIR}/knowledge/` 开发过程知识库」。
 
@@ -68,6 +69,7 @@
 5. `tasks` 是否完成？
 6. Assignment 是否含 **`Task category`**（实现类任务）并与 Owner 一致？
 7. 若中途出现 plan drift，是否先回写再继续？
+8. 实现说明中是否体现“最小解法 + 手术式改动 + 可验证检查”？
 
 任一项为“否”时，`Gate decision` 必须是 `blocked`。
 
