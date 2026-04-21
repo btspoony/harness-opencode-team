@@ -5,7 +5,8 @@
       "/private/tmp/**": "allow",
       "/tmp/**": "allow",
       "~/.cargo/**": "allow",
-      "~/.config/opencode/docs/agents/**": "allow"
+      "~/.config/opencode/skills/**": "allow",
+      "~/.config/opencode/.cursor/skills/**": "allow"
     },
     "skill": {
       "*": "allow",

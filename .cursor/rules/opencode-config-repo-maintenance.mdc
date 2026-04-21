@@ -1,16 +1,16 @@
 ---
-description: 在 Cursor 工作区维护 ~/.config/opencode 全局配置仓库时的边界与变更流程
+description: 在 Cursor 工作区维护 ~/.config/opencode 全局配置仓库（Morning Star harness）时的边界与变更流程
 alwaysApply: true
 ---
 
-# OpenCode 配置仓库维护
+# Morning Star Harness 配置仓库维护（OpenCode / Cursor）
 
-当工作区为 `~/.config/opencode/`（全局 OpenCode 配置仓库）时适用本规则。本规则**不**替代其他仓库中的项目级 `AGENTS.md`。
+当工作区为 `~/.config/opencode/`（全局 OpenCode 配置仓库，Morning Star / 启明星 harness）时适用本规则。本规则**不**替代其他仓库中的项目级 `AGENTS.md`。
 
 ## 维护话术与清单的唯一入口
 
-下列内容**仅在本文件**展开：**本配置仓库如何维护**、**更新规则**、**设计审查清单**、**重定向存根策略**、**避免与执行向正文双轨**。  
-**不**在根目录 `AGENTS.md`、`docs/agents/*.md`、`agents/*.md` 中重复上述维护话术或指向本文件的说明。
+下列内容**仅在本文件**展开：**本配置仓库如何维护**、**更新规则**、**设计审查清单**、**避免与执行向正文双轨**。  
+**不**在根目录 `AGENTS.md`、`skills/mstar-*/`、`agents/*.md` 中重复上述维护话术或指向本文件的说明。
 
 **例外（仍保留在执行向文档中）**：与运行时行为直接相关的边界陈述，例如「全局配置落盘仅由用户执行」「未经同意不得改 `opencode.json` / 凭据」等。
 
@@ -20,11 +20,16 @@ alwaysApply: true
 
 | 路径 | 用途 |
 |------|------|
-| `AGENTS.md` | **Code agent harness** 全局入口（执行向优先级、不变量、专题索引、角色归属）；OpenCode 每会话加载见 [Global Rules](https://opencode.ai/docs/rules/#global)；Cursor 等见 `docs/agents/host-cursor.md` |
-| `docs/agents/host-opencode.md`、`host-cursor.md` | 宿主适配层（与 harness 正文解耦） |
-| `docs/agents/AGENTS.md`、`docs/agents/index.md` | 重定向存根；勿写长文正文（避免漂移） |
-| `docs/agents/*.md`（上列除外） | 编排骨架专题正文 |
-| `agents/*.md` | 角色提示词 |
+| `AGENTS.md` | **Morning Star harness** 全局入口（执行向优先级、不变量、skill 索引、护栏）；OpenCode 每会话加载见 [Global Rules](https://opencode.ai/docs/rules/#global)；Cursor 等见 `.cursor/skills/mstar-host/SKILL.md` |
+| `skills/mstar-harness-core/` | 核心不变量：状态机、Spec-Driven 双阶段门禁、分支 / worktree、QC-QA 检出对齐、调度防串扰、升级触发 |
+| `skills/mstar-plan-conventions/` | `{HARNESS_DIR}` / `{PLAN_DIR}`、`status.json` SSOT、residual findings、knowledge/ 知识库、Done 瘦身、工期预估 |
+| `skills/mstar-review-qc/` | QC 三审基线：工作流、清单、报告模板、门禁规则、residual 留档 |
+| `skills/mstar-routing-eval/` | PM 路由回归 + prompt/规则迭代评估 + `Routing Eval Report` 模板；场景集在 `assets/routing-evals.json` |
+| `skills/mstar-coding-behavior/` | 跨角色通用编码行为准则 |
+| `skills/mstar-superpowers-align/` | Morning Star × Superpowers 对齐与消解 |
+| `skills/mstar-host-opencode/` | OpenCode 宿主适配（含库文档 Context7 协议、可选 MCP、密钥占位） |
+| `.cursor/skills/mstar-host/` | Cursor 宿主适配（Task 并行 QC、单会话多帽） |
+| `agents/*.md` | 角色提示词；开场块点名该角色必读的 `mstar-*` skills |
 | **本文件** | 维护边界、更新规则、设计审查；工作目录为本仓库时的默认任务理解 |
 
 ## 仓库边界
@@ -36,41 +41,42 @@ alwaysApply: true
 
 ## 维护原则
 
-- **单一权威**（入口 + 专题索引）：根目录 `AGENTS.md`。深层流程正文放在 `docs/agents/*.md` 专题中；阶段或门禁变更时先更新专题，仅当专题索引或摘要级不变量需对齐时再改根目录 `AGENTS.md`。
-- 避免漂移：每个主题单一事实来源；重定向存根中不要重复维护长正文。
-- 角色提示词应引用 `docs/agents/*.md` 中的阶段门禁，勿粘贴大段规则。
+- **单一权威**（入口 + skill 索引）：根目录 `AGENTS.md`。深层流程正文放在 `skills/mstar-*/` 中；阶段或门禁变更时先更新对应 skill，仅当 skill 索引或摘要级不变量需对齐时再改根目录 `AGENTS.md`。
+- 避免漂移：每个主题单一事实来源；`mstar-*` skill 的 `references/` 与 `SKILL.md` 正文间不要双写同一规则。
+- 角色提示词应引用对应 `mstar-*` skill 中的阶段门禁，勿粘贴大段规则。
 
 ## 快速导航
 
-1. `~/.config/opencode/AGENTS.md` — 全局入口、优先级、专题索引、不变量
-2. 编排骨架理念与可选工具：`open-harness-principles.md`、`optional-tooling-by-capability.md`
-3. 路由或门禁变更后：按需更新相关专题与根目录 `AGENTS.md`，并做一致性检查
+1. `~/.config/opencode/AGENTS.md` — 全局入口、优先级、skill 索引、护栏
+2. `skills/mstar-harness-core/SKILL.md` 与 `references/` — 核心不变量与分支 / worktree 约定
+3. 路由或门禁变更后：按需更新相关 `mstar-*` skill 与根目录 `AGENTS.md`，并做一致性检查
 4. **本文件** — 维护本配置仓库时的更新规则与设计审查清单
 
 ## 库文档与宿主
 
-涉及第三方库 / API / CLI / 云服务语法、配置与迁移时，勿仅依赖模型训练数据。单一协议见 `~/.config/opencode/docs/agents/library-docs-and-hosts.md`。若变更该协议，请同步引用它的 Cursor 规则。
+涉及第三方库 / API / CLI / 云服务语法、配置与迁移时，勿仅依赖模型训练数据。OpenCode 侧单一协议见 `~/.config/opencode/skills/mstar-host-opencode/SKILL.md`「库文档检索（Context7；单一协议）」；Cursor 侧见 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md`。若变更该协议，请同步引用它的 Cursor 规则。
 
 ## 更新规则（供维护全局配置的用户）
 
-- **跨角色工作流、门禁或路由**变更时：先更新 `docs/agents/` 中相关专题，再同步 `agents/*.md`（含路由与角色表）；宜在同一提交中完成。
-- 质量门禁变更时，优先更新 `harness-loop.md`。
-- 评审策略变更时，优先更新 `review-harness.md`。
-- **QC 三审角色提示词**（`agents/qc-specialist.md`、`qc-specialist-2.md`、`qc-specialist-3.md`）：流程与共用正文以 **`agents/qc-specialist.md`** 为准；`-2`/`-3` 仅保留 frontmatter、开场白 Reviewer 编号、`## 并行审查时本 reviewer 的侧重`、Completion Report 中的 **Agent** 名。共享基线或清单变更时同步 `docs/agents/review-harness.md`，并视需要在同一提交中更新三份 agent 内对 harness 的引用。
-- 提示词调优流程变更时，优先更新 `evaluation-harness.md`。
-- Superpowers 与编排骨架对照（`superpowers-skills.md`）变更时：只更新该专题与必要的角色短指针；勿在各 `agents/*.md` 内嵌长对照表。
-- 计划管理约定变更时，优先更新 `plan-convention.md`。
-- 工期 / 工作量口径变更时，优先更新 `effort-estimation.md`，并同步 PM / product-manager / architect 模板与根目录 **`AGENTS.md`** 中 Effort / 工期相关不变量或索引简述。
-- 编排理念变更时，同步 `harness-loop.md`、`open-harness-principles.md`、`agents/project-manager.md`、`phase-gate-playbook.md` 与 `routing-harness.md`。
-- 库文档协议或宿主说明变更时，同步 `library-docs-and-hosts.md`、根目录 **`AGENTS.md`** 中的相关指针；核对 Cursor **Context7** 类规则（如 `~/.cursor/rules/context7.mdc`）及本文件上文**库文档与宿主**小节中的指向是否仍与 `docs/agents/library-docs-and-hosts.md` 一致。
-- 密钥约定变更时，同步 `opencode-config-secrets.md` 与 `secrets.env.example`。
-- **共享入口、优先级、专题索引或不变量**变更时：只改**根目录 `AGENTS.md`**，并检查 `docs/agents/AGENTS.md` / `docs/agents/index.md` 存根无需改（除非要调整重定向文案）。
+- **跨角色工作流、门禁或路由**变更时：先更新对应 `mstar-*` skill，再同步 `agents/*.md`（含路由与角色表）；宜在同一提交中完成。
+- **状态机 / 两阶段门禁 / 并行规则 / 分支与 worktree** 变更时，优先更新 `skills/mstar-harness-core/SKILL.md` 与 `references/`（`phase-gate-playbook.md`、`branch-and-worktree.md`、`open-harness-principles.md`）。
+- **评审策略**变更时，优先更新 `skills/mstar-review-qc/SKILL.md`。
+- **QC 三审角色提示词**（`agents/qc-specialist.md`、`qc-specialist-2.md`、`qc-specialist-3.md`）：流程与共用正文以 **`agents/qc-specialist.md`** 为准；`-2` / `-3` 仅保留 frontmatter、开场白 Reviewer 编号、`## 并行审查时本 reviewer 的侧重`、Completion Report 中的 **Agent** 名。共享基线或清单变更时同步 `skills/mstar-review-qc/SKILL.md`，并视需要在同一提交中更新三份 agent 内对 harness 的引用。
+- **提示词调优流程 / 路由回归** 变更时，优先更新 `skills/mstar-routing-eval/SKILL.md`；若场景集变更，同步 `skills/mstar-routing-eval/assets/routing-evals.json`。
+- **Superpowers 与 harness 对照** 变更时：只更新 `skills/mstar-superpowers-align/`（含 `references/per-role-matrix.md`、`tension-table.md`）与必要的角色短指针；勿在各 `agents/*.md` 内嵌长对照表。
+- **计划管理约定 / status.json / residual findings / knowledge/** 变更时，优先更新 `skills/mstar-plan-conventions/SKILL.md` 与对应 `references/`。
+- **工期 / 工作量口径** 变更时，优先更新 `skills/mstar-plan-conventions/references/effort-estimation.md`，并同步 PM / product-manager / architect 模板与根目录 **`AGENTS.md`** 中 Effort / 工期相关不变量或索引简述。
+- **编码行为准则** 变更时，优先更新 `skills/mstar-coding-behavior/SKILL.md`；角色提示词不得粘贴大段重复。
+- **库文档协议或宿主说明** 变更时，同步 `skills/mstar-host-opencode/SKILL.md`、`.cursor/skills/mstar-host/SKILL.md` 与根目录 **`AGENTS.md`** 中的相关指针；核对 Cursor **Context7** 类规则（如 `~/.cursor/rules/context7.mdc`）是否仍与 OpenCode 的单一协议一致。
+- **密钥约定** 变更时，同步 `skills/mstar-host-opencode/SKILL.md`「密钥与 `opencode.json`」节 与 `secrets.env.example`。
+- **共享入口、优先级、skill 索引或不变量** 变更时：只改**根目录 `AGENTS.md`**；`mstar-*` skill 内部有独立 SKILL.md frontmatter `description`，同步更新触发语。
 - **本维护规则**（边界、更新规则、审查清单）变更时：同步本文件 `.cursor/rules/opencode-config-repo-maintenance.mdc`。
 
 ## Agent 设计变更审查清单
 
 - 根目录 `AGENTS.md`（全局入口）是否仍结构清晰、便于每会话加载？
-- 角色职责是否与工作流细节分离？
+- 角色职责是否与工作流细节分离（细节已在 `mstar-*` skill）？
+- 每个 `mstar-*` skill 的 `description` 是否包含足够「pushy」的触发短语（见 skill-creator 指南）？
 - 每个阶段是否有可观察的具体产出？
-- 反复出现的失败是否已转化为可复用指引？
-- `AGENTS.md`、`docs/agents/*.md`、`agents/*.md` 是否仍夹带独立的「维护 / 跨文件同步 / 更新规则」长段或对本文件的重复说明？若有，应删并并入本节「更新规则」，避免执行向文档与维护清单双轨。
+- 反复出现的失败是否已转化为可复用指引（写回相关 `mstar-*` skill）？
+- `AGENTS.md`、`skills/mstar-*/`、`agents/*.md` 是否仍夹带独立的「维护 / 跨文件同步 / 更新规则」长段或对本文件的重复说明？若有，应删除并并入本节「更新规则」，避免执行向文档与维护清单双轨。
