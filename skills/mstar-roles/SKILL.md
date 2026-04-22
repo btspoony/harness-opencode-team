@@ -44,9 +44,9 @@ description: Morning Star (启明星) 的角色提示词总线。把 `agents/*.m
 | `mstar-routing-eval` | PM 路由回归与迭代评估（PM / prompt-engineer 主要依赖） |
 | `mstar-coding-behavior` | Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven（所有实现、审查、重构任务） |
 | `mstar-superpowers-align` | Morning Star × Superpowers 对齐与消解；`dispatching-parallel-agents` / `using-git-worktrees` 叠用约束 |
-| 当前宿主 host adapter skill | 宿主能力差异（`question` 工具、subagent 调度、Task 并行等）；由各宿主自行提供 |
+| 当前宿主的 `mstar-host` skill | 宿主能力差异（`question` 工具、subagent 调度、Task 并行等）；由各宿主自行提供 |
 
-> **原则**：共享 skill 按名字引用（例：`mstar-harness-core` skill），**不写绝对路径**；宿主差异只用"当前宿主 host adapter skill"指代，避免把 Cursor/OpenCode 的专属路径塞进共享角色正文。
+> **原则**：共享 skill 按名字引用（例：`mstar-harness-core` skill），**不写绝对路径**；宿主差异只用“当前宿主的 `mstar-host` skill”指代，避免把 Cursor/OpenCode 的专属路径塞进共享角色正文。
 
 ## 参数表（SSOT）
 

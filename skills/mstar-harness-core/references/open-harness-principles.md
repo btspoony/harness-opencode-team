@@ -16,7 +16,7 @@
 | **编码行为约束（轻量）** | 降低静默假设、过度设计与无关改动 | `mstar-coding-behavior`：Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution |
 | **并行与边界** | 多线任务不踩同一写归属、不绕过分支门禁；**开发**阶段同仓多可写并发须独立 **`git worktree`**；**QC / QA** 在 **同一检出**（`Review cwd`）与 **同一 `plan_id` + `Review range` / `Diff basis`** 上审查与验证，保证三票同一功能 | `mstar-harness-core` SKILL.md「并行规则」与 `references/branch-and-worktree.md`；`mstar-review-qc`；`mstar-superpowers-align` 的 **`using-git-worktrees`** |
 | **分层上下文（可选）** | 大仓库用目录级 `AGENTS.md` 降噪；根 `AGENTS.md` 维护边界见下文专节 | `mstar-harness-core` SKILL.md「分层上下文」；由业务项目维护者按需添加 |
-| **结构化澄清（按宿主）** | 向用户澄清/抉择时，**有 `question` 类能力则优先**；否则结构化正文；长问兜底 | `mstar-harness-core` SKILL.md「Spec-Driven」下 `clarify`；当前宿主 host adapter skill；`mstar-roles` skill 的 `project-manager` 角色 |
+| **结构化澄清（按宿主）** | 向用户澄清/抉择时，**有 `question` 类能力则优先**；否则结构化正文；长问兜底 | `mstar-harness-core` SKILL.md「Spec-Driven」下 `clarify`；当前宿主的 `mstar-host` skill；`mstar-roles` skill 的 `project-manager` 角色 |
 
 ## 与常见 harness 说法的对照（帮助理解角色分工）
 
@@ -67,7 +67,7 @@
 
 ## 延伸阅读
 
-- 按能力选配 MCP/skills：当前宿主 host adapter skill 的「按能力选配」章节
+- 按能力选配 MCP/skills：当前宿主的 `mstar-host` skill 的「按能力选配」章节
 - Superpowers 与门禁对齐：`mstar-superpowers-align`
 - 库文档检索共享协议：`mstar-harness-core` `references/library-docs-protocol.md`
 - 跨角色编码行为准则（轻量、可复用）：`mstar-coding-behavior`

@@ -6,9 +6,9 @@
 - `mstar-plan-conventions` skill — `{HARNESS_DIR}` / `{PLAN_DIR}` 与 `status.json` 更新权限
 - `mstar-review-qc` skill — **重点读**：「高危变更与破坏性操作」最小检查、CI 门禁、回滚步骤
 - `mstar-coding-behavior` skill — 运维脚本与配置变更同样遵循 Surgical Changes / Goal-Driven
-- 当前宿主 host adapter skill — OpenCode 宿主能力；以及 Cursor 下必读
+- 当前宿主的 `mstar-host` skill — OpenCode 宿主能力；以及 Cursor 下必读
 
-会话启动后，按 `mstar-harness-core` skill 的加载约定先 Read 其 SKILL.md 与当前任务相关的 `references/`（OpenCode 下由根目录 `AGENTS.md` 指到此入口，其它宿主按当前 host adapter skill 主动 Read）。
+会话启动后，按 `mstar-harness-core` skill 的加载约定先 Read 其 SKILL.md 与当前任务相关的 `references/`（OpenCode 下由根目录 `AGENTS.md` 指到此入口，其它宿主按当前宿主的 `mstar-host` skill 主动 Read）。
 
 ---
 你是运维工程师。你由 @project-manager 调度，完成后向其回报。

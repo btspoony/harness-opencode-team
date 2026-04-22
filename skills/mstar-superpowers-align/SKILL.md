@@ -20,7 +20,7 @@ description: Morning Star (启明星) harness 与 Superpowers 技能的对齐与
 
 ## 如何"使用"技能
 
-- 各角色在对应任务阶段应 **显式加载并遵循** 相应技能的完整内容（在支持 `/skill-name` 或少样本名称的环境中，通过技能名调用；以**宿主客户端**实际能力为准，宿主差异见当前 host adapter skill）。
+- 各角色在对应任务阶段应 **显式加载并遵循** 相应技能的完整内容（在支持 `/skill-name` 或少样本名称的环境中，通过技能名调用；以**宿主客户端**实际能力为准，宿主差异见当前宿主的 `mstar-host` skill）。
 - **优先级（本仓库强制）**：**用户显式指令**（含项目 `AGENTS.md` / `CLAUDE.md`）> **`mstar-*` skills 中的 harness 不变量**（`mstar-harness-core` 里的状态机与门禁、plan 约定、review 基线、branch 协作等）> **Superpowers 技能正文中的流程、阶段划分与审查模型** > 一般惯例。当技能描述的顺序、谁可派 subagent、何时审查与 **harness 不一致**时，**以 harness 与 PM Assignment 为准**，技能仅保留**不冲突**的技巧（例如自检清单、模型分档、提问纪律）。若用户禁止 TDD，则不得强制 `test-driven-development`。
 - **`writing-plans` 保存路径（门限）**：`mstar-plan-conventions` 中的 **`{PLAN_DIR}`**（主 plan Markdown；与 **`{HARNESS_DIR}`** 分层见同 skill）优先于上游技能正文中的 `docs/superpowers/plans/`；执行该技能时仍须将计划落在 **`{PLAN_DIR}`**，**`{HARNESS_DIR}/status.json`**、**`{HARNESS_DIR}/notes.json`**、**`{HARNESS_DIR}/archived/`**、**`{HARNESS_DIR}/knowledge/`** 等仍按 **`{HARNESS_DIR}`**。
 - **与 harness 的关系**：不改变 `mstar-harness-core` 的阶段顺序；技能规定的是**每个阶段内的做法**（例如排障前先走系统化调试、宣称完成前先有验证证据）——**但不得用技能覆盖 harness 的门禁**（见下节「`subagent-driven-development` 与上游模板」）。
@@ -109,7 +109,7 @@ Superpowers 插件内该技能附带 **`implementer-prompt.md`**、**`spec-revie
 - **完成态**：实现方将工作置 **`InReview`**；**`Done`** 仅 `@project-manager` 或 `@qa-engineer` 设定（`mstar-harness-core`）。上游模板中的「任务完成」**不等于** harness 的 **Done / sign-off**。
 - **并行**：上游技能默认 **不并行多个 implementer**；若 PM 已按 harness 分配 **多写入流** 且 **同仓并发**，则 **必须** **`using-git-worktrees`** + Assignment 检出约定（见 `references/tension-table.md`）。**以 Assignment 与 harness 为准**，不因上游「禁止并行 implementer」而拒绝已批准的并行分派。
 - **计划路径**：一律以 **`{PLAN_DIR}`** 为准，**禁止**把示例 `docs/superpowers/plans/` 当作落盘位置。
-- **澄清**：需要结构化取舍时，**若宿主提供** `question` 类工具则优先（`mstar-harness-core` SKILL.md），与上游「自由提问」可并存；宿主细节以当前 host adapter skill 为准。
+- **澄清**：需要结构化取舍时，**若宿主提供** `question` 类工具则优先（`mstar-harness-core` SKILL.md），与上游「自由提问」可并存；宿主细节以当前宿主的 `mstar-host` skill 为准。
 
 PM 在 Assignment 的 `Superpowers` 中引用 `subagent-driven-development` 时，建议加一行 **Expected evidence** 或备注，标明 *「per-task 子代理审查非正式 gate；承接方用 @general / generalPurpose（或 PM 标明的 informal @qa-engineer），勿用 @qc-specialist；正式 QC/QA 仍按 harness」*，避免承接方把上游流程当作 SSOT 或误派 QC 产正式报告。
 

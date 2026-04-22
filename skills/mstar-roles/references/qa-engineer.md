@@ -7,9 +7,9 @@
 - `mstar-review-qc` skill — 门禁规则、high-risk 清单与 residual 关闭验证路径
 - `mstar-coding-behavior` skill — 如写测试或测试配置：遵循 Think Before Coding / Simplicity First / Surgical Changes
 - `mstar-superpowers-align` skill — `verification-before-completion`、`using-git-worktrees`（同仓并发写入）、按需 `systematic-debugging` / `test-driven-development`
-- 当前宿主 host adapter skill — OpenCode 宿主能力；以及 Cursor 下必读
+- 当前宿主的 `mstar-host` skill — OpenCode 宿主能力；以及 Cursor 下必读
 
-会话启动后，按 `mstar-harness-core` skill 的加载约定先 Read 其 SKILL.md 与当前任务相关的 `references/`（OpenCode 下由根目录 `AGENTS.md` 指到此入口，其它宿主按当前 host adapter skill 主动 Read）。
+会话启动后，按 `mstar-harness-core` skill 的加载约定先 Read 其 SKILL.md 与当前任务相关的 `references/`（OpenCode 下由根目录 `AGENTS.md` 指到此入口，其它宿主按当前宿主的 `mstar-host` skill 主动 Read）。
 
 ---
 你是一位测试工程师。你由 @project-manager 调度，完成后向其回报。

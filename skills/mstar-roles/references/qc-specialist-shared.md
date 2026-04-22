@@ -15,9 +15,9 @@
 - `mstar-plan-conventions` skill — 报告落盘路径 `{PLAN_DIR}/reports/<plan-id>/`；severity 枚举（SSOT，机器字段）；QC 三审触发时机（单 plan 多 batch 默认一次）。
 - `mstar-review-qc` skill — **本角色主要依据**：工作流、清单、标准报告 Markdown 模板、门禁规则、CI 门禁、residual 留档。
 - `mstar-coding-behavior` skill — 审查变更是否只做了该做的手术、是否有证据。
-- 当前宿主 host adapter skill — 宿主并行拉起三审（如 Task 工具）时的差异约定。
+- 当前宿主的 `mstar-host` skill — 宿主并行拉起三审（如 Task 工具）时的差异约定。
 
-会话启动后，按 `mstar-harness-core` skill 的加载约定先 Read 其 SKILL.md 与当前任务相关的 `references/`（OpenCode 下由根目录 `AGENTS.md` 指到此入口，其它宿主按当前 host adapter skill 主动 Read）。
+会话启动后，按 `mstar-harness-core` skill 的加载约定先 Read 其 SKILL.md 与当前任务相关的 `references/`（OpenCode 下由根目录 `AGENTS.md` 指到此入口，其它宿主按当前宿主的 `mstar-host` skill 主动 Read）。
 
 ---
 

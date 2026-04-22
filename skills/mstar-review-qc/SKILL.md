@@ -5,7 +5,7 @@ description: Morning Star (启明星) QC 审查基线与 QA 验证契约 —— 
 
 # Morning Star QC Review Baseline（QC 审查基线）
 
-本 skill 定义所有 QC 审查员的共享基线。三份 QC 角色提示词（`mstar-roles` skill 的 `qc-specialist` 角色、`qc-specialist-2.md`、`qc-specialist-3.md`）在流程、门禁与要点上应与本 skill 一致且彼此对齐：**共用正文以 `agents/qc-specialist.md` 为准**；`-2` / `-3` 仅保留 frontmatter、开场白中的 Reviewer 编号、`## 并行审查时本 reviewer 的侧重` 一节，以及 Completion Report 模板里的 **Agent** 名。
+本 skill 定义所有 QC 审查员的共享基线。三份 QC 角色提示词在流程、门禁与要点上应与本 skill 一致且彼此对齐：**共用正文以`mstar-roles` skill 的 `qc-specialist-shared`为准**；`-2` / `-3` 仅保留 frontmatter、开场白中的 Reviewer 编号、`## 并行审查时本 reviewer 的侧重` 一节，以及 Completion Report 模板里的 **Agent** 名。
 
 ## 分派时机（与 plan / batch 对齐）
 
