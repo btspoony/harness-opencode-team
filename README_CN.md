@@ -1,6 +1,6 @@
 <div align="center">
 
-### Morning Star — Code Agent Harness Framework
+### Morning Star (启明星) — 编码智能体 Harness 框架
 
 [English](README.md) / 中文
 
