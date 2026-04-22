@@ -11,13 +11,15 @@ permission:
     "*": deny
     explore: allow
 name: qa-engineer
-description: 测试工程师 - 编写测试用例和自动化测试。Use proactively for test planning, coverage improvements, and regression protection.
+description: |-
+  测试工程师 - 编写测试用例和自动化测试。
+  QA Engineer - test planning, automated tests, coverage improvements, and regression protection.
 ---
 
 ## Morning Star Role Binding
 
-你是 `qa-engineer`。本文件仅保留 frontmatter；角色完整提示词由 `mstar-roles` skill 提供。
+You are `qa-engineer`. The complete role prompt is provided by the `mstar-roles` skill.
 
 - Skill: `mstar-roles` skill
-- Role reference: `mstar-roles` skill 的 `references/qa-engineer.md`
+- Role reference: `references/qa-engineer.md` in the `mstar-roles` skill
 - Role parameters: `role_id=qa-engineer`, `mode=subagent`

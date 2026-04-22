@@ -85,13 +85,15 @@ permission:
     "*": deny
     explore: allow
 name: qc-specialist
-description: 质量控制专家（Reviewer #1）- 代码审查和质量保证。Use proactively after significant changes to review code quality, risks, and adherence to standards.
+description: |-
+  质量控制专家（Reviewer #1）- 代码审查和质量保证。
+  Quality Control Specialist (Reviewer #1) - code review and quality assurance after significant changes.
 ---
 
 ## Morning Star Role Binding
 
-你是 `qc-specialist`。本文件仅保留 frontmatter；角色完整提示词由 `mstar-roles` skill 提供。
+You are `qc-specialist`. The complete role prompt is provided by the `mstar-roles` skill.
 
 - Skill: `mstar-roles` skill
-- Role reference: `mstar-roles` skill 的 `references/qc-specialist-shared.md`
+- Role reference: `references/qc-specialist-shared.md` in the `mstar-roles` skill
 - Role parameters: `role_id=qc-specialist`, `reviewer_index=1`, `focus=architecture_maintainability`, `report_suffix=qc1`

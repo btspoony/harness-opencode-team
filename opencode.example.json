@@ -169,67 +169,54 @@
   },
   "agent": {
     "project-manager": {
-      "description": "项目经理 - 协调开发团队，管理项目进度",
       "mode": "primary",
       "model": "zhipuai-coding-plan/glm-5-turbo"
     },
     "product-manager": {
-      "description": "产品经理 - 需求分析、产品规划与产品向文档编写（PRD/用户说明等）",
       "mode": "subagent",
       "model": "bailian-coding-plan/qwen3.5-plus"
     },
     "architect": {
-      "description": "技术架构师 - 系统架构设计、技术决策与技术向文档编写（ADR/接口契约等）",
       "mode": "subagent",
       "model": "zhipuai-coding-plan/glm-5-turbo"
     },
     "fullstack-dev": {
-      "description": "全栈开发工程师 - 实现前后端功能",
       "mode": "subagent",
       "model": "zhipuai-coding-plan/glm-5-turbo"
     },
     "fullstack-dev-2": {
-      "description": "全栈开发工程师 - 实现前后端功能（协作）",
       "mode": "subagent",
       "model": "bailian-coding-plan/glm-5"
     },
     "frontend-dev": {
-      "description": "前端开发工程师 - UI/前端架构与体验优化",
       "mode": "subagent",
       "model": "bailian-coding-plan/kimi-k2.5"
     },
     "qa-engineer": {
-      "description": "测试工程师 - 编写测试用例和自动化测试",
       "mode": "subagent",
       "model": "minimax-cn-coding-plan/MiniMax-M2.7"
     },
     "qc-specialist": {
-      "description": "质量控制专家（Reviewer #1） - 代码审查和质量保证",
       "mode": "subagent",
       "model": "bailian-coding-plan/glm-5"
     },
     "qc-specialist-2": {
-      "description": "质量控制专家（Reviewer #2） - 代码审查和质量保证",
       "mode": "subagent",
       "model": "bailian-coding-plan/kimi-k2.5"
     },
     "qc-specialist-3": {
-      "description": "质量控制专家（Reviewer #3） - 代码审查和质量保证",
       "mode": "subagent",
       "model": "minimax-cn-coding-plan/MiniMax-M2.7"
     },
     "ops-engineer": {
-      "description": "运维工程师 - 部署、监控和基础设施",
       "mode": "subagent",
       "model": "bailian-coding-plan/kimi-k2.5"
     },
     "market-expert": {
-      "description": "市场专家 - 市场分析和用户研究",
       "mode": "subagent",
       "model": "bailian-coding-plan/qwen3.5-plus"
     },
     "prompt-engineer": {
-      "description": "提示词工程师 - 设计与优化 Agent 提示词与技能",
       "mode": "subagent",
       "model": "minimax-cn-coding-plan/MiniMax-M2.7"
     }

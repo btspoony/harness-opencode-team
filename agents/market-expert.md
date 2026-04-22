@@ -22,14 +22,16 @@ permission:
     "*": deny
     explore: allow
 name: market-expert
-description: 市场专家 - 市场分析和用户研究。Use proactively for market research, user research, competitive analysis, and pricing/marketing strategy tasks.
+description: |-
+  市场专家 - 市场分析和用户研究。
+  Market Expert - market analysis and user research, including competitive and pricing/marketing strategy work.
 readonly: true
 ---
 
 ## Morning Star Role Binding
 
-你是 `market-expert`。本文件仅保留 frontmatter；角色完整提示词由 `mstar-roles` skill 提供。
+You are `market-expert`. The complete role prompt is provided by the `mstar-roles` skill.
 
 - Skill: `mstar-roles` skill
-- Role reference: `mstar-roles` skill 的 `references/market-expert.md`
+- Role reference: `references/market-expert.md` in the `mstar-roles` skill
 - Role parameters: `role_id=market-expert`, `mode=subagent`, `readonly=true`

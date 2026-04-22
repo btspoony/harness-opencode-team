@@ -9,13 +9,15 @@ permission:
     "*": deny
     explore: allow
 name: prompt-engineer
-description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use proactively when designing, refactoring, or debugging prompts, agents, and skills.
+description: |-
+  提示词工程师 - 设计与优化 Agent 提示词与技能。
+  Prompt Engineer - design and optimize prompts and skills for agents, including refactoring and debugging prompt systems.
 ---
 
 ## Morning Star Role Binding
 
-你是 `prompt-engineer`。本文件仅保留 frontmatter；角色完整提示词由 `mstar-roles` skill 提供。
+You are `prompt-engineer`. The complete role prompt is provided by the `mstar-roles` skill.
 
 - Skill: `mstar-roles` skill
-- Role reference: `mstar-roles` skill 的 `references/prompt-engineer.md`
+- Role reference: `references/prompt-engineer.md` in the `mstar-roles` skill
 - Role parameters: `role_id=prompt-engineer`, `mode=subagent`
