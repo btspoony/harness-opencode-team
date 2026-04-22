@@ -1,4 +1,15 @@
-# Morning Star (启明星) — Code Agent Harness（OpenCode / Cursor）
+<div align="center">
+
+### Morning Star — Code Agent Harness Framework
+
+[English](README.md) / 中文
+
+<a href="https://github.com/btspoony/mstar-harness">GitHub</a> · <a href="https://github.com/btspoony/mstar-harness/issues">Issues</a>
+
+[![](https://img.shields.io/badge/license-MIT-white?labelColor=black\&style=flat-square)](https://github.com/btspoony/mstar-harness/blob/main/LICENSE)
+[![](https://img.shields.io/github/last-commit/btspoony/mstar-harness?color=c4f042\&labelColor=black\&style=flat-square)](https://github.com/btspoony/mstar-harness/commits/main)
+
+</div>
 
 本仓库是一套 **Morning Star / 启明星** 代码智能体（code agent）多角色 harness 的流程与提示词配置，**以中性 harness 正文为主**，再按宿主拆分适配说明。配置以「虚拟团队」方式组织：一名主代理（`@project-manager`）协调多个子角色，按职责分工完成任务。
 

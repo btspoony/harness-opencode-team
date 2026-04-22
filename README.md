@@ -1,6 +1,15 @@
-# Morning Star — Code Agent Harness (OpenCode / Cursor)
+<div align="center">
 
-Other languages: [简体中文](./README_CN.md)
+### Morning Star — Code Agent Harness Framework
+
+English / [中文](README_CN.md)
+
+<a href="https://github.com/btspoony/mstar-harness">GitHub</a> · <a href="https://github.com/btspoony/mstar-harness/issues">Issues</a>
+
+[![](https://img.shields.io/badge/license-MIT-white?labelColor=black\&style=flat-square)](https://github.com/btspoony/mstar-harness/blob/main/LICENSE)
+[![](https://img.shields.io/github/last-commit/btspoony/mstar-harness?color=c4f042\&labelColor=black\&style=flat-square)](https://github.com/btspoony/mstar-harness/commits/main)
+
+</div>
 
 This repository contains the **Morning Star** multi-agent harness configuration for code agents. It is organized as a virtual team: one primary agent (`project-manager`) coordinates specialized subagents.
 
