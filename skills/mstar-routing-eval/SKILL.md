@@ -98,7 +98,7 @@ description: Morning Star (启明星) 路由与 prompt 迭代评估体系 ——
 
 ### 迭代循环
 
-1. 定义变更假设（若涉及「库文档怎么查」或宿主差异，先对照 `mstar-host-opencode` 或 `.cursor/skills/mstar-host/`，避免与 Cursor/OpenCode 双轨说明重复或漂移）。
+1. 定义变更假设（若涉及「库文档怎么查」或宿主差异，先对照 `mstar-harness-core` 的共享协议与当前宿主 adapter skill，避免双轨说明漂移）。
 2. 运行一组固定的代表性任务提示词。
 3. 对比变更前后的行为。
 4. 记录发现并更新提示词/skill 文档。

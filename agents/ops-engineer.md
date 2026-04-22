@@ -21,7 +21,7 @@ description: 运维工程师 - 部署、监控和基础设施。Use proactively 
 - `~/.config/opencode/skills/mstar-plan-conventions/SKILL.md` — `{HARNESS_DIR}` / `{PLAN_DIR}` 与 `status.json` 更新权限
 - `~/.config/opencode/skills/mstar-review-qc/SKILL.md` — **重点读**：「高危变更与破坏性操作」最小检查、CI 门禁、回滚步骤
 - `~/.config/opencode/skills/mstar-coding-behavior/SKILL.md` — 运维脚本与配置变更同样遵循 Surgical Changes / Goal-Driven
-- `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` — OpenCode 宿主能力
+- `~/.config/opencode/.opencode/skills/mstar-host/SKILL.md` — OpenCode 宿主能力
 - `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` — Cursor 下必读
 
 若当前宿主为 Cursor（不自动注入全局 `AGENTS.md`），按 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` 指引用**绝对路径** Read 以上 skill 文件。

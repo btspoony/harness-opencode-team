@@ -32,7 +32,7 @@ readonly: true
 开工前（或**接到 Assignment** 的首次读取时），**必须** Read 下列 Morning Star skill 的 `SKILL.md`（及其 `references/` 中与当前任务相关的文件），不得凭角色提示词残留处理门禁或状态机：
 
 - `~/.config/opencode/skills/mstar-harness-core/SKILL.md` — 必读：生命周期与升级触发（只读角色，不直接改 plan / 仓库）
-- `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` — 结构化澄清与库文档检索（市场调研常用）
+- `~/.config/opencode/.opencode/skills/mstar-host/SKILL.md` — 结构化澄清与库文档检索（市场调研常用）
 - `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` — Cursor 下必读
 
 若当前宿主为 Cursor（不自动注入全局 `AGENTS.md`），按 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` 指引用**绝对路径** Read 以上 skill 文件。

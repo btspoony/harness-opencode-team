@@ -69,10 +69,7 @@ PM 在 Status Update 中可简要注明本次三审是 **Task 并行子代理** 
 
 自 cwd 向上的项目 `AGENTS.md` / `CLAUDE.md` 优先于全局 harness；与 `project-manager-mode` 等 Cursor 规则冲突时以项目规则与用户当轮指令为准。
 
-## 库文档检索（Cursor 视角）
+## 共享协议：库文档检索（Context7）
 
-优先使用 Cursor 已启用的 Context7 MCP（例如 `user-context7`）；协议与 OpenCode 版本相同（**单一路径、禁双跑**），详见 `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` 「库文档检索（Context7；单一协议）」。
-
-## OpenCode 对照
-
-OpenCode 下的加载与子代理语义见 **`~/.config/opencode/skills/mstar-host-opencode/SKILL.md`**。
+Context7 文档检索属于**共享流程规则**，统一由 `mstar-harness-core` 维护。  
+执行时请按：`~/.config/opencode/skills/mstar-harness-core/references/library-docs-protocol.md`。

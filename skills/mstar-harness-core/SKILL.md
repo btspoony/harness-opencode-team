@@ -49,7 +49,7 @@ description: Morning Star (启明星) harness 核心入口 —— 多角色 agen
 - `specify` — 问题陈述、用户价值、范围/非目标、DoD 草案。
 - `clarify` — 关键歧义清单与结论；高影响歧义必须收敛，否则 `Blocked`。
   - **意图核对（Intent gate）**：区分**用户字面表述**与**待解决的真正问题**；手段与目标混淆须在此收敛。
-  - **结构化澄清**：宿主提供 `question` 工具时（如 OpenCode）优先使用；否则用结构化正文选项；详见 `mstar-host-opencode` 与 `.cursor/skills/mstar-host/`（Cursor）。
+  - **结构化澄清**：宿主提供 `question` 工具时优先使用；否则用结构化正文选项。宿主细节在各自 host adapter skill。
 - `plan` — 技术方案、模块边界/接口契约、风险与回滚点、验证计划。
   - **意图门禁**：锁 plan 前须能书面写清**真实目标 / 成功判据 / 非目标**三项；否则 Prepare 未通过。
 
@@ -136,6 +136,28 @@ description: Morning Star (启明星) harness 核心入口 —— 多角色 agen
 
 理念层：`references/open-harness-principles.md`。
 
+## 库文档检索协议（Context7，共享）
+
+回答涉及具体框架、SDK、CLI、云服务的 API 与配置问题时，使用本共享协议；不在宿主专属 skill 重复维护。
+
+### 目标与边界
+
+- **目标**：优先使用现行文档，降低版本漂移导致的错误回答。
+- **不适用**：纯重构、从零写脚本、业务逻辑排错、代码评审、泛化编程概念。
+
+### 单一路径规则（禁止双跑）
+
+1. **主路径：Context7 MCP（可用时）**
+   - 先读 MCP 工具 schema，再调用文档查询工具。
+   - 查询句使用用户完整问题；版本相关时选择带版本信息的 library ID。
+2. **备用路径：ctx7 CLI（MCP 不可用时）**
+   - `npx ctx7@latest library <name> "<user question>"`
+   - `npx ctx7@latest docs <libraryId> "<user question>"`
+   - 单问题最多 3 次命令；命令中不得包含密钥。
+
+- **禁止**：同一问题内对同一库同时使用 MCP 与 CLI 做重复全量拉取。
+- **降级策略**：仅在主路径失败时切换备用路径。
+
 ## 升级触发（人工介入）
 
 - 澄清尝试后验收标准仍模糊
@@ -165,8 +187,7 @@ description: Morning Star (启明星) harness 核心入口 —— 多角色 agen
 | `mstar-routing-eval` | 验证 PM 路由 + prompt/规则迭代评估；Routing Eval Report 模板 |
 | `mstar-coding-behavior` | 实现/重构/调试/审查任务：Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven |
 | `mstar-superpowers-align` | Superpowers 技能与 harness 的对齐与消解；按角色必用/宜用清单 |
-| `mstar-host-opencode` | OpenCode 宿主能力、`question` 工具、库文档 Context7 协议、可选 MCP、`opencode.json` 密钥占位 |
-| `.cursor/skills/mstar-host/` | Cursor 宿主：Task 工具并行 QC、`/pm` 入口、与 OpenCode 差异 |
+| 宿主 adapter skills | 各宿主的入口/工具差异（`question`、Task 并行、会话加载方式等） |
 
 ## 护栏（不变量）
 
@@ -176,10 +197,11 @@ description: Morning Star (启明星) harness 核心入口 —— 多角色 agen
 - 同仓 ≥2 可写并发时**必须** `git worktree` 隔离；详见 `references/branch-and-worktree.md`。
 - 执行 Superpowers `writing-plans` 时计划文件落在 `mstar-plan-conventions` 解析到的 `{PLAN_DIR}`，**不得**写入 `docs/superpowers/plans/`。
 - **工作量与工期表述**只写 agent-oriented 预估；**不得**纳入人天、FTE、人类日历（见 `mstar-plan-conventions` 工期节）。
-- **结构化澄清**优先宿主提供的 `question` 类工具；见 `mstar-host-opencode` / `.cursor/skills/mstar-host/`。
+- **结构化澄清**优先宿主提供的 `question` 类工具；宿主差异以对应 host adapter skill 为准。
 
 ## References
 
 - `references/phase-gate-playbook.md` — Phase Gate 执行手册：各阶段角色动作与最小证据要求。
 - `references/branch-and-worktree.md` — 功能分支门禁 / 分支协作契约 / 同仓并发 worktree / 多 worktree 并行开发与 QC-QA 衔接 / plan 集成分支推荐编排 / QC-QA 检出上下文对齐。
 - `references/open-harness-principles.md` — 意图门禁、Task category、可验证编辑、长任务纪律、分层 `AGENTS.md`、项目根 `AGENTS.md` 维护边界。
+- `references/library-docs-protocol.md` — Context7 文档检索共享协议（MCP 优先、CLI 兜底、禁双跑）。

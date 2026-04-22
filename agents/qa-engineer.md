@@ -24,7 +24,7 @@ description: 测试工程师 - 编写测试用例和自动化测试。Use proact
 - `~/.config/opencode/skills/mstar-review-qc/SKILL.md` — 门禁规则、high-risk 清单与 residual 关闭验证路径
 - `~/.config/opencode/skills/mstar-coding-behavior/SKILL.md` — 如写测试或测试配置：遵循 Think Before Coding / Simplicity First / Surgical Changes
 - `~/.config/opencode/skills/mstar-superpowers-align/SKILL.md` — `verification-before-completion`、`using-git-worktrees`（同仓并发写入）、按需 `systematic-debugging` / `test-driven-development`
-- `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` — OpenCode 宿主能力
+- `~/.config/opencode/.opencode/skills/mstar-host/SKILL.md` — OpenCode 宿主能力
 - `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` — Cursor 下必读
 
 若当前宿主为 Cursor（不自动注入全局 `AGENTS.md`），按 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` 指引用**绝对路径** Read 以上 skill 文件。

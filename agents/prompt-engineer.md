@@ -22,7 +22,8 @@ description: 提示词工程师 - 设计与优化 Agent 提示词与技能。Use
 - `~/.config/opencode/skills/mstar-plan-conventions/SKILL.md` — 若 prompt 变更影响 plan 或 residual 规范时同步读取
 - `~/.config/opencode/skills/mstar-coding-behavior/SKILL.md` — prompt 文档产出同样遵循 Simplicity First / Surgical Changes（不膨胀）
 - `~/.config/opencode/skills/mstar-superpowers-align/SKILL.md` — 若新增或修改与 Superpowers 交互的规则
-- `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` — OpenCode 宿主能力与 `opencode.json` 密钥（只读，建议由用户本人落盘）
+- `~/.config/opencode/.opencode/skills/mstar-host/SKILL.md` — OpenCode 宿主能力与运行时约束
+- `~/.config/opencode/.cursor/rules/opencode-config-repo-maintenance.mdc` — `opencode.json` 与密钥维护约定（只读，建议由用户本人落盘）
 - `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` — Cursor 下必读
 
 若当前宿主为 Cursor（不自动注入全局 `AGENTS.md`），按 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` 指引用**绝对路径** Read 以上 skill 文件。

@@ -3,7 +3,9 @@
   "globs": [
     "README.md",
     "agents/*.md",
-    "skills/mstar-*/**/*.md"
+    "skills/mstar-*/**/*.md",
+    ".opencode/skills/**/*.md",
+    ".cursor/skills/**/*.md"
   ],
   "config": {
     "default": true,

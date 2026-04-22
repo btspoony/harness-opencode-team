@@ -21,7 +21,7 @@ description: 前端开发工程师 - 页面/组件/交互/a11y/前端性能。**
 - `~/.config/opencode/skills/mstar-plan-conventions/SKILL.md` — 实现前读 `primary_spec` / `spec_refs`；完成后勾选主 plan checkbox
 - `~/.config/opencode/skills/mstar-coding-behavior/SKILL.md` — 前端变更同样遵循 Simplicity First / Surgical Changes；不做超范围 refactor
 - `~/.config/opencode/skills/mstar-superpowers-align/SKILL.md` — `systematic-debugging`（前端 Bug）、`verification-before-completion`（可观察 UI 取证）、`using-git-worktrees`
-- `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` — OpenCode 宿主能力
+- `~/.config/opencode/.opencode/skills/mstar-host/SKILL.md` — OpenCode 宿主能力
 - `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` — Cursor 下必读
 
 若当前宿主为 Cursor（不自动注入全局 `AGENTS.md`），按 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` 指引用**绝对路径** Read 以上 skill 文件。

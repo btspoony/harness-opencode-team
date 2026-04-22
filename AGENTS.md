@@ -1,6 +1,6 @@
 # Morning Star (启明星) — Code Agent Harness 全局入口
 
-本文件是 **Morning Star / 启明星** code agent harness 的**全局入口**，描述多角色 agent 工作流在本配置仓库中的组织方式。执行向规则与专题深度内容**不在本文件正文展开**，统一放入 `~/.config/opencode/skills/mstar-*/`（OpenCode / 中性流程）与 `.cursor/skills/mstar-host/`（Cursor 宿主）的 SKILL.md + `references/`。
+本文件是 **Morning Star / 启明星** code agent harness 的**全局入口**，描述多角色 agent 工作流在本配置仓库中的组织方式。执行向规则与专题深度内容**不在本文件正文展开**，统一放入 `~/.config/opencode/skills/mstar-*/`（中性流程）、`~/.config/opencode/.opencode/skills/mstar-host/`（OpenCode 宿主）与 `.cursor/skills/mstar-host/`（Cursor 宿主）的 SKILL.md + `references/`。
 
 **单一权威**：执行向规则与专题索引以本文件 + `mstar-*` skills 为准（在未被项目规则覆盖的范围内）。项目工作目录下自 cwd 向上解析的 `AGENTS.md` / `CLAUDE.md`（项目本地 Rules）优先于本文件。
 
@@ -33,12 +33,12 @@
 | **`mstar-routing-eval`** | PM 路由回归（`assets/routing-evals.json`）+ prompt/规则迭代评估 + `Routing Eval Report` 输出模板 |
 | **`mstar-coding-behavior`** | 跨角色通用编码行为：Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution |
 | **`mstar-superpowers-align`** | Morning Star × Superpowers：加载契约、最小声明契约、编排触发短语表、per-role 必用/宜用、`subagent-driven-development` 与 implementer-prompt 降权、QC 三审 × `using-git-worktrees` 叠用约束、张力与消解表 |
-| **`mstar-host-opencode`** | OpenCode 宿主：全局规则注入、`question` 工具、`@explore` / `@general`、按角色模型、库文档 Context7 单一协议、按能力选配 MCP、`opencode.json` 密钥占位 |
+| **`mstar-host-opencode`** (`.opencode/skills/mstar-host/SKILL.md`) | OpenCode 宿主：全局规则注入、`question` 工具、`@explore` / `@general`、按角色模型、库文档 Context7 单一协议、按能力选配 MCP |
 | **`mstar-host-cursor`** (`.cursor/skills/mstar-host/SKILL.md`) | Cursor 宿主：Task 工具并行 QC 三审、单会话多帽 / 多窗口模式、implement 内禁止递归 Task、结构化 Markdown 澄清兜底 |
 
 ## 护栏（不变量）
 
-- 未经用户**明确同意**，不得修改 `~/.config/opencode/opencode.json`、凭据文件或 `secrets.env`（详见 `mstar-host-opencode`）。
+- 未经用户**明确同意**，不得修改 `~/.config/opencode/opencode.json`、凭据文件或 `secrets.env`（详见 `.cursor/rules/opencode-config-repo-maintenance.mdc`）。
 - 行为变更必须有对应验证证据；拒绝未记录的破坏性变更。
 - 对业务 Git 仓库的可合并改动，默认在功能分支上完成；默认分支直改需 Assignment 显式写 `Branch policy` 例外（见 `mstar-harness-core`）。
 - **Dev 三角**：`@fullstack-dev` 后端主导；用户可见 UI / 多文件前端默认由 `@frontend-dev` 主责；独立第二实现轨用 `@fullstack-dev-2`。详见 `~/.config/opencode/agents/project-manager.md`「Dev 三角平衡」。

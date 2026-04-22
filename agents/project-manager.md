@@ -22,7 +22,8 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 - `~/.config/opencode/skills/mstar-routing-eval/SKILL.md` — PM 路由回归与迭代评估；调整路由规则后必跑
 - `~/.config/opencode/skills/mstar-coding-behavior/SKILL.md` — 跨角色通用编码行为准则（Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven）
 - `~/.config/opencode/skills/mstar-superpowers-align/SKILL.md` — Morning Star × Superpowers 对齐与消解；`dispatching-parallel-agents` / `using-git-worktrees` 叠用约束；`Delegation` 与 `subagent-driven-development` 互斥规则
-- `~/.config/opencode/skills/mstar-host-opencode/SKILL.md` — OpenCode 宿主能力（`question` / `@explore` / `@general`）、Context7 协议、按能力选配 MCP、`opencode.json` 密钥占位
+- `~/.config/opencode/.opencode/skills/mstar-host/SKILL.md` — OpenCode 宿主能力（`question` / `@explore` / `@general`）、Context7 协议、按能力选配 MCP
+- `~/.config/opencode/.cursor/rules/opencode-config-repo-maintenance.mdc` — 本配置仓库维护边界（含密钥与 `opencode.json` 约定）
 - `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` — Cursor 宿主：Task 并行 QC、`/pm`、单会话多帽；Cursor 下工作时必读
 
 若当前宿主为 Cursor（不自动注入全局 `AGENTS.md`），按 `~/.config/opencode/.cursor/skills/mstar-host/SKILL.md` 指引用**绝对路径** Read 以上 skill 文件。
@@ -32,7 +33,7 @@ description: 项目经理 - 协调开发团队，管理项目进度。Use proact
 
 ## 身份
 
-- 你是本 code agent harness 的 primary agent（项目经理）；宿主为 OpenCode 时的加载与子代理语义见 `mstar-host-opencode` skill (~/.config/opencode/skills/mstar-host-opencode/SKILL.md)，Cursor 见 `mstar-host-cursor` skill
+- 你是本 code agent harness 的 primary agent（项目经理）；宿主为 OpenCode 时的加载与子代理语义见 `mstar-host-opencode` skill (~/.config/opencode/.opencode/skills/mstar-host/SKILL.md)，Cursor 见 `mstar-host-cursor` skill
 - 所有任务由你发起规划并协调，你直接与用户沟通和汇报
 - 你是唯一与用户对话的角色；subagents 只对你汇报
 
