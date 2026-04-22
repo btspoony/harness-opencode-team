@@ -1,64 +1,81 @@
 ---
 name: mstar-host-opencode
-description: Morning Star (启明星) harness 在 OpenCode 宿主上的加载方式与专属能力 —— 强制首先加载 `mstar-harness-core` skill；由 `opencode.json` 驱动的角色加载（`agents/<id>.md` 壳层 + `mstar-roles` skill 的角色正文）；内置 `question` 工具（结构化澄清）；内置 `@explore` 只读导航与 `@general` subagent；具名角色需 PM 经宿主入口实际拉起（仅打印 Assignment Markdown 不会自动创建子代理）；按角色模型（`opencode.json` 中 `agent.<id>.model`）；按能力选配 MCP（现行文档 / Web 检索 / 代码模式 / 仓库图谱 / 浏览器 E2E / Git 工作流 / 系统化排障）。OpenCode 使用者在会话开始前必读；`@project-manager` 编排前必读，以决定是否用 `question` 工具做结构化澄清。
+description: OpenCode host adapter for Morning Star harness. Use this skill whenever running Morning Star in OpenCode, especially for host entry behavior, `opencode.json`-driven role loading, `question`-based structured clarify, `@explore`/`@general` usage boundaries, and PM-triggered named-role invocation. Always load this after `mstar-harness-core` to keep host behavior aligned with shared gates and routing.
 ---
 
 # Morning Star × OpenCode Host Adapter
 
-本 skill 描述 **Morning Star harness 在 OpenCode 上运行时**的宿主适配（能力、入口、降噪）。**中性流程与不变量**仍以 `mstar-harness-core` 为准。
+This skill defines host adaptation for **Morning Star running in OpenCode** (capabilities, entry behavior, and noise control).  
+Neutral process rules and invariants remain authoritative in `mstar-harness-core`.
 
-## 首要动作：加载 `mstar-harness-core`
+## First Action: Load `mstar-harness-core`
 
-无论 OpenCode 是否已通过 Global Rules 把根目录 `AGENTS.md` 注入到会话，agent 开工前的**第一动作**都是 Read `mstar-harness-core` skill。
+Regardless of whether OpenCode injected root `AGENTS.md` via Global Rules, the agent’s **first action** is to read `mstar-harness-core`.
 
-## 角色加载
+## Default path (recommended)
 
-- **角色壳层**：`agents/<id>.md` 由 `opencode.json` 的 `agent.<id>` 引用；文件仅保留 frontmatter（mode / tools / permission）与一行 role binding。
-- **角色正文**：在 `mstar-roles` skill 的 `references/<id>.md`（或共享 reference + `Role parameters`）。
-- **插件能力与编排消解**：Superpowers 等插件的消解见 `mstar-superpowers-align`。
+Use this default sequence unless a project rule explicitly overrides it:
 
-## OpenCode 专属能力（其他宿主可能没有）
+1. Read `mstar-harness-core`
+2. Read current host adapter (`mstar-host-opencode`)
+3. Load role via `mstar-roles`
+4. Execute with evidence-first completion checks
 
-- **结构化澄清**：优先使用内置 **`question`** 工具（标题、题干、选项；可自定义文本回答）。须在配置中允许 `permission.question`（由用户维护；agent 不得擅自改全局配置）。
-- **内置子代理**：如 **`@explore`**（只读导航）、**`@general`** 等，由 OpenCode 调度；语义上仍须遵守 `mstar-harness-core` 中对 `@explore` 边界等的约定。
-- **具名角色（`@<agent-id>`）**：配置在 `opencode.json` 的 `agent.<id>`（与 `agents/<id>.md` 同名）的角色，须由 **PM 通过宿主提供的入口实际拉起**（例如对 `@fullstack-dev` 发起一轮子代理 / Task，以 Assignment 为消息体）。**仅**在主会话里打印 `## Assignment` Markdown **不会**自动创建子代理会话；若未见子代理启动，属于**未分派**，见 `mstar-roles` skill 的 `project-manager` 角色 **§2** 与 **Q13**。
-- **按角色模型**：可在 `opencode.json` 为不同 subagent 配置不同 `model`。
+## Role loading
 
-## 共享协议：库文档检索（Context7）
+- **Role shell**: `agents/<id>.md` is referenced by `opencode.json` `agent.<id>`; the file keeps only frontmatter and role binding.
+- **Role body**: stored in `mstar-roles` `references/<id>.md` (or shared references + role parameters).
+- **Plugin orchestration conflict handling**: see `mstar-superpowers-align`.
 
-Context7 文档检索属于**共享流程规则**，统一由 `mstar-harness-core` 维护。
-执行时请按：`mstar-harness-core` skill 的 `references/library-docs-protocol.md`。
+## OpenCode-specific capabilities (other hosts may differ)
+
+- **Structured clarify**: prefer built-in `question` tool (title, prompt, options, optional custom text). Requires `permission.question` in config (user-maintained; agent must not edit global config without explicit consent).
+- **Built-in subagents**: e.g., `@explore` (read-only navigation), `@general`; still subject to `mstar-harness-core` boundaries for explore usage.
+- **Named roles (`@<agent-id>`)**: roles configured in `opencode.json` `agent.<id>` must be **actually invoked** by PM through host entry points. Printing Assignment Markdown alone does not create subagent sessions.
+- **Per-role models**: different models can be configured per subagent in `opencode.json`.
+
+## Gotchas
+
+- `question` availability is host-config dependent; if unavailable, fall back to structured Markdown clarify flow.
+- Printing an Assignment in the main thread is not dispatch; PM must actually invoke the target role.
+- Built-in `@explore` remains read-only orientation, not a substitute for role-owned implementation or review deliverables.
+- More MCPs does not fix process gaps; follow phase-gate and evidence rules first.
+
+## Shared protocol: library documentation retrieval (Context7)
+
+Context7 retrieval is a shared process rule maintained by `mstar-harness-core`.  
+Follow: `mstar-harness-core` skill `references/library-docs-protocol.md`.
 
 ---
 
-## 会话上下文与插件注入（降噪）
+## Session context and plugin injection (noise control)
 
-- **大型平台注入**（例如 Vercel 生态长文、SessionStart hook）：与当前任务栈无关时，占用上下文且易与项目技术选型冲突。建议在**非 Vercel 项目**关闭对应规则/插件，或改为按需规则（`alwaysApply: false` + 描述触发条件）。
-- **多个搜索/文档 MCP**：同类能力只保留一个默认主通道。
+- **Large platform injections** (for example, long Vercel ecosystem prompts, SessionStart hooks): if unrelated to current stack, they consume context and can conflict with project choices. For non-Vercel projects, disable or make them on-demand (`alwaysApply: false` + explicit trigger description).
+- **Multiple search/docs MCPs**: keep one default channel per capability class.
 
 ---
 
-## 按能力选配的 MCP / Skills
+## Optional MCPs / skills by capability
 
-本节按**能力维度**列出可选增强项，与 `mstar-harness-core` `references/open-harness-principles.md` 中的「文档检索、可观察验证、结构化探索」等理念对应。是否接入由用户决定；**修改全局 `opencode.json` 须用户明确同意**。
+This section lists optional enhancements by capability domain, aligned with principles in `mstar-harness-core` `references/open-harness-principles.md` (documentation retrieval, observable verification, structured exploration). User decides whether to enable them; editing global `opencode.json` requires explicit user consent.
 
-| 能力 | 用途 | 说明 |
+| Capability | Purpose | Notes |
 |------|------|------|
-| **现行文档** | 库/API 随版本变化，减少幻觉 | Context7 类 MCP，或宿主已配置的等价文档工具（见上节） |
-| **Web 检索** | 时效信息、issue、迁移说明 | 本仓库若已配置搜索类 MCP，避免重复堆多个同类 |
-| **代码模式检索** | 跨仓库参考实现 | 例如 `https://mcp.grep.app`；本配置若已有 `grep` MCP 则已覆盖 |
-| **仓库图谱 / 影响分析** | 依赖与调用关系、PR 风险 | 例如 GitNexus（本仓库 `opencode.json` 已示例时即用） |
-| **浏览器 / E2E 验证** | 用户可见流程、取证 | agent-browser、Playwright 等 skill；与 QA「可观察证据」一致 |
-| **Git 工作流** | 原子提交、分支收口 | `git-commit`、`finishing-a-development-branch` 等 |
-| **系统化排障** | RCA 再修复 | Superpowers `systematic-debugging`（见 `mstar-superpowers-align`） |
+| **Current docs** | Reduce hallucination for versioned APIs/libs | Context7-like MCP or equivalent host-configured docs tool |
+| **Web search** | Time-sensitive issues and migration notes | Avoid overlapping multiple search MCPs for the same purpose |
+| **Code pattern search** | Cross-repo implementation references | Example: `https://mcp.grep.app`; skip if equivalent already configured |
+| **Repo graph / impact analysis** | Dependency/call graph and PR risk | Example: GitNexus |
+| **Browser / E2E verification** | User-visible flow validation and evidence capture | agent-browser, Playwright, aligned with QA observable-evidence requirements |
+| **Git workflow** | Atomic commits and branch closure | e.g., `git-commit`, `finishing-a-development-branch` |
+| **Systematic debugging** | RCA before fix | Superpowers `systematic-debugging` (see `mstar-superpowers-align`) |
 
-### 不建议
+### Not recommended
 
-- 多个功能重叠的「搜索 MCP」同时常开，浪费上下文与配额。
-- 在未跑通本 harness Phase Gate 的情况下，用更多工具掩盖流程缺口。
+- Keeping multiple overlapping search MCPs always enabled.
+- Using more tools to mask phase-gate/process gaps when harness baseline is not yet followed.
 
-## 维护边界（与 runtime skill 分离）
+## Maintenance boundary (separate from runtime skill)
 
-本 skill 只承载 **运行时宿主适配**（能力、入口）。
+This skill should contain only **runtime host adaptation** (capabilities and entry behavior).
 
-- 执行期护栏保持不变：**agent 不得擅自改** `opencode.json` / `secrets.env` / `.secrets/*`。
+- Runtime guardrail remains unchanged: agent must not modify `opencode.json`, `secrets.env`, or `.secrets/*` without explicit user consent.

@@ -14,7 +14,7 @@ alwaysApply: true
 
 **例外（仍保留在执行向文档中）**：与运行时行为直接相关的边界陈述，例如「全局配置落盘仅由用户执行」「未经同意不得改 `opencode.json` / 凭据」等。
 
-**人类读者 / 非 Cursor 宿主**：用编辑器或 Read 打开本路径即可：`.cursor/rules/opencode-config-repo-maintenance.mdc`。
+**人类读者 / 非 Cursor 宿主**：用编辑器或 Read 打开本路径即可：`.cursor/rules/repo-maintenance.mdc`。
 
 ### 仓库内文件分工（索引）
 
@@ -94,6 +94,45 @@ alwaysApply: true
 
 **迁移后，"维护本仓库" ≈ "修改 mstar-\* skills"**。本节给出规范动作；路径、structure、description 触发语在 skill-creator 指南中有详解，本文不重复，仅强调 Morning Star 本地约束。
 
+## Skill 创作最佳实践（agentskills.io 对齐）
+
+以下规则用于编写或重构本仓库 `mstar-*` skills，目标是提升触发准确率、减少上下文浪费、降低与其它 skills（如 Superpowers）并用时的冲突成本。
+
+### 1) 从真实执行经验提炼，不从泛化常识倒推
+
+- 优先基于真实任务中的成功步骤、纠偏记录、输入输出格式、项目约束来写 skill。
+- 避免“通用最佳实践口号”式描述（如“handle errors appropriately”）；要写本仓库和本流程的具体做法。
+
+### 2) 先给默认路径，再给例外
+
+- 多种方案并存时，必须先声明一个默认方案（default-first），再列替代方案触发条件。
+- 避免平铺“菜单式选项”，否则 agent 在运行时会增加试探成本。
+
+### 3) 用 Gotchas 承载高价值纠偏知识
+
+- 把最容易犯错且违背直觉的点放在 skill 正文显眼位置（`Gotchas`）。
+- 每次你发现需要反复纠正 agent 的地方，都应沉淀成一条 gotcha。
+
+### 4) 渐进披露（Progressive Disclosure）
+
+- `SKILL.md` 保持核心执行路径；大段细节放 `references/`，并写明“何时读取哪个 reference”。
+- 仅在相关条件触发时加载细节，避免让所有会话都背完整长文。
+
+### 5) 控制粒度：一个 skill 一个连贯工作单元
+
+- 过小会导致一个任务同时触发多个 skill、互相打架；过大则触发不精准。
+- host adapter skill 只负责“宿主差异与接入”，不承载跨域大而全流程正文。
+
+### 6) 指令风格：程序化步骤优先，宣言式规则次之
+
+- 优先写可执行步骤（plan/validate/execute）与验证环；少写抽象宣告。
+- 需要固定输出结构时提供模板；多步骤流程优先 checklist。
+
+### 7) 上下文预算意识
+
+- 只写“agent 若没这条就会做错”的信息；agent 本来就知道的常识要删除。
+- 如果移除某段后行为不变，说明该段可删。
+
 ### Skill 目录结构（硬性）
 
 ```text
@@ -154,6 +193,7 @@ skills/mstar-<topic>/
 - [ ] **`AGENTS.md` skill 索引表**：skill 职责描述一行是否需要更新？
 - [ ] **`README.md`「Morning Star Skill 结构」表**：一行摘要是否需要对齐？
 - [ ] **README 多语言同步**：若更新 `README.md`，必须同步更新所有语言版本（当前至少包括 `README_CN.md`）；并检查跨语言链接（如 `Other languages`）可用且互相指向正确文件。
+- [ ] **best-practices 对齐**：是否满足 default-first、gotchas、progressive disclosure、单一连贯单元这四项最小要求？
 - [ ] **Lint**：`npx -y markdownlint-cli2`（glob 已覆盖 `skills/mstar-*/**/*.md`）。
 - [ ] **路由回归**：若本次变更涉及 PM 路由或门禁，跑 `mstar-routing-eval` 的 `assets/routing-evals.json` 场景集。
 - [ ] **Git 提交颗粒度**：skill 实体变更 + AGENTS.md 索引 + agent 壳层参数 + README 摘要 宜在同一 PR，避免 handoff 期间文档半同步。
@@ -177,7 +217,7 @@ skills/mstar-<topic>/
 - **库文档协议或宿主说明** 变更时，先更新 `skills/mstar-harness-core/references/library-docs-protocol.md`（共享协议），再同步 `.opencode/skills/mstar-host/SKILL.md`、`.cursor/skills/mstar-host/SKILL.md` 与根目录 **`AGENTS.md`*`**相关指针；核对 Cursor **Context7** 类规则（如 `~/.cursor/rules/context7.mdc`）是否一致。
 - **密钥约定** 变更时，优先更新**本文件**「OpenCode 密钥与 `opencode.json` 维护」小节，并同步 `secrets.env.example` / `opencode.example.json`（若字段名或占位方式变更）。
 - **共享入口、优先级、skill 索引或不变量** 变更时：只改**根目录 `AGENTS.md`**`**tar-*` skill 内部有独立 SKILL.md frontmatter `description`，同步更新触发语。
-- **本维护规则**（边界、更新规则、审查清单）变更时：同步本文件 `.cursor/rules/opencode-config-repo-maintenance.mdc`。
+- **本维护规则**（边界、更新规则、审查清单）变更时：同步本文件 `.cursor/rules/repo-maintenance.mdc`。
 
 ## Agent 设计变更审查清单
 
