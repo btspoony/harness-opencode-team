@@ -23,7 +23,7 @@
 
 ## Morning Star Skill 索引（强制加载）
 
-下列 skills 承载 harness 全部执行向规则。**每个角色在开工前须按其必读清单 Read 对应 SKILL.md**（角色必读表见各 `~/.config/opencode/agents/<role>.md` 开场块）。
+下列 skills 承载 harness 全部执行向规则。角色运行时先读取角色绑定的 `mstar-roles` 入口，再按其映射加载对应 reference。
 
 | Skill | 职责范围 |
 |-------|---------|
@@ -33,6 +33,7 @@
 | **`mstar-routing-eval`** | PM 路由回归（`assets/routing-evals.json`）+ prompt/规则迭代评估 + `Routing Eval Report` 输出模板 |
 | **`mstar-coding-behavior`** | 跨角色通用编码行为：Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution |
 | **`mstar-superpowers-align`** | Morning Star × Superpowers：加载契约、最小声明契约、编排触发短语表、per-role 必用/宜用、`subagent-driven-development` 与 implementer-prompt 降权、QC 三审 × `using-git-worktrees` 叠用约束、张力与消解表 |
+| **`mstar-roles`** | 角色提示词总线：`agents/*.md` 仅保留 frontmatter + 参数绑定，完整角色正文统一在 `skills/mstar-roles/references/`（含重复角色共享 reference） |
 | **`mstar-host-opencode`** (`.opencode/skills/mstar-host/SKILL.md`) | OpenCode 宿主：全局规则注入、`question` 工具、`@explore` / `@general`、按角色模型、按能力选配 MCP |
 | **`mstar-host-cursor`** (`.cursor/skills/mstar-host/SKILL.md`) | Cursor 宿主：Task 工具并行 QC 三审、单会话多帽 / 多窗口模式、implement 内禁止递归 Task、结构化 Markdown 澄清兜底 |
 
