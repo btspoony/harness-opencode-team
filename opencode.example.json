@@ -12,8 +12,7 @@
     },
     "*": "allow"
   },
-  "model": "bailian-coding-plan/glm-5",
-  "small_model": "minimax-cn-coding-plan/MiniMax-M2.7",
+  "model": "zhipuai-coding-plan/glm-5-turbo",
   "default_agent": "project-manager",
   "plugin": [
     "superpowers@git+https://github.com/obra/superpowers.git"
@@ -29,19 +28,6 @@
         "gitnexus",
         "mcp"
       ]
-    },
-    "MiniMax": {
-      "type": "local",
-      "command": [
-        "uvx",
-        "minimax-coding-plan-mcp",
-        "-y"
-      ],
-      "environment": {
-        "MINIMAX_API_KEY": "{env:MINIMAX_API_KEY}",
-        "MINIMAX_API_HOST": "https://api.minimaxi.com"
-      },
-      "enabled": true
     },
     "web-search-prime": {
       "type": "remote",
@@ -89,81 +75,6 @@
     "zhipuai-coding-plan": {
       "options": {
         "apiKey": "{env:Z_AI_API_KEY}"
-      },
-      "models": {
-        "glm-5.1": {
-          "name": "GLM-5.1"
-        }
-      }
-    },
-    "bailian-coding-plan": {
-      "npm": "@ai-sdk/anthropic",
-      "name": "Qwen Coding Plan",
-      "options": {
-        "baseURL": "https://coding.dashscope.aliyuncs.com/apps/anthropic/v1",
-        "apiKey": "{env:DASHSCOPE_API_KEY}"
-      },
-      "models": {
-        "qwen3.5-plus": {
-          "name": "Qwen3.5 Plus",
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 1024
-            }
-          }
-        },
-        "qwen3-coder-next": {
-          "name": "Qwen3 Coder Next"
-        },
-        "qwen3-coder-plus": {
-          "name": "Qwen3 Coder Plus"
-        },
-        "MiniMax-M2.5": {
-          "name": "MiniMax M2.5",
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 1024
-            }
-          }
-        },
-        "glm-5": {
-          "name": "GLM-5",
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 1024
-            }
-          }
-        },
-        "kimi-k2.5": {
-          "name": "Kimi K2.5",
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 1024
-            }
-          }
-        }
       }
     }
   },
