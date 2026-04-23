@@ -249,6 +249,7 @@
 
 #### 最小流程（5 步；0=分派）
 
+0. **QC pre-dispatch read gate（mandatory）**：before dispatching any QC task, PM must read `mstar-review-qc` (including relevant `references/`) in the current round.
 1. **分派（先于收集报告）**：按 **§2「PM：同轮多 invoke」** 发出 **三份** 独立 QC Assignment（三次 invoke；宿主支持时 **同一条回复内并行发出**，禁止默认「先发一名 reviewer、等回报再发下一名」）。
 2. 收集三份 QC 报告；**汇总前核对**三份（及对应 Assignment）中的 `**plan_id`**、`**Review range` / `Diff basis**`、`**Review cwd` / `Worktree path**`、`**Working branch**` 与 handoff 一致——若任一份报告 **Scope** 与 PM 下发字符串不一致或未写明，**不得**汇总为 Approve，应标 `Blocked` 并重派或补报告。然后合并同类 finding（去重）。
 3. 标记冲突项并按证据强度裁决（复现/工具报错优先）。

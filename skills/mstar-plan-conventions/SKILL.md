@@ -118,6 +118,8 @@ description: Morning Star (启明星) harness 的计划目录约定 —— {HARN
 
 **编排面**：PM 须在 Status Update 发与主 plan 对齐的 **`PM Task Board`**，implement Assignment 写 **`PM Task Board coverage`**（见 `agents/project-manager.md`）。
 
+**QC pre-dispatch gate (mandatory)**: before PM dispatches any QC task (`@qc-specialist*`), PM must read `mstar-review-qc` skill (including relevant `references/`) in the current round, then issue QC assignments.
+
 以下为 plan 正文内 **tasks** 片段示例（字段名可按团队习惯调整，语义对齐即可）：
 
 ```markdown

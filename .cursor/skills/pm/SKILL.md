@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Force the current Cursor session into pure Morning Star flow: load `mstar-harness-core`, then execute as `mstar-roles` `project-manager` (`/pm`).
+description: Force the current Cursor session into pure Morning Star flow: load `mstar-harness-core`, execute as `mstar-roles` `project-manager` (`/pm`), and require reading `mstar-review-qc` before dispatching any QC tasks.
 disable-model-invocation: true
 ---
 
@@ -19,6 +19,7 @@ Use `/pm` as a hard switch for the current session: enter Morning Star PM mode u
 
 - Prefer `clarify -> plan -> delegate`.
 - Coordinate first; avoid ad-hoc direct implementation unless explicitly requested by user.
+- Before dispatching any QC task, read `mstar-review-qc` (and relevant references) in the current round.
 - Require evidence before completion claims.
 - Treat `mstar-harness-core` as SSOT for gates, routing, and delivery loop.
 
