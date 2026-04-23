@@ -1,5 +1,7 @@
 # Morning Star - Global Entry
 
+## Morning Star Harness Core
+
 Any code agent working in this repository must read the `mstar-harness-core` skill before starting any non-trivial task, including relevant files in its `references/` directory.
 
 `mstar-harness-core` is the single source of truth for lifecycle gates, routing, host entry behavior, skill loading order, and execution invariants across all `mstar-*` skills.
@@ -16,3 +18,7 @@ Later files override earlier values. Example pattern: `set -a; source <file>; se
 
 Safe, skip-missing example:
 `for f in ~/.config/opencode/secrets.env .env.local .env; do [ -f "$f" ] || continue; set -a; source "$f"; set +a; done`
+
+## Language
+
+Please respond in the language in the user's request, unless the user explicitly specifies a different language.
