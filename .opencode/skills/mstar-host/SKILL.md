@@ -34,6 +34,20 @@ Use this default sequence unless a project rule explicitly overrides it:
 - **Named roles (`@<agent-id>`)**: roles configured in `opencode.json` `agent.<id>` must be **actually invoked** by PM through host entry points. Printing Assignment Markdown alone does not create subagent sessions.
 - **Per-role models**: different models can be configured per subagent in `opencode.json`.
 
+## OpenCode parallel dispatch contract (critical)
+
+When PM dispatches parallel work (especially QC tri-review), treat "parallel" as a **tool-level requirement**, not only a wording requirement.
+
+- **Hard rule**: if 2+ subagents must run in parallel, emit all corresponding subagent/task invocations in the **same assistant message**.
+- **QC tri-review**: launch `qc-specialist`, `qc-specialist-2`, and `qc-specialist-3` in one dispatch turn (three invocations in one message block).
+- **Failure mode to avoid**: sending only one invocation and planning to send the others later is a serial rollout, not a successful parallel launch.
+- **Completion claim gate**: do not claim "QC tri-review dispatched in parallel" unless all three invocations were issued in that same dispatch turn.
+
+Quick self-check before sending:
+1. How many independent assignments are required this turn?
+2. Does the outgoing message contain the same number of invocation calls?
+3. For QC tri-review, is the count exactly 3 in one message?
+
 ## Gotchas
 
 - `question` availability is host-config dependent; if unavailable, fall back to structured Markdown clarify flow.
