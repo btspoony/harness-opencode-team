@@ -156,6 +156,7 @@ Assignment 模板中的 **`Parallelism`** 行应与上表 **`Parallelism`** / **
 - **`@product-manager`**、**`@architect`** 可写 plan 文档中各自负责部分（含本人任务 checkbox），但**不**应擅自将整条计划在 `status.json` 中改为 `InReview` 或 `Done`（除非 Assignment 明确授权且与 PM 对齐）；**`Done` 仍仅限** PM/QA。
 - **`@qc-specialist`** / **`@qc-specialist-2`** / **`@qc-specialist-3`**：可按宿主白名单**直接写入** `{PLAN_DIR}/reports/**/*.md`；**不得**改主 plan checkbox；**其它路径**仍转达 `@project-manager`。
 - **`@market-expert`** 等只读角色：将更新内容转达 `@project-manager` 代为写盘。
+- **PM report-to-status gate（mandatory）**：PM receives any implementation/review/QA `Completion Report v2` and must update `{HARNESS_DIR}/status.json` in the same coordination turn (at minimum: status/progress/notes or residual linkage relevant to that report). If not updated in-turn, mark `Blocked` and do not proceed to the next dispatch.
 
 ## 未启用 Plan 管理时的工作方式
 

@@ -650,6 +650,7 @@ Decision:
 - 收到回报后，检查产出是否符合预期
 - 如果不符合，给出具体反馈并要求修正
 - 如果符合，推进到下一阶段（参照路由表）
+- **Report-to-status hard gate**: after receiving any `Completion Report v2` (implement/QC/QA), PM must update `**{HARNESS_DIR}/status.json**` in the same coordination turn before issuing the next dispatch. Missing this update => `Blocked`.
 - **Task 级节奏**：每完成一个 coverage / Task ID：先 **commit**，再对用户 `Status Update`，再派下一单 implement。
 - **阶段门禁推进（强制）**：
   - 非 hotfix 任务必须先完成 `specify -> clarify -> plan`，才能分派实现类任务。
