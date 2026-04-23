@@ -13,6 +13,15 @@ description: Morning Star (启明星) QC 审查基线与 QA 验证契约 —— 
 - **同仓多 worktree 并行开发**：一轮 QC 三审仍只对应 **一套** `Review cwd` + `Working branch` + `Review range` / `Diff basis`（三票逐字相同）。若成果曾分布在 **未合并** 的多条分支或多个 `HEAD`，PM **须先**完成 Git 归并到 **单一**待审分支再派 QC；**不得**指望 reviewer 自行在多个开发 worktree 之间拼凑审查范围。**推荐** PM 在并行开发开始前已建立 **plan 集成分支** 作为各轨 merge 靶（见 `mstar-harness-core` `references/branch-and-worktree.md` 同节 **「推荐默认编排：先建 plan 集成分支，再挂各 worktree」**）。细则见 `mstar-harness-core` `references/branch-and-worktree.md` **「多 worktree 并行开发与 QC / QA 的门禁衔接」**。
 - **Request Changes 后**：再审为**新波次**，落盘用新文件名（如 `-rev2` / `wave2-`），PM 汇总时标明有效波次。
 
+## 三审身份与模型独立性门禁（PM 强制）
+
+在 PM 发出 QC 三审后、进入汇总前，必须先完成以下校验：
+
+- 三个实际运行会话的角色 ID 必须分别为 `qc-specialist`、`qc-specialist-2`、`qc-specialist-3`。
+- 三个会话的运行模型应与 `opencode.json` 的对应角色配置一致。
+- 若出现“Assignment 写的是 #2/#3，但实际拉起仍为 `qc-specialist`”或模型映射不符，判定为 `dispatch invalid`，不得进入 consolidated 结论，必须重派。
+- 若宿主故障导致三审退化为同模型且无法即时修复，需在 Status Update 明确标记 `degraded tri-review` 并请求用户确认是否继续（默认不放行）。
+
 ## 共享基线（所有审查员）
 
 每位 QC 审查员必须检查：
@@ -74,6 +83,8 @@ description: Morning Star (启明星) QC 审查基线与 QA 验证契约 —— 
 
 ## Reviewer Metadata
 - Reviewer: @qc-specialist | @qc-specialist-2 | @qc-specialist-3
+- Runtime Agent ID: {qc-specialist | qc-specialist-2 | qc-specialist-3}
+- Runtime Model: {provider/model-id}
 - Review Perspective: {role-specific primary focus}
 - Report Timestamp: {ISO-8601}
 

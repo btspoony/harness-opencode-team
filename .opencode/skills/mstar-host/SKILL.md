@@ -48,6 +48,11 @@ Quick self-check before sending:
 2. Does the outgoing message contain the same number of invocation calls?
 3. For QC tri-review, is the count exactly 3 in one message?
 
+Post-dispatch validation (mandatory for QC tri-review):
+1. Verify the three runtime invocations were started as the intended agent IDs: `qc-specialist`, `qc-specialist-2`, `qc-specialist-3` (not three runs of the same role).
+2. Verify runtime model mapping matches host config intent for each reviewer.
+3. If any role/model mismatch is observed, mark dispatch as invalid, do not enter QC consolidation, and re-dispatch with corrected role/model targeting.
+
 ## Gotchas
 
 - `question` availability is host-config dependent; if unavailable, fall back to structured Markdown clarify flow.

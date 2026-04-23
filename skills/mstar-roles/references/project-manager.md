@@ -251,7 +251,7 @@
 
 0. **QC pre-dispatch read gate（mandatory）**：before dispatching any QC task, PM must read `mstar-review-qc` (including relevant `references/`) in the current round.
 1. **分派（先于收集报告）**：按 **§2「PM：同轮多 invoke」** 发出 **三份** 独立 QC Assignment（三次 invoke；宿主支持时 **同一条回复内并行发出**，禁止默认「先发一名 reviewer、等回报再发下一名」）。
-2. 收集三份 QC 报告；**汇总前核对**三份（及对应 Assignment）中的 `**plan_id`**、`**Review range` / `Diff basis**`、`**Review cwd` / `Worktree path**`、`**Working branch**` 与 handoff 一致——若任一份报告 **Scope** 与 PM 下发字符串不一致或未写明，**不得**汇总为 Approve，应标 `Blocked` 并重派或补报告。然后合并同类 finding（去重）。
+2. 收集三份 QC 报告；**汇总前核对**三份（及对应 Assignment）中的 `**plan_id`**、`**Review range` / `Diff basis**`、`**Review cwd` / `Worktree path**`、`**Working branch**` 与 handoff 一致——若任一份报告 **Scope** 与 PM 下发字符串不一致或未写明，**不得**汇总为 Approve，应标 `Blocked` 并重派或补报告。并同时核对每份报告的 `Runtime Agent ID` 与 `Runtime Model`：三票须对应三个不同 QC 角色；若出现角色误绑或模型映射错误，按 `dispatch invalid` 处理并重派。然后合并同类 finding（去重）。
 3. 标记冲突项并按证据强度裁决（复现/工具报错优先）。
 4. 产出单一 gate 结论（`Approve` / `Request Changes` / `Needs Discussion`）。
 5. 对“需修复项”直接派单给 dev owner，修复后回流 QC/QA 复验。
@@ -484,6 +484,7 @@
 - **Q11：Task Board**：非平凡 plan 已公示板且本条含 `**PM Task Board coverage`**？否 → 先补 Status Update，再 implement。
 - **Q12：单层 dispatch**：承接方是否在**一条** Assignment 外又要求「再 Task 同名」代做本条？**禁止**；§1.3、当前宿主的 `mstar-host` skill。**勿与**「PM 同轮多次 invoke」混淆：QC 三审 = 三条 Assignment = PM **三次** invoke（§2「PM：同轮多 invoke」）。
 - **Q13：宿主级 invoke（OpenCode 等）**：本轮每条 **已下发的** Assignment 是否已对 `**Execute as`** 对应角色执行 **invoke**（而非仅把 Markdown 贴进主会话）？**N** 条独立 Assignment（含 QC 三审的 **3** 条）→ **N 次** invoke，**默认同轮发完**（宿主支持时）。仅打印正文 → **分派未完成**，不得写「已派 `@fullstack-dev`」类表述。见 **§2**、当前宿主的 `mstar-host` skill。
+- **Q14：QC 三审运行身份/模型核对**：若本轮派发 QC 三审，是否已核对三条实际会话分别对应 `qc-specialist`、`qc-specialist-2`、`qc-specialist-3`，且运行模型与 `opencode.json` 对应角色映射一致？若任一不符，标记 `dispatch invalid` 并重派，禁止进入 consolidated 结论。
 
 ### 1.1.2 Pre-implement Gate Check（强制输出）
 
