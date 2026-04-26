@@ -27,5 +27,5 @@ Use `/pm` as a hard switch for the current session: enter Morning Star PM mode u
 
 1. User explicit instructions
 2. Project `AGENTS.md` / `CLAUDE.md`
-3. `mstar-harness-core` and related `mstar-*` skills (`mstar-roles`, `mstar-plan-conventions`, `mstar-review-qc`, `mstar-routing-eval`, `mstar-coding-behavior`, `mstar-superpowers-align`)
+3. `mstar-harness-core` and related runtime `mstar-*` skills under `skills/` (`mstar-roles`, `mstar-plan-conventions`, `mstar-review-qc`, `mstar-coding-behavior`, `mstar-superpowers-align`). Routing regression is **maint-only**: `.cursor/skills/mstar-routing-eval/` (not part of `/pm` runtime load).
 4. This `/pm` command skill

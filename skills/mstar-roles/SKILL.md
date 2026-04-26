@@ -48,7 +48,6 @@ description: Morning Star (启明星) 的角色提示词总线。把 `agents/*.m
 | `mstar-harness-core` | 状态机、Spec-Driven 双阶段门禁、Task category、分支 / worktree、QC-QA 检出对齐、调度防串扰 |
 | `mstar-plan-conventions` | `{HARNESS_DIR}` / `{PLAN_DIR}` 发现与初始化、`status.json` SSOT、residual findings、knowledge/ 布局、工期预估 |
 | `mstar-review-qc` | 工作流、审查清单、报告模板、门禁规则（三审角色必依赖，其它角色读懂门禁即可） |
-| `mstar-routing-eval` | PM 路由回归与迭代评估（PM / prompt-engineer 主要依赖） |
 | `mstar-coding-behavior` | Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven（所有实现、审查、重构任务） |
 | `mstar-superpowers-align` | Morning Star × Superpowers 对齐与消解；`dispatching-parallel-agents` / `using-git-worktrees` 叠用约束 |
 | 当前宿主的 `mstar-host` skill | 宿主能力差异（`question` 工具、subagent 调度、Task 并行等）；由各宿主自行提供 |

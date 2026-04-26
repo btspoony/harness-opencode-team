@@ -78,13 +78,14 @@
 | `mstar-harness-core` | 全局入口、状态机、门禁与不变量 |
 | `mstar-plan-conventions` | plan / status / residual 的统一约定 |
 | `mstar-review-qc` | QC 审查标准与报告模板 |
-| `mstar-routing-eval` | 路由回归与规则迭代评估 |
 | `mstar-coding-behavior` | 通用编码行为基线 |
 | `mstar-superpowers-align` | 与 Superpowers 的对齐与冲突消解 |
 | `mstar-roles` | 角色提示词总线（角色正文在 `references/`） |
 | `mstar-host`（按宿主） | 宿主能力差异（OpenCode / Cursor） |
 
 **Morning Star 加载顺序：** 任意会话或任务中，**须先 Read `skills/mstar-harness-core/SKILL.md`**，再读其它 `skills/mstar-*/SKILL.md`。各非核心 skill 正文开头的 **「Load order」** 小节重复此要求；冲突以 **`mstar-harness-core`** 为准。详见该文件「与其它 `mstar-*` skill 的加载契约」。
+
+**仅 Cursor 维护：** PM 路由场景回归与 `Routing Eval Report` 在 **`.cursor/skills/mstar-routing-eval/`**（不在 `skills/`）。见 `.cursor/rules/repo-maintenance.mdc`。
 
 ## 常见使用流（最短）
 

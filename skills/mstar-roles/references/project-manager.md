@@ -5,7 +5,6 @@
 - `mstar-harness-core` skill — 状态机、Spec-Driven 双阶段门禁、Task category、分支 / worktree、QC-QA 检出对齐、调度防串扰
 - `mstar-plan-conventions` skill — `{HARNESS_DIR}` / `{PLAN_DIR}` 发现与初始化、`status.json` SSOT、residual findings 登记/归档、Done 瘦身 Profile、工期预估
 - `mstar-review-qc` skill — QC 三审基线、报告模板、门禁规则；派三审时必读
-- `mstar-routing-eval` skill — PM 路由回归与迭代评估；调整路由规则后必跑
 - `mstar-coding-behavior` skill — 跨角色通用编码行为准则（Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven）
 - `mstar-superpowers-align` skill — Morning Star × Superpowers 对齐与消解；`dispatching-parallel-agents` / `using-git-worktrees` 叠用约束；`Delegation` 与 `subagent-driven-development` 互斥规则
 - `mstar-host` skill - 当前宿主的 `mstar-host` skill，各个宿主略有区别
@@ -68,15 +67,11 @@
 
 - **极简任务**（单点小改、路由表已明确）：`mstar-harness-core` skill 的 SKILL.md 开头（优先级与最小循环）+ 本轮 Assignment 已足够；**勿**默认通读其全部 `references/`。
 - **标准交付**（非平凡功能 / Bug / 跨模块）：再读 `mstar-harness-core` skill 中与**当前阶段**相关的节，必要时 `mstar-harness-core` references/phase-gate-playbook.md。
-- **路由或门禁规则变更**：再读 `mstar-routing-eval` skill，并用 `routing-evals.json` 做回归。
 - 专题文档索引与角色归属：以 Morning Star 全局入口与各 `mstar-*` skill 为准，避免在对话中重复粘贴大段规则。
 - 涉及流程与质量门禁时，按需从全局配置读取（注意是绝对路径）：
   - `mstar-harness-core` skill（code agent harness 入口：索引、优先级、最小循环、护栏；OpenCode 下由根目录 `AGENTS.md` 注入指向这里，其它宿主按当前宿主的 `mstar-host` skill 主动 Read）
-  - `mstar-harness-core` skill
-  - `mstar-routing-eval` skill
   - `mstar-review-qc` skill
-  - `mstar-routing-eval` skill
-- 调整任务路由规则后，使用 `mstar-routing-eval` skill 的 `assets/routing-evals.json` 做一轮场景回归，避免路由漂移。
+- **路由或门禁策略变更**后的场景回归与 `routing-evals.json` 维护：由 **Cursor 维护流程**执行（见本仓库 `.cursor/rules/repo-maintenance.mdc`），**不**作为你在 OpenCode 等宿主上日常编排时的必读 skill。
 - 项目级规范以当前工作目录下的 `AGENTS.md` 或 `CLAUDE.md` 为准；全局规则与项目规则冲突时，项目规则优先。
 
 ### 开源 Harness 理念（本仓库默认内化）
@@ -401,7 +396,6 @@
 - 若任务涉及路由/门禁策略，额外必读（全局配置）：
   - `mstar-harness-core` skill
   - `mstar-review-qc` skill
-  - `mstar-routing-eval` skill
   - `mstar-harness-core` skill 的 `references/open-harness-principles.md`（意图门禁、Task category、可验证编辑等默认纪律的索引）
 
 未完成该步骤，不得进入分派流程。

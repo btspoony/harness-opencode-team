@@ -24,7 +24,7 @@ alwaysApply: true
 | `skills/mstar-harness-core/` | 核心不变量：状态机、Spec-Driven 双阶段门禁、分支 / worktree、QC-QA 检出对齐、调度防串扰、升级触发 |
 | `skills/mstar-plan-conventions/` | `{HARNESS_DIR}` / `{PLAN_DIR}`、`status.json` SSOT、residual findings、knowledge/ 知识库、Done 瘦身、工期预估 |
 | `skills/mstar-review-qc/` | QC 三审基线：工作流、清单、报告模板、门禁规则、residual 留档 |
-| `skills/mstar-routing-eval/` | PM 路由回归 + prompt/规则迭代评估 + `Routing Eval Report` 模板；场景集在 `assets/routing-evals.json` |
+| `.cursor/skills/mstar-routing-eval/` | PM 路由回归 + prompt/规则迭代评估 + `Routing Eval Report` 模板（**Cursor 维护专属**；场景集在 `assets/routing-evals.json`） |
 | `skills/mstar-coding-behavior/` | 跨角色通用编码行为准则 |
 | `skills/mstar-superpowers-align/` | Morning Star × Superpowers 对齐与消解 |
 | `skills/mstar-roles/` | 角色提示词总线：角色正文集中在 `references/`，`agents/*.md` 仅保留 frontmatter + 参数绑定 |
@@ -156,7 +156,7 @@ skills/mstar-<topic>/
 | Spec 级细节（`phase-gate-playbook` / `branch-and-worktree` / `open-harness-principles`） | 优先改 `mstar-harness-core/references/<file>.md`；SKILL.md 只动索引与摘要 |
 | `status.json` / residual lifecycle / knowledge 布局 | 优先改 `mstar-plan-conventions/references/<file>.md`；SKILL.md 动索引 |
 | QC 清单或报告模板 | `mstar-review-qc/SKILL.md`（该 skill 目前不拆 references/，除非超 500 行） |
-| 路由回归场景 | `mstar-routing-eval/assets/routing-evals.json`；相关评分细则改 `SKILL.md` |
+| 路由回归场景 | `.cursor/skills/mstar-routing-eval/assets/routing-evals.json`；相关评分细则改同目录 `SKILL.md` |
 | Superpowers 对照表 | `mstar-superpowers-align/references/per-role-matrix.md` 或 `tension-table.md`；SKILL.md 仅改总体契约 |
 | 角色行为正文（含重复角色共享） | `skills/mstar-roles/references/*.md` |
 | 角色绑定参数（role_id / reviewer_index / track） | `agents/*.md`（仅壳层，不写长规则） |
@@ -195,7 +195,7 @@ skills/mstar-<topic>/
 - [ ] **README 多语言同步**：若更新 `README.md`，必须同步更新所有语言版本（当前至少包括 `README_CN.md`）；并检查跨语言链接（如 `Other languages`）可用且互相指向正确文件。
 - [ ] **best-practices 对齐**：是否满足 default-first、gotchas、progressive disclosure、单一连贯单元这四项最小要求？
 - [ ] **Lint**：`npx -y markdownlint-cli2`（glob 已覆盖 `skills/mstar-*/**/*.md`）。
-- [ ] **路由回归**：若本次变更涉及 PM 路由或门禁，跑 `mstar-routing-eval` 的 `assets/routing-evals.json` 场景集。
+- [ ] **路由回归**：若本次变更涉及 PM 路由或门禁，Read `.cursor/skills/mstar-routing-eval/` 并跑 `assets/routing-evals.json` 场景集。
 - [ ] **Git 提交颗粒度**：skill 实体变更 + AGENTS.md 索引 + agent 壳层参数 + README 摘要 宜在同一 PR，避免 handoff 期间文档半同步。
 
 ### skill-creator 流程接入
@@ -209,7 +209,7 @@ skills/mstar-<topic>/
 - **状态机 / 两阶段门禁 / 并行规则 / 分支与 worktree** 变更时，优先更新 `skills/mstar-harness-core/SKILL.md` 与 `references/`（`phase-gate-playbook.md`、`branch-and-worktree.md`、`open-harness-principles.md`）。
 - **评审策略**变更时，优先更新 `skills/mstar-review-qc/SKILL.md`。
 - **QC 三审角色提示词**：共享正文维护在 `skills/mstar-roles/references/qc-specialist-shared.md`；`agents/qc-specialist*.md` 仅维护 frontmatter 与 reviewer 参数（`reviewer_index` / `focus` / `report_suffix`）。
-- **提示词调优流程 / 路由回归** 变更时，优先更新 `skills/mstar-routing-eval/SKILL.md`；若场景集变更，同步 `skills/mstar-routing-eval/assets/routing-evals.json`。
+- **提示词调优流程 / 路由回归** 变更时，优先更新 `.cursor/skills/mstar-routing-eval/SKILL.md`；若场景集变更，同步 `.cursor/skills/mstar-routing-eval/assets/routing-evals.json`。
 - **Superpowers 与 harness 对照** 变更时：只更新 `skills/mstar-superpowers-align/`（含 `references/per-role-matrix.md`、`tension-table.md`）与必要的角色短指针；勿在各 `agents/*.md` 内嵌长对照表。
 - **计划管理约定 / status.json / residual findings / knowledge/** 变更时，优先更新 `skills/mstar-plan-conventions/SKILL.md` 与对应 `references/`。
 - **工期 / 工作量口径** 变更时，优先更新 `skills/mstar-plan-conventions/references/effort-estimation.md`，并同步 PM / product-manager / architect 模板与根目录 **`AGENTS.md``** Effort / 工期相关不变量或索引简述。

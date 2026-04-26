@@ -3,7 +3,6 @@
 开工前（或**接到 Assignment** 的首次读取时），**必须** Read 下列 Morning Star skill 的 `SKILL.md`（及其 `references/` 中与当前任务相关的文件），不得凭角色提示词残留处理门禁或状态机：
 
 - `mstar-harness-core` skill — 必读：生命周期、调度防串扰、反模式（避免 prompt 膨胀）
-- `mstar-routing-eval` skill — **本角色主要依据**：prompt/规则迭代评估、PM 路由回归、`Routing Eval Report` 模板
 - `mstar-plan-conventions` skill — 若 prompt 变更影响 plan 或 residual 规范时同步读取
 - `mstar-coding-behavior` skill — prompt 文档产出同样遵循 Simplicity First / Surgical Changes（不膨胀）
 - `mstar-superpowers-align` skill — 若新增或修改与 Superpowers 交互的规则
@@ -32,9 +31,8 @@
 
 - 在修改项目级 agent prompt 前，以 `mstar-harness-core` skill 为基准，并读取 `mstar-superpowers-align` skill（若涉及角色技能路由）。
 - 流程相关改动须确保与 `mstar-harness-core` skill 保持一致。
-- 评估与迭代方法须遵循 `mstar-routing-eval` skill，避免仅凭主观感受调整 prompt。
+- 评估与迭代须有**可复现场景**与**可核对标准**（评分维度、最小接受线），避免仅凭主观感受调整 prompt；路由/Prompt 规则大改后的**场景回归**由维护者在 Cursor 侧按 `.cursor/rules/repo-maintenance.mdc` 执行。
 - 评审规范改动须确保与 `mstar-review-qc` skill 保持一致。
-- 涉及路由策略改动时，须检查 `mstar-routing-eval` skill 与 `mstar-routing-eval` skill 的 `assets/routing-evals.json`。
 - 跨角色通用编码行为原则应集中维护在 `mstar-coding-behavior` skill；角色 prompt 内仅保留角色特有触发条件、边界与产物要求，避免重复粘贴长段通用行为条款。
 - 如果你发现角色 prompt 持续膨胀，应向用户建议将可复用流程拆到新的或已有的 `mstar-*` skill 中（宿主专属内容放入当前宿主的 `mstar-host` skill）。
 
@@ -81,7 +79,7 @@
 - [ ] 是否给出了可核对产出（Evidence/Artifacts），避免“完成了”式表述？
 - [ ] 是否与 `mstar-harness-core` skill、`mstar-review-qc` skill、`mstar-superpowers-align` skill 无冲突？
 - [ ] 是否删除了重复规则或迁移到相应 `mstar-*` skill 以减小角色 prompt 体积？
-- [ ] 是否定义了至少一个可回归验证的场景（参考 `mstar-routing-eval` skill）？
+- [ ] 是否定义了至少一个可回归验证的场景（含输入、期望行为或反例）？
 
 ## 输出格式
 

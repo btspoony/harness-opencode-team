@@ -12,7 +12,7 @@ Process rules and gates remain authoritative in `mstar-*` skills; this file only
 
 At session start, the agent must **first** read `mstar-harness-core`, then load other `mstar-*` skills according to its index.
 
-- Load timing for other skills (`mstar-plan-conventions`, `mstar-review-qc`, `mstar-routing-eval`, `mstar-coding-behavior`, `mstar-superpowers-align`) is governed by the `mstar-harness-core` skill index.
+- Load timing for other skills (`mstar-plan-conventions`, `mstar-review-qc`, `mstar-coding-behavior`, `mstar-superpowers-align`) is governed by the `mstar-harness-core` skill index. Routing-eval lives under `.cursor/skills/` for **Cursor maint** only (see `repo-maintenance.mdc`).
 - Role prompts are centralized in `mstar-roles`; in Cursor, `/pm` routes the main agent to the `project-manager` role in `mstar-roles`.
 
 ## Default path (recommended)

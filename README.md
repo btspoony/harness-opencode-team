@@ -78,13 +78,14 @@ Recommended sequence for both hosts:
 | `mstar-harness-core` | Global entry, state machine, gates, invariants |
 | `mstar-plan-conventions` | Unified plan/status/residual conventions |
 | `mstar-review-qc` | QC review baseline and report template |
-| `mstar-routing-eval` | Routing regression and rule-iteration evaluation |
 | `mstar-coding-behavior` | Cross-role coding behavior baseline |
 | `mstar-superpowers-align` | Alignment and conflict handling with Superpowers |
 | `mstar-roles` | Role prompt bus (role bodies in `references/`) |
 | `mstar-host` (per host) | Host-specific capabilities (OpenCode / Cursor) |
 
 **Morning Star load order:** In any session or task, **read `skills/mstar-harness-core/SKILL.md` before** any other `skills/mstar-*/SKILL.md`. Each non-core skill begins with a **Load order** section that repeats this; on conflict, **`mstar-harness-core` wins**. See `mstar-harness-core/SKILL.md` →「与其它 `mstar-*` skill 的加载契约」.
+
+**Cursor-only maint:** PM routing scenario regression + `Routing Eval Report` live in **`.cursor/skills/mstar-routing-eval/`** (not under `skills/`). See `.cursor/rules/repo-maintenance.mdc`.
 
 ## Common Flows (Short)
 
