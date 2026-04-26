@@ -1,7 +1,13 @@
 ---
 name: mstar-routing-eval
-description: Morning Star (启明星) 路由与 prompt 迭代评估体系 —— (1) PM 路由回归：用 routing-evals.json 验证 `@project-manager` 是否把任务分派给正确的 agent、是否经过正确门禁、是否满足 `must_have_artifacts`、是否触发 `hard_fail_if`；(2) Prompt/规则迭代评估：在不过拟合单次对话的前提下迭代调优 `mstar-roles` skill 的各角色 与 `mstar-*` skills，含测试集设计、评分维度、Prompt 变更最低接受标准、回归记录；(3) Routing Eval Report 输出模板（含 phase_gate_compliance_rate）。`@project-manager` 回归本轮路由合规时必读；`@prompt-engineer` 设计/修改提示词、规则或 skill 前必读；任何评估、打分或回归场景引用 routing-evals.json 时必读。场景集数据见本 skill 的 assets/routing-evals.json。
+description: "[Cursor maint] Morning Star 路由与 prompt 迭代评估 —— 维护/回归专用（非日常 PM 编排 runtime）。路径：本仓库 `.cursor/skills/mstar-routing-eval/`。(1) PM 路由回归：`assets/routing-evals.json`；(2) Prompt/规则迭代评估；(3) Routing Eval Report 模板。变更 PM 路由或 harness 门禁、`@prompt-engineer` 改 agents/skills、或显式跑场景集时 Read。"
 ---
+
+## Maintainer scope（维护专用 · Cursor）
+
+- **不是 runtime pack**：日常 `specify → implement → QC` **不要求** Read 本 skill；已从 `skills/mstar-*` 运行时包中拆出，避免与「每轮必读」混淆。
+- **Canonical 位置**：本仓库内 **仅此目录**（`.cursor/skills/mstar-routing-eval/`）为正文 + `assets/` SSOT；**不再**维护 `skills/mstar-routing-eval/` 副本。
+- **谁在读**：`@prompt-engineer` 改规则前；维护者改 `project-manager` / harness 门禁后跑回归；`repo-maintenance` 清单涉及路由时。
 
 ## Load order（必读顺序）
 
