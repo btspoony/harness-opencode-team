@@ -46,26 +46,10 @@ That completes installation.
 
 You can assign different models per agent in `opencode.json` without replacing your existing file. For detailed OpenCode setup and migration, see `.opencode/INSTALL.md`.
 
-## Host Entry (OpenCode vs Cursor)
+## How to use
 
-| Host | First thing to do |
-|------|-------------------|
-| **Cursor** | The plugin-enforced rule `rules/mstar-entry.mdc` loads core first |
-| **OpenCode** | The plugin `.opencode/plugins/mstar.ts` injects `.opencode/AGENTS.md` to force core entry |
-
-After core entry, the core flow loads the corresponding host adapter (`mstar-host`) automatically.
-
-From a user perspective, the practical flow is:
-
-1. Install plugin for your host.
-2. Start/restart host session.
-3. Let Morning Star core + host adapter load automatically.
-4. Work with roles as normal.
-
-Recommended PM-first start:
-
-- **OpenCode**: start the conversation with the Project Manager role (primary agent) defined by `agents/project-manager.md`.
-- **Cursor**: prefer `/pm` to force-enable the Project Manager role before task orchestration.
+- **OpenCode**: start with the `Project Manager` role (`agents/project-manager.md`, typically `agent.project-manager` in `opencode.json`).
+- **Cursor**: use `/pm` to force-start with the `Project Manager` role.
 
 ## Role and Skill Overview
 
@@ -95,8 +79,6 @@ Recommended PM-first start:
 | `mstar-review-qc` | QC review baseline and report template |
 | `mstar-coding-behavior` | Cross-role coding behavior baseline |
 | `mstar-superpowers-align` | Alignment and conflict handling with Superpowers |
-
-**Morning Star load order:** In any session or task, **read `skills/mstar-harness-core/SKILL.md` before** any other `skills/mstar-*/SKILL.md`. Each non-core skill begins with a **Load order** section that repeats this; on conflict, **`mstar-harness-core` wins**. See `mstar-harness-core/SKILL.md` →「与其它 `mstar-*` skill 的加载契约」.
 
 ## License
 

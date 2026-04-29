@@ -46,26 +46,10 @@
 
 你可以在 `opencode.json` 里为不同 agent 指定 model，而不需要覆盖你现有配置。OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
 
-## 宿主入口（OpenCode vs Cursor）
+## 使用方式
 
-| 宿主 | 你要先做什么 |
-|------|-------------|
-| **Cursor** | 由插件强制规则 `rules/mstar-entry.mdc` 先加载 core |
-| **OpenCode** | 由插件 `.opencode/plugins/mstar.ts` 注入 `.opencode/AGENTS.md`，强制进入 core |
-
-进入 core 后，会自动加载对应宿主的 `mstar-host` 适配层。
-
-对用户来说，流程可以理解为：
-
-1. 安装对应宿主的插件。
-2. 重启宿主会话。
-3. 让 Morning Star 自动完成 core + host adapter 加载。
-4. 按正常角色协作方式工作。
-
-建议从 PM 角色启动：
-
-- **OpenCode**：以 `agents/project-manager.md` 对应的 PM 角色开始聊天（即 `opencode.json` 配置的 `agent.project-manager`）。
-- **Cursor**：优先使用 `/pm`，强制启用 PM 角色后再做任务编排。
+- **OpenCode**：以 `Project Manager` 角色开局（对应 `agents/project-manager.md`，通常是 `opencode.json` 里的 `agent.project-manager`）。
+- **Cursor**：使用 `/pm` 强制以 `Project Manager` 角色启动。
 
 ## 角色与技能总览
 
@@ -95,8 +79,6 @@
 | `mstar-superpowers-align` | 与 Superpowers 的对齐与冲突消解 |
 | `mstar-roles` | 角色提示词总线（角色正文在 `references/`） |
 | `mstar-host`（按宿主） | 宿主能力差异（OpenCode / Cursor） |
-
-**Morning Star 加载顺序：** 任意会话或任务中，**须先 Read `skills/mstar-harness-core/SKILL.md`**，再读其它 `skills/mstar-*/SKILL.md`。各非核心 skill 正文开头的 **「Load order」** 小节重复此要求；冲突以 **`mstar-harness-core`** 为准。详见该文件「与其它 `mstar-*` skill 的加载契约」。
 
 ## 许可
 
