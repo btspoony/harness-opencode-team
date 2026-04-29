@@ -394,9 +394,8 @@
 - 若任务已绑定具体 plan，额外必读（项目目录）：
   - 对应 `{PLAN_DIR}/<plan>.md`
 - 若任务涉及路由/门禁策略，额外必读（全局配置）：
-  - `mstar-harness-core` skill
-  - `mstar-review-qc` skill
   - `mstar-harness-core` skill 的 `references/open-harness-principles.md`（意图门禁、Task category、可验证编辑等默认纪律的索引）
+  - `mstar-review-qc` skill
 
 未完成该步骤，不得进入分派流程。
 

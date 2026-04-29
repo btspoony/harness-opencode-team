@@ -80,6 +80,33 @@
 | `mstar-roles` | 角色提示词总线（角色正文在 `references/`） |
 | `mstar-host`（按宿主） | 宿主能力差异（OpenCode / Cursor） |
 
+## Harness Workflow（统一流程）
+
+```mermaid
+flowchart TD
+    A[PM: 入口与意图澄清] --> B{PM: 规格与上下文是否就绪?}
+    B -- 否 --> C[PM: 继续澄清并补齐需求约束]
+    C --> B
+    B -- 是 --> D[PM: 初始化或加载 {HARNESS_DIR}/{PLAN_DIR}]
+    D --> E[PM: 创建或选择 active plan 并更新 status.json SSOT]
+    E --> F[PM: 任务路由与角色分派]
+    F --> G{PM: 任务类型}
+    G -- 大型或高歧义 --> H[Explore + 产品经理 + 架构师前置产出]
+    H --> I[开发团队: 开发轨实现]
+    G -- 中小型或常规 Bug --> I
+    I --> J[开发责任人 + PM: 持续记录 notes/findings]
+    J --> K[[QC 审查员: QC 审查门禁\n(默认: QC 三审并行)]]
+    K --> L{PM: 汇总后的 QC 结论}
+    L -- Request Changes --> M[PM: 分派给开发责任人修复]
+    M --> I
+    L -- Approve 或已消解讨论项 --> N[QA 工程师: QA 验证]
+    N --> O{PM + QA: 是否仍有 residual findings?}
+    O -- 是 --> P[PM: 写入 status.json 并安排后续跟踪]
+    P --> Q[QA 或 PM: 基于可追溯证据完成签收]
+    O -- 否 --> Q
+    Q --> R[PM: 标记 done 并归档上下文]
+```
+
 ## 许可
 
 本项目采用 MIT License，详见 [LICENSE](./LICENSE)。
