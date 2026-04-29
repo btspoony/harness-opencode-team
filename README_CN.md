@@ -50,15 +50,17 @@
 
 | 宿主 | 你要先做什么 |
 |------|-------------|
-| **OpenCode** | 通常自动注入根目录 `AGENTS.md`；再由 `.opencode/skills/mstar-host/SKILL.md` 补齐宿主差异 |
-| **Cursor** | 先手动 Read 根目录 `AGENTS.md`，再 Read `.cursor-plugin/skills/mstar-host/SKILL.md` |
+| **Cursor** | 由插件强制规则 `rules/mstar-entry.mdc` 先加载 core |
+| **OpenCode** | 由插件 `.opencode/plugins/mstar.ts` 注入 `.opencode/AGENTS.md`，强制进入 core |
 
-无论哪个宿主，推荐统一顺序：
+进入 core 后，会自动加载对应宿主的 `mstar-host` 适配层。
 
-1. `AGENTS.md`
-2. 当前宿主的 `mstar-host` skill
-3. `skills/mstar-roles/SKILL.md`
-4. 对应角色 `Role reference`
+对用户来说，流程可以理解为：
+
+1. 安装对应宿主的插件。
+2. 重启宿主会话。
+3. 让 Morning Star 自动完成 core + host adapter 加载。
+4. 按正常角色协作方式工作。
 
 ## 角色与技能总览
 

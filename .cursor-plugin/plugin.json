@@ -25,10 +25,10 @@
     "agents/"
   ],
   "skills": [
-    ".cursor-plugin/skills/",
-    "skills/"
+    "skills/",
+    "skills-cursor/"
   ],
   "rules": [
-    ".cursor-plugin/rules/"
+    "rules/"
   ]
 }

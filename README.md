@@ -50,15 +50,17 @@ You can assign different models per agent in `opencode.json` without replacing y
 
 | Host | First thing to do |
 |------|-------------------|
-| **OpenCode** | Usually auto-injects `AGENTS.md`; then use `.opencode/skills/mstar-host/SKILL.md` for host-specific behavior |
-| **Cursor** | Read `AGENTS.md` manually first, then `.cursor-plugin/skills/mstar-host/SKILL.md` |
+| **Cursor** | The plugin-enforced rule `rules/mstar-entry.mdc` loads core first |
+| **OpenCode** | The plugin `.opencode/plugins/mstar.ts` injects `.opencode/AGENTS.md` to force core entry |
 
-Recommended sequence for both hosts:
+After core entry, the core flow loads the corresponding host adapter (`mstar-host`) automatically.
 
-1. `AGENTS.md`
-2. Current host `mstar-host` skill
-3. `skills/mstar-roles/SKILL.md`
-4. Target role `Role reference`
+From a user perspective, the practical flow is:
+
+1. Install plugin for your host.
+2. Start/restart host session.
+3. Let Morning Star core + host adapter load automatically.
+4. Work with roles as normal.
 
 ## Role and Skill Overview
 

@@ -7,8 +7,8 @@ This repository is packaged as a Cursor plugin via `.cursor-plugin/plugin.json`.
 Provide Morning Star harness capabilities in Cursor with:
 
 - Role agents from `agents/`
-- Core and host skills from `skills/` and `.cursor-plugin/skills/`
-- Cursor rules from `.cursor-plugin/rules/`
+- Core and host skills from `skills/` and `skills-cursor/`
+- Cursor rules from `rules/`
 
 ## Install / Use
 
@@ -21,8 +21,8 @@ Provide Morning Star harness capabilities in Cursor with:
 ## Component Coverage
 
 - `agents`: `./agents/`
-- `skills`: `./skills/`, `./.cursor-plugin/skills/`
-- `rules`: `./.cursor-plugin/rules/`
+- `skills`: `./skills/`, `./skills-cursor/`
+- `rules`: `./rules/`
 
 ## Validation
 
