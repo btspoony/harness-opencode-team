@@ -27,15 +27,21 @@
    - **Cursor（本地插件目录，直接 clone）**
      - `mkdir -p ~/.cursor/plugins/local`
      - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
-   - **OpenCode（软链接内容，不软链接整个目录）**
-     - `mkdir -p ~/.config/opencode/agents ~/.config/opencode/skills`
-     - `ln -sfn ~/.mstar-harness/agents/*.md ~/.config/opencode/agents/`
-     - `ln -sfn ~/.mstar-harness/skills ~/.config/opencode/skills`
-     - `ln -sfn ~/.mstar-harness/.opencode/skills/* ~/.config/opencode/skills/`
+   - **OpenCode（推荐使用 plugin 安装）**
+     - 在 `opencode.json` 增加插件配置：
+       ```json
+       {
+         "plugin": [
+           "superpowers@git+https://github.com/obra/superpowers.git",
+           "morning-star@git+https://github.com/btspoony/mstar-harness.git"
+         ]
+       }
+       ```
+     - 重启 OpenCode
 
 完成以上两步即安装完成。
 
-你可以在 `opencode.json` 里为不同 agent 指定 model。配置结构可参考 `opencode.example.json`，仅作为参考，不需要覆盖你现有的 `opencode.json`。
+你可以在 `opencode.json` 里为不同 agent 指定 model，而不需要覆盖你现有配置。OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
 
 ## 宿主入口（OpenCode vs Cursor）
 

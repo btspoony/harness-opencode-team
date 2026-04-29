@@ -27,15 +27,21 @@ Core value:
    - **Cursor (local plugin directory, clone directly)**
      - `mkdir -p ~/.cursor/plugins/local`
      - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
-   - **OpenCode (symlink contents, not the whole directory)**
-     - `mkdir -p ~/.config/opencode/agents ~/.config/opencode/skills`
-     - `ln -sfn ~/.mstar-harness/agents/*.md ~/.config/opencode/agents/`
-     - `ln -sfn ~/.mstar-harness/skills ~/.config/opencode/skills`
-     - `ln -sfn ~/.mstar-harness/.opencode/skills/* ~/.config/opencode/skills/`
+   - **OpenCode (plugin install, recommended)**
+     - add plugin config in `opencode.json`:
+       ```json
+       {
+         "plugin": [
+           "superpowers@git+https://github.com/obra/superpowers.git",
+           "morning-star@git+https://github.com/btspoony/mstar-harness.git"
+         ]
+       }
+       ```
+     - restart OpenCode
 
 That completes installation.
 
-You can assign different models per agent in `opencode.json`. Refer to `opencode.example.json` for structure and examples; no need to overwrite your existing `opencode.json`.
+You can assign different models per agent in `opencode.json` without replacing your existing file. For detailed OpenCode setup and migration, see `.opencode/INSTALL.md`.
 
 ## Host Entry (OpenCode vs Cursor)
 
@@ -73,12 +79,12 @@ Recommended sequence for both hosts:
 | Skill | Purpose |
 |-------|---------|
 | `mstar-harness-core` | Global entry, state machine, gates, invariants |
+| `mstar-host` (per host) | Host-specific capabilities (OpenCode / Cursor) |
+| `mstar-roles` | Role prompt bus (role bodies in `references/`) |
 | `mstar-plan-conventions` | Unified plan/status/residual conventions |
 | `mstar-review-qc` | QC review baseline and report template |
 | `mstar-coding-behavior` | Cross-role coding behavior baseline |
 | `mstar-superpowers-align` | Alignment and conflict handling with Superpowers |
-| `mstar-roles` | Role prompt bus (role bodies in `references/`) |
-| `mstar-host` (per host) | Host-specific capabilities (OpenCode / Cursor) |
 
 **Morning Star load order:** In any session or task, **read `skills/mstar-harness-core/SKILL.md` before** any other `skills/mstar-*/SKILL.md`. Each non-core skill begins with a **Load order** section that repeats this; on conflict, **`mstar-harness-core` wins**. See `mstar-harness-core/SKILL.md` →「与其它 `mstar-*` skill 的加载契约」.
 
@@ -98,13 +104,6 @@ Recommended sequence for both hosts:
 - Global entry: `AGENTS.md`
 - Core workflow: `skills/mstar-harness-core/SKILL.md`
 - Role hub: `skills/mstar-roles/SKILL.md`
-
-## Deeper Docs
-
-- `AGENTS.md`: global entry and index
-- `skills/mstar-harness-core/`: core execution rules
-- `skills/mstar-roles/`: role content and parameterization
-- `skills/mstar-plan-conventions/`: plan and state conventions
 
 > Maintainer workflows, cross-file sync rules, and lint/maintenance checklists are intentionally kept in maintainer rule docs, not in this user-facing README.
 
