@@ -19,18 +19,27 @@ Core value:
 - Run with unified `mstar-*` skills instead of scattered rules
 - Reuse one core process across OpenCode and Cursor
 
-## Quick Start (User Path)
+## Quick Start (Recommended)
 
-> The install section is still evolving. The steps below focus on the shortest runnable path (also a temporary solution for now).
+Use a single source checkout and install via symlinks:
 
-1. Prepare config directory (optional backup)
-   - `mv ~/.config/opencode ~/.config/opencode.backup.$(date +%Y%m%d-%H%M%S)`
-2. Clone repository
-   - `git clone https://github.com/btspoony/mstar-harness.git ~/.config/opencode`
-3. Create local config
+1. Clone repository to a stable source path:
+   - `git clone https://github.com/btspoony/mstar-harness.git ~/.mstar-harness`
+2. Install for OpenCode (symlink config root):
+   - `ln -s ~/.mstar-harness ~/.config/opencode`
+   - If target exists, recreate safely:
+   - `rm -rf ~/.config/opencode && ln -s ~/.mstar-harness ~/.config/opencode`
+3. Install for Cursor local plugin (symlink plugin root):
+   - `mkdir -p ~/.cursor/plugins/local`
+   - `ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - If link exists, recreate safely:
+   - `rm -f ~/.cursor/plugins/local/mstar-harness && ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - Or force update:
+   - `ln -sfn ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+4. Create local config:
    - `cp ~/.config/opencode/opencode.example.json ~/.config/opencode/opencode.json`
-4. Configure secrets via `{env:...}` or `{file:...}` placeholders
-5. Restart OpenCode / Cursor session and verify entry files are readable
+5. Configure secrets via `{env:...}` or `{file:...}` placeholders
+6. Restart OpenCode / Cursor session and verify entry files are readable
 
 If you prefer incremental adoption (without replacing the whole directory), merge these first:
 
@@ -38,14 +47,29 @@ If you prefer incremental adoption (without replacing the whole directory), merg
 - `agents/`
 - `skills/mstar-*/`
 - `.opencode/skills/mstar-host/`
-- `.cursor/skills/mstar-host/`
+- `.cursor-plugin/skills/mstar-host/`
+
+## Cursor Local Plugin Install (Symlink)
+
+If you already cloned to `~/.mstar-harness`, install Cursor plugin via:
+
+1. Create local plugin folder:
+   - `mkdir -p ~/.cursor/plugins/local`
+2. Create symlink:
+   - `ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - If the link already exists, recreate it safely:
+   - `rm -f ~/.cursor/plugins/local/mstar-harness && ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - Or use force update:
+   - `ln -sfn ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+3. Restart Cursor or run `Developer: Reload Window`.
+4. Verify plugin components are loaded (rules, skills, agents).
 
 ## Host Entry (OpenCode vs Cursor)
 
 | Host | First thing to do |
 |------|-------------------|
 | **OpenCode** | Usually auto-injects `AGENTS.md`; then use `.opencode/skills/mstar-host/SKILL.md` for host-specific behavior |
-| **Cursor** | Read `AGENTS.md` manually first, then `.cursor/skills/mstar-host/SKILL.md` |
+| **Cursor** | Read `AGENTS.md` manually first, then `.cursor-plugin/skills/mstar-host/SKILL.md` |
 
 Recommended sequence for both hosts:
 
@@ -85,7 +109,7 @@ Recommended sequence for both hosts:
 
 **Morning Star load order:** In any session or task, **read `skills/mstar-harness-core/SKILL.md` before** any other `skills/mstar-*/SKILL.md`. Each non-core skill begins with a **Load order** section that repeats this; on conflict, **`mstar-harness-core` wins**. See `mstar-harness-core/SKILL.md` →「与其它 `mstar-*` skill 的加载契约」.
 
-**Cursor-only maint:** PM routing scenario regression + `Routing Eval Report` live in **`.cursor/skills/mstar-routing-eval/`** (not under `skills/`). See `.cursor/rules/repo-maintenance.mdc`.
+**Cursor-only maint:** PM routing scenario regression + `Routing Eval Report` live in **`.cursor/skills/mstar-routing-eval/`** (maint-only), while runtime host skills live in **`.cursor-plugin/skills/`**. See `.cursor/rules/repo-maintenance.mdc`.
 
 ## Common Flows (Short)
 

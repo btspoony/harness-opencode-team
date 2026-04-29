@@ -19,18 +19,27 @@
 - 通过统一的 `mstar-*` skills 执行，而不是散落规则
 - 在 OpenCode / Cursor 下复用同一套核心流程
 
-## 快速开始（用户路径）
+## 快速开始（推荐方式）
 
-> 安装流程目前仍在持续优化，以下步骤先保证“最短可跑通”(目前只是临时方案)。
+建议使用统一源码目录 + 软链接安装：
 
-1. 准备配置目录（可选备份旧配置）
-   - `mv ~/.config/opencode ~/.config/opencode.backup.$(date +%Y%m%d-%H%M%S)`
-2. 克隆仓库
-   - `git clone https://github.com/btspoony/mstar-harness.git ~/.config/opencode`
-3. 生成本地配置
+1. 克隆仓库到固定源码目录：
+   - `git clone https://github.com/btspoony/mstar-harness.git ~/.mstar-harness`
+2. 安装 OpenCode（软链接配置根目录）：
+   - `ln -s ~/.mstar-harness ~/.config/opencode`
+   - 若目标已存在，可安全重建：
+   - `rm -rf ~/.config/opencode && ln -s ~/.mstar-harness ~/.config/opencode`
+3. 安装 Cursor 本地插件（软链接插件目录）：
+   - `mkdir -p ~/.cursor/plugins/local`
+   - `ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - 若软链接已存在，可安全重建：
+   - `rm -f ~/.cursor/plugins/local/mstar-harness && ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - 或使用强制更新：
+   - `ln -sfn ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+4. 生成本地配置：
    - `cp ~/.config/opencode/opencode.example.json ~/.config/opencode/opencode.json`
-4. 配置密钥（使用 `{env:...}` 或 `{file:...}` 占位，不要写死）
-5. 重启 OpenCode / Cursor 会话并验证入口是否可读
+5. 配置密钥（使用 `{env:...}` 或 `{file:...}` 占位，不要写死）
+6. 重启 OpenCode / Cursor 会话并验证入口是否可读
 
 如果你只想增量接入，不覆盖现有目录，可手动合并这些关键内容：
 
@@ -38,14 +47,29 @@
 - `agents/`
 - `skills/mstar-*/`
 - `.opencode/skills/mstar-host/`
-- `.cursor/skills/mstar-host/`
+- `.cursor-plugin/skills/mstar-host/`
+
+## Cursor 本地插件安装（软链接）
+
+如果你已经克隆到 `~/.mstar-harness`，可按以下方式安装 Cursor 插件：
+
+1. 创建本地插件目录：
+   - `mkdir -p ~/.cursor/plugins/local`
+2. 建立软链接：
+   - `ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - 如果软链接已存在，可安全重建：
+   - `rm -f ~/.cursor/plugins/local/mstar-harness && ln -s ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+   - 或使用强制更新：
+   - `ln -sfn ~/.mstar-harness ~/.cursor/plugins/local/mstar-harness`
+3. 重启 Cursor，或执行 `Developer: Reload Window`。
+4. 验证插件组件已生效（rules、skills、agents）。
 
 ## 宿主入口（OpenCode vs Cursor）
 
 | 宿主 | 你要先做什么 |
 |------|-------------|
 | **OpenCode** | 通常自动注入根目录 `AGENTS.md`；再由 `.opencode/skills/mstar-host/SKILL.md` 补齐宿主差异 |
-| **Cursor** | 先手动 Read 根目录 `AGENTS.md`，再 Read `.cursor/skills/mstar-host/SKILL.md` |
+| **Cursor** | 先手动 Read 根目录 `AGENTS.md`，再 Read `.cursor-plugin/skills/mstar-host/SKILL.md` |
 
 无论哪个宿主，推荐统一顺序：
 
@@ -85,7 +109,7 @@
 
 **Morning Star 加载顺序：** 任意会话或任务中，**须先 Read `skills/mstar-harness-core/SKILL.md`**，再读其它 `skills/mstar-*/SKILL.md`。各非核心 skill 正文开头的 **「Load order」** 小节重复此要求；冲突以 **`mstar-harness-core`** 为准。详见该文件「与其它 `mstar-*` skill 的加载契约」。
 
-**仅 Cursor 维护：** PM 路由场景回归与 `Routing Eval Report` 在 **`.cursor/skills/mstar-routing-eval/`**（不在 `skills/`）。见 `.cursor/rules/repo-maintenance.mdc`。
+**仅 Cursor 维护：** PM 路由场景回归与 `Routing Eval Report` 在 **`.cursor/skills/mstar-routing-eval/`**（维护专用）；运行时宿主技能在 **`.cursor-plugin/skills/`**。见 `.cursor/rules/repo-maintenance.mdc`。
 
 ## 常见使用流（最短）
 
