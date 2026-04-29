@@ -84,27 +84,27 @@ You can assign different models per agent in `opencode.json` without replacing y
 
 ```mermaid
 flowchart TD
-    A[PM: entry and intent clarification] --> B{PM: spec and context ready?}
-    B -- No --> C[PM: clarify and refine requirements]
+    A["PM: entry and intent clarification"] --> B{"PM: spec and context ready"}
+    B -->|No| C["PM: clarify and refine requirements"]
     C --> B
-    B -- Yes --> D[PM: initialize or load {HARNESS_DIR}/{PLAN_DIR}]
-    D --> E[PM: create or select active plan and update status.json SSOT]
-    E --> F[PM: task routing and assignment]
-    F --> G{PM: work type}
-    G -- Large or high-ambiguity --> H[Explore + Product Manager + Architect pre-work]
-    H --> I[Dev team: implementation tracks]
-    G -- Medium/small or bugfix --> I
-    I --> J[Dev owners + PM: record notes and findings]
-    J --> K[[QC specialists: QC review gate\n(default: QC trio parallel review)]]
-    K --> L{PM: consolidated QC decision}
-    L -- Request Changes --> M[PM: assign fixes to dev owners]
+    B -->|Yes| D["PM: initialize or load HARNESS_DIR and PLAN_DIR"]
+    D --> E["PM: create or select active plan and update status.json SSOT"]
+    E --> F["PM: task routing and assignment"]
+    F --> G{"PM: work type"}
+    G -->|Large or high-ambiguity| H["Explore, Product Manager, Architect pre-work"]
+    H --> I["Dev team: implementation tracks"]
+    G -->|Medium, small, or bugfix| I
+    I --> J["Dev owners and PM: record notes and findings"]
+    J --> K["QC specialists: QC review gate (default: QC trio parallel review)"]
+    K --> L{"PM: consolidated QC decision"}
+    L -->|Request Changes| M["PM: assign fixes to dev owners"]
     M --> I
-    L -- Approve or Needs Discussion resolved --> N[QA engineer: verification]
-    N --> O{PM + QA: residual findings remain?}
-    O -- Yes --> P[PM: register residuals in status.json and schedule follow-up]
-    P --> Q[QA or PM: sign-off with traceable evidence]
-    O -- No --> Q
-    Q --> R[PM: mark done and archive context]
+    L -->|Approve or discussion resolved| N["QA engineer: verification"]
+    N --> O{"PM and QA: residual findings remain"}
+    O -->|Yes| P["PM: register residuals in status.json and schedule follow-up"]
+    P --> Q["QA or PM: sign-off with traceable evidence"]
+    O -->|No| Q
+    Q --> R["PM: mark done and archive context"]
 ```
 
 ## License
