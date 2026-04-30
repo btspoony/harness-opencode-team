@@ -21,16 +21,9 @@ Core value:
 
 ## Quick Start
 
-### Cursor Installation
+### OpenCode(Recommended) Installation
 
-- Local plugin install (direct clone):
-  - `mkdir -p ~/.cursor/plugins/local`
-  - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
-  - Restart Cursor or run `Developer: Reload Window`
-
-### OpenCode Installation
-
-- Plugin install (recommended):
+- Plugin install:
   - Add plugin config in `opencode.json`:
     ```json
     {
@@ -42,51 +35,28 @@ Core value:
     ```
   - Restart OpenCode
 
+For detailed OpenCode setup and migration, see `.opencode/INSTALL.md`.
+
+### Cursor Installation
+
+- Local plugin install (direct clone):
+  - `mkdir -p ~/.cursor/plugins/local`
+  - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
+  - Restart Cursor or run `Developer: Reload Window`
+
 ### Codex Installation
 
-- Marketplace install (recommended):
+- Marketplace install:
   - `codex plugin marketplace add https://github.com/btspoony/mstar-harness.git --sparse .codex/`
   - Install **Morning Star Harness** from the added marketplace.
 
 That completes installation.
-
-You can assign different models per agent in `opencode.json` without replacing your existing file. For detailed OpenCode setup and migration, see `.opencode/INSTALL.md`.
 
 ## How to use
 
 - **OpenCode**: start with the `Project Manager` role (`agents/project-manager.md`, typically `agent.project-manager` in `opencode.json`).
 - **Cursor**: use `/pm` to force-start with the `Project Manager` role.
 - **Codex**: use `/pm` to force-start with the `Project Manager` role after installing the plugin.
-
-## Role and Skill Overview
-
-### Roles
-
-| Agent ID | Role | Responsibility |
-|----------|------|----------------|
-| `project-manager` | Project Manager | Routing, assignment, phase progression |
-| `product-manager` | Product Manager | Requirements and product-facing docs |
-| `architect` | Architect | Architecture and technical contracts |
-| `fullstack-dev` / `fullstack-dev-2` | Fullstack Dev | Backend-led implementation / second parallel track |
-| `frontend-dev` | Frontend Dev | UI, interaction, frontend performance |
-| `qa-engineer` | QA | Testing and acceptance validation |
-| `qc-specialist*` | QC Trio | Code quality gate (architecture/security/performance) |
-| `ops-engineer` | Ops | Deployment, monitoring, infrastructure |
-| `market-expert` | Market Expert | Market and user research |
-| `prompt-engineer` | Prompt Engineer | Prompt / skill / rule optimization |
-
-### Core Skills
-
-| Skill | Purpose |
-|-------|---------|
-| `mstar-harness-core` | Global entry, state machine, gates, invariants |
-| `mstar-host` (per host) | Host-specific capabilities (OpenCode / Cursor) |
-| `pm` | Shared `/pm` shortcut for Cursor and Codex PM entry |
-| `mstar-roles` | Role prompt bus (role bodies in `references/`) |
-| `mstar-plan-conventions` | Unified plan/status/residual conventions |
-| `mstar-review-qc` | QC review baseline and report template |
-| `mstar-coding-behavior` | Cross-role coding behavior baseline |
-| `mstar-superpowers-align` | Alignment and conflict handling with Superpowers |
 
 ## Harness Workflow
 
@@ -114,6 +84,38 @@ flowchart TD
     O -->|No| Q
     Q --> R["PM: mark done and archive context"]
 ```
+
+## Role and Skill Overview
+
+### Roles
+
+| Agent ID | Role | Responsibility |
+|----------|------|----------------|
+| `project-manager` | Project Manager | Routing, assignment, phase progression |
+| `product-manager` | Product Manager | Requirements and product-facing docs |
+| `architect` | Architect | Architecture and technical contracts |
+| `fullstack-dev` / `fullstack-dev-2` | Fullstack Dev | Backend-led implementation / second parallel track |
+| `frontend-dev` | Frontend Dev | UI, interaction, frontend performance |
+| `qa-engineer` | QA | Testing and acceptance validation |
+| `qc-specialist` / `qc-specialist-2` / `qc-specialist-3` | QC Trio | Code quality gate (architecture/security/performance) |
+| `ops-engineer` | Ops | Deployment, monitoring, infrastructure |
+| `market-expert` | Market Expert | Market and user research |
+| `prompt-engineer` | Prompt Engineer | Prompt / skill / rule optimization |
+
+You can assign different models per agent in `opencode.json` without replacing your existing file.
+
+### Core Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `mstar-harness-core` | Global entry, state machine, gates, invariants |
+| `mstar-host` (per host) | Host-specific capabilities (OpenCode / Cursor) |
+| `pm` | Shared `/pm` shortcut for Cursor and Codex PM entry |
+| `mstar-roles` | Role prompt bus (role bodies in `references/`) |
+| `mstar-plan-conventions` | Unified plan/status/residual conventions |
+| `mstar-review-qc` | QC review baseline and report template |
+| `mstar-coding-behavior` | Cross-role coding behavior baseline |
+| `mstar-superpowers-align` | Alignment and conflict handling with Superpowers |
 
 ## License
 

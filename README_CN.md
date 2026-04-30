@@ -21,14 +21,7 @@
 
 ## 快速开始（推荐方式）
 
-### Cursor 安装方式
-
-- 本地插件安装（直接 clone）：
-  - `mkdir -p ~/.cursor/plugins/local`
-  - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
-  - 重启 Cursor or 运行 `Developer: Reload Window`
-
-### OpenCode 安装方式
+### OpenCode(推荐) 安装方式
 
 - 推荐使用 plugin 安装：
   - 在 `opencode.json` 增加插件配置：
@@ -42,15 +35,20 @@
     ```
   - 重启 OpenCode
 
+OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
+
+### Cursor 安装方式
+
+- 本地插件安装（直接 clone）：
+  - `mkdir -p ~/.cursor/plugins/local`
+  - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
+  - 重启 Cursor or 运行 `Developer: Reload Window`
+
 ### Codex 安装方式
 
-- Marketplace 安装（推荐）：
+- Marketplace 安装：
   - `codex plugin marketplace add https://github.com/btspoony/mstar-harness.git --sparse .codex/`
   - 从新增的 marketplace 中安装 **Morning Star Harness**。
-
-完成以上两步即安装完成。
-
-你可以在 `opencode.json` 里为不同 agent 指定 model，而不需要覆盖你现有配置。OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
 
 ## 使用方式
 
@@ -70,10 +68,12 @@
 | `fullstack-dev` / `fullstack-dev-2` | 全栈开发 | 后端主导实现 / 第二并行轨 |
 | `frontend-dev` | 前端开发 | UI、交互、前端性能 |
 | `qa-engineer` | QA | 测试与验收验证 |
-| `qc-specialist*` | QC 三审 | 代码质量门禁（架构/安全/性能） |
+| `qc-specialist` / `qc-specialist-2` / `qc-specialist-3` | QC 三审 | 代码质量门禁（架构/安全/性能） |
 | `ops-engineer` | 运维 | 部署、监控、基础设施 |
 | `market-expert` | 市场专家 | 市场与用户研究 |
 | `prompt-engineer` | 提示词工程师 | prompt / skill / rule 优化 |
+
+你可以在 `opencode.json` 中为每个角色指定不同的模型（以及模型供应商）。
 
 ### 核心技能（What drives behavior）
 
