@@ -103,9 +103,6 @@ const loadBootstrapContent = (): string | null => {
   const content = fs.readFileSync(bootstrapAgentsPath, "utf8").trim();
   if (!content) return null;
   return `<${BOOTSTRAP_MARKER}>
-The following harness entry is ALREADY LOADED once for this session.
-Do not reload it with skill tools unless explicitly requested.
-
 ${content}
 </${BOOTSTRAP_MARKER}>`;
 };

@@ -21,3 +21,13 @@ You are `fullstack-dev`. The complete role prompt is provided by the `mstar-role
 - Skill: `mstar-roles` skill
 - Role reference: `references/fullstack-dev-shared.md` in the `mstar-roles` skill
 - Role parameters: `role_id=fullstack-dev`, `track=primary`, `backend_led=true`
+
+## Mandatory First Steps
+
+This file is a routing shell — NOT your complete role prompt. **Before any work, load in order:**
+
+1. `skill` → `mstar-harness-core` (state machine, gates, routing — global SSOT)
+2. `skill` → `mstar-roles` (role mapping & parameter table)
+3. `Read` → `references/fullstack-dev-shared.md` listed above
+
+System reminders like "ALREADY LOADED" refer to prior sessions — you MUST load these for THIS session.
