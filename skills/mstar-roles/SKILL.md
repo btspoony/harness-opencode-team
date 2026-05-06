@@ -1,6 +1,6 @@
 ---
 name: mstar-roles
-description: Morning Star (启明星) 的角色提示词总线。把 `agents/*.md` 的正文完全 skill 化：所有角色的完整行为定义都在 `references/`，`agents/*.md` 只保留 frontmatter 与 role 参数绑定。任何一个 Morning Star 角色（`project-manager` / `product-manager` / `architect` / `fullstack-dev` / `fullstack-dev-2` / `frontend-dev` / `qa-engineer` / `qc-specialist*` / `ops-engineer` / `market-expert` / `prompt-engineer`）开工前，都先加载本 skill，再按角色的 `Role parameters` 查参数表并 Read 对应 `references/*.md`。重复角色（`fullstack-dev` 与 `fullstack-dev-2`、`qc-specialist*`）共享同一 reference，参数不同行为不同，绝不复制多份正文。
+description: Morning Star (启明星) 的角色提示词总线。把 `agents/*.md` 的正文完全 skill 化：所有角色的完整行为定义都在 `references/`，`agents/*.md` 只保留 frontmatter 与 role 参数绑定。任何一个 Morning Star 角色（`project-manager` / `product-manager` / `architect` / `fullstack-dev` / `fullstack-dev-2` / `frontend-dev` / `qa-engineer` / `qc-specialist*` / `ops-engineer` / `writing-specialist` / `prompt-engineer`）开工前，都先加载本 skill，再按角色的 `Role parameters` 查参数表并 Read 对应 `references/*.md`。重复角色（`fullstack-dev` 与 `fullstack-dev-2`、`qc-specialist*`）共享同一 reference，参数不同行为不同，绝不复制多份正文。
 ---
 
 ## Load order（必读顺序）
@@ -36,7 +36,7 @@ description: Morning Star (启明星) 的角色提示词总线。把 `agents/*.m
 | `qc-specialist-2` | `references/qc-specialist-shared.md` | `role_id`, `reviewer_index`, `focus`, `report_suffix` |
 | `qc-specialist-3` | `references/qc-specialist-shared.md` | `role_id`, `reviewer_index`, `focus`, `report_suffix` |
 | `ops-engineer` | `references/ops-engineer.md` | — |
-| `market-expert` | `references/market-expert.md` | — |
+| `writing-specialist` | `references/writing-specialist.md` | — |
 | `prompt-engineer` | `references/prompt-engineer.md` | — |
 
 ## Skill dependencies（所有角色默认适用）

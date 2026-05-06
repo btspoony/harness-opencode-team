@@ -54,7 +54,7 @@
 - **范围**：**只勾选与当前任务直接对应、且已由本角色交付证据支撑的条目**；不得代为勾选他人负责或未完工项。若正文用分段、Owner 或角色标签区分任务，以 Assignment 与文内约定为准。
 - **与 `status.json` / frontmatter 的关系**：勾选任务**不**等于整条计划收口。`plans[].status` 及主 plan frontmatter 的 **`Done`** 仍**仅** `@project-manager` / `@qa-engineer`（见「状态更新权限」）。`@architect` / `@product-manager` **不得**擅自将整条计划标为 `Done`；是否将 `status.json` 推进为 `InReview` 等仍按下文「状态更新权限」与 Assignment。
 - **`@qc-specialist*`**：**不得**修改主 plan（宿主仅允许 `{PLAN_DIR}/reports/**/*.md`）；审查结论落在 `reports/<plan-id>/` 内。若主 plan 需新增或勾选与审查相关的条目，由 `@project-manager` 或 Assignment 明确授权的角色据报告回写。
-- **只读角色**（如 `@market-expert`）：不直接改主 plan；将建议交给 `@project-manager` 代为更新清单。
+- **只读角色**：不直接改主 plan；将建议交给 `@project-manager` 代为更新清单。
 
 Plan 正文与 `status.json` 必须保持一致；不一致时以 `status.json` 的条目状态为准并尽快纠正正文或登记 notes。
 

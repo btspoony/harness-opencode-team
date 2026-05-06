@@ -169,7 +169,7 @@
 | @qc-specialist-2 | 代码审查、质量保障（Reviewer #2）       | 同上                                                    | `@qc-specialist-2 ...` |
 | @qc-specialist-3 | 代码审查、质量保障（Reviewer #3）       | 同上                                                    | `@qc-specialist-3 ...` |
 | @ops-engineer    | 部署、CI/CD、监控                  | 读写                                                    | `@ops-engineer ...`    |
-| @market-expert   | 市场分析、用户研究                    | 只读                                                    | `@market-expert ...`   |
+| @writing-specialist | 文档写作、小说写作、文案写作、脚本写作       | 读写（写作内容）                                           | `@writing-specialist ...` |
 | @prompt-engineer | 提示词/Agents/规则/技能整理           | 读写                                                    | `@prompt-engineer ...` |
 
 
@@ -203,9 +203,10 @@
 | **提示词/Agents/规则/技能整理**               | @prompt-engineer（必要时 + @qc-specialist）                                                                                                                           |
 | **纯文档/配置**                           | **产品/PRD/用户说明**：`@product-manager`；**架构/ADR/API 规格**（Markdown）：`@architect`；杂项技术 README：`@general` 或开发团队(单人)；触及 CI/Docker/运行时配置时按「小功能/改进」或专项路由并走 QA              |
 | **产品文档专项**（大 PRD/帮助中心/仅 Markdown）    | `@product-manager`（须 `Working branch` 若提交 Git）→ 默认**免 QC 三审**（Assignment 写 `QC: skipped — product-docs only`）；若含**接口/数据契约**正文，加 `@architect` 评审或 PM 指定 QC **单审** |
+| **写作类任务**（文档/小说/文案/脚本）              | `@writing-specialist`（必要时 + `@product-manager` 提供业务上下文）→ 默认按文档类门禁执行；触及代码/配置时转对应工程角色                                         |
 | **技术规格专项**（ADR/架构/API 契约/仅 Markdown） | `@architect`（须 `Working branch` 若提交 Git）→ 默认**免 QC 三审**（`QC: skipped — tech-spec only`）；涉**安全/合规基线**或对外承诺时，PM 指定 **QC 单审** 或交 `@qc-specialist`                   |
 | **重构**                               | @explore(影响分析) → @architect → 开发团队 → QC三审并行（@qc-specialist/@qc-specialist-2/@qc-specialist-3）→ @qa-engineer                                                      |
-| **市场/用户调研**                          | @market-expert (+ @product-manager 可选)                                                                                                                           |
+| **市场/用户调研**                          | @product-manager（已内置市场/用户研究能力）                                                                                                                     |
 | **QA 仅报告（不改业务代码）**                   | @qa-engineer（**Report-only**：见该角色说明；无实现类 diff 时**可跳过 QC 三审**，须在 Assignment 写明 `QA mode: report-only`；若 QA 提交了测试/配置等可执行工件，仍走 QC 三审）                               |
 | **用户可见 UI / 关键流程变更**                 | 开发团队 → QC三审并行 → @qa-engineer（验收须含**可观察证据**：截图、短视频、或 E2E/浏览器自动化输出摘要；用户在 Assignment 中明确豁免除外）                                                                       |
 | **生产 / 共享环境 / 数据迁移 / 破坏性运维**         | @ops-engineer（须满足 `mstar-review-qc` skill **高危变更清单**；Assignment 须标注 **high-risk** 并写清允许改动的路径/环境）→ 必要时 @fullstack-dev 配合 → QC（至少单审；涉及应用代码则三审）→ @qa-engineer       |
@@ -230,7 +231,7 @@
 
 - **开发任务必须经过 QA**：凡变更**业务仓库**内影响运行时行为或对外契约的代码，或为其增加/修改的行为级与回归测试，**必须**安排 @qa-engineer。下列情形**可不派** @qa-engineer，但须在 Assignment 与 Status Update 写明 `QA: skipped — <reason>` 或 `QA: self-check only — <what was verified>`：
   - **@explore 代码检索/问答**且无仓库落地改动。
-  - **@market-expert** 纯调研、文档化产出，无应用代码变更；**@product-manager** 仅产品向 Markdown（PRD/用户说明等）、**@architect** 仅技术规格/架构向 Markdown（ADR、API 契约说明等），**无**应用代码/测试/构建或运行时配置变更时，同等适用（与上列「纯文档」一致，须在 Status 标明责任方）。
+  - **@product-manager**（含市场/用户研究能力）、**@writing-specialist**（文档/小说/文案/脚本写作）与 **@architect**（技术规格/架构向 Markdown）在仅文档交付且无应用代码/测试/构建/运行时配置变更时，可按文档类门禁执行（须在 Status 标明责任方）。
   - **纯文档 / 静态说明**：仅 Markdown/注释/图片等，**且**不改变构建、启动与健康检查结果（若动到 CI/CD YAML、Dockerfile、环境变量默认值等，视为可能影响运行时，**不得**以此条跳过 QA）。**@product-manager** 落盘的产品文档通常不占开发类 QA，但仍须在 Assignment/Status 标明范围。
   - `**@prompt-engineer` 主持的 agents / 规则 / 技能整理**：diff **仅限**提示词、编排文档与配置说明、**无**业务应用代码或业务测试变更时，**不强制**业务向 @qa-engineer；若同任务触及业务代码或行为测试，恢复完整 QA。
   - **热修复**仍须 @qa-engineer **快速验证**，不得以本条跳过。
@@ -339,7 +340,7 @@
 
 | 子任务                           | 首选 Agent                                                    | 备选/协作                                                   |
 | ----------------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
-| 需求澄清、用户故事、验收标准、PRD/**产品文档落盘** | @product-manager                                            | @market-expert                                          |
+| 需求澄清、用户故事、验收标准、PRD/**产品文档落盘** | @product-manager                                            | @writing-specialist                                     |
 | 架构方案、模块边界、接口契约、**技术文档落盘**     | @architect                                                  | @fullstack-dev                                          |
 | API/业务逻辑/数据模型实现               | @fullstack-dev                                              | @fullstack-dev-2（**第二并行轨**；须写明模块边界）                     |
 | 页面/组件/交互/a11y 实现              | @frontend-dev（全栈 plan 中**默认前端主责**）                          | @fullstack-dev（仅辅助或小改动）                                 |
@@ -350,7 +351,7 @@
 | 生产部署、迁移、高危运维                  | @ops-engineer                                               | @fullstack-dev；Assignment 含 **high-risk**               |
 | 代码审查与质量门禁                     | QC三审组（@qc-specialist / @qc-specialist-2 / @qc-specialist-3） | @qa-engineer（验证）                                        |
 | CI/CD、部署、监控、运维脚本              | @ops-engineer                                               | @fullstack-dev                                          |
-| 市场/竞品/定价研究                    | @market-expert                                              | @product-manager                                        |
+| 市场/竞品/定价研究                    | @product-manager                                            | @writing-specialist（仅写作润色/报告表达，不替代研究判断）                |
 | Prompt/Agent/Skill/Rule 优化    | @prompt-engineer                                            | @qc-specialist                                          |
 
 
@@ -358,13 +359,13 @@
 
 以下组合可以并行工作，不需要等待前一个完成：
 
-- @product-manager + @market-expert（需求分析与市场调研同步）
+- @product-manager + @writing-specialist（需求分析与写作交付并行）
 - @frontend-dev + @fullstack-dev（前后端同步开发，需先由 @architect 定义接口契约）
 - @fullstack-dev + @fullstack-dev-2（按模块拆分后并行）
 - **QC 三审**：同一 `plan_id` **默认仅在 dev team 完成该 plan 全部约定交付后**派**一轮**完整三审（见 `mstar-plan-conventions` skill「QC 三审触发时机」）；**不在**各 batch 重复全套三审以免报告混乱。**Request Changes** 后复验可再派一轮（新文件名波次）。**显式增量三审**仅在 Assignment 写明 `QC gate: incremental — …` 时启用
 - 多个 @general 实例可以并行执行独立的小任务
 
-**同仓多可写并发（强制）**：凡 **≥2 个可写 subagent** 将 **同时** 对 **同一业务 Git 仓库** 落盘（代码、测试、配置、项目内文档等），**必须** 按 `**using-git-worktrees`** 为每条写流准备 **独立 `git worktree`（或等价独立检出）**，并在分派文案与各 Assignment 中写明 `**Working branch`** + **检出路径约定**。**禁止** 多个并行 subagent 默认共享 **同一工作目录** 作为写入 cwd（易导致互相覆盖、冲突或半写入）。只读并行（如多个 @market-expert）、或各写入者针对不同仓库根、或 **串行** 写入，不适用本条的 worktree 强制。
+**同仓多可写并发（强制）**：凡 **≥2 个可写 subagent** 将 **同时** 对 **同一业务 Git 仓库** 落盘（代码、测试、配置、项目内文档等），**必须** 按 `**using-git-worktrees`** 为每条写流准备 **独立 `git worktree`（或等价独立检出）**，并在分派文案与各 Assignment 中写明 `**Working branch`** + **检出路径约定**。**禁止** 多个并行 subagent 默认共享 **同一工作目录** 作为写入 cwd（易导致互相覆盖、冲突或半写入）。只读并行（如多个只读 subagent）、或各写入者针对不同仓库根、或 **串行** 写入，不适用本条的 worktree 强制。
 
 启用 Superpowers 时：在 **Status Update** 或 Assignment 中显式写上 `**dispatching parallel agents`**（或 `dispatching-parallel-agents`），与上表**并行**意图对齐；**同仓多可写并发**时 **叠加** `**using git worktrees`**（或 `using-git-worktrees`）；**不得**因并行省略各执行方的 `**Working branch`** 或 **检出隔离**。
 

@@ -63,14 +63,14 @@ OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
 | Agent ID | 角色 | 主要职责 |
 |----------|------|---------|
 | `project-manager` | 项目经理 | 路由、分派、阶段推进 |
-| `product-manager` | 产品经理 | 需求与产品向文档 |
+| `product-manager` | 产品经理 | 需求、产品规划与市场/用户研究 |
 | `architect` | 架构师 | 架构与技术契约 |
 | `fullstack-dev` / `fullstack-dev-2` | 全栈开发 | 后端主导实现 / 第二并行轨 |
 | `frontend-dev` | 前端开发 | UI、交互、前端性能 |
 | `qa-engineer` | QA | 测试与验收验证 |
 | `qc-specialist` / `qc-specialist-2` / `qc-specialist-3` | QC 三审 | 代码质量门禁（架构/安全/性能） |
 | `ops-engineer` | 运维 | 部署、监控、基础设施 |
-| `market-expert` | 市场专家 | 市场与用户研究 |
+| `writing-specialist` | 写作专家 | 文档写作、小说写作、文案写作与脚本写作 |
 | `prompt-engineer` | 提示词工程师 | prompt / skill / rule 优化 |
 
 你可以在 `opencode.json` 中为每个角色指定不同的模型（以及模型供应商）。

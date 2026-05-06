@@ -92,14 +92,14 @@ flowchart TD
 | Agent ID | Role | Responsibility |
 |----------|------|----------------|
 | `project-manager` | Project Manager | Routing, assignment, phase progression |
-| `product-manager` | Product Manager | Requirements and product-facing docs |
+| `product-manager` | Product Manager | Requirements, product planning, and market/user research |
 | `architect` | Architect | Architecture and technical contracts |
 | `fullstack-dev` / `fullstack-dev-2` | Fullstack Dev | Backend-led implementation / second parallel track |
 | `frontend-dev` | Frontend Dev | UI, interaction, frontend performance |
 | `qa-engineer` | QA | Testing and acceptance validation |
 | `qc-specialist` / `qc-specialist-2` / `qc-specialist-3` | QC Trio | Code quality gate (architecture/security/performance) |
 | `ops-engineer` | Ops | Deployment, monitoring, infrastructure |
-| `market-expert` | Market Expert | Market and user research |
+| `writing-specialist` | Writing Specialist | Documentation, fiction, copywriting, and script writing |
 | `prompt-engineer` | Prompt Engineer | Prompt / skill / rule optimization |
 
 You can assign different models per agent in `opencode.json` without replacing your existing file.

@@ -81,11 +81,13 @@
 | 宜用 | `systematic-debugging`（流水线失败、线上异常） |
 | 宜用 | `finishing-a-development-branch`（发布与分支/tag 策略收口） |
 
-## @market-expert
+## @writing-specialist
 
 | 场景 | 技能 |
 |------|------|
-| 宜用 | `brainstorming`（课题开放、策略与假设需对齐） |
+| 必用 | `brainstorming`（任务目标与风格未锁定时先澄清） |
+| 必用（与同仓其他可写 subagent 并发落盘项目仓库时） | `using-git-worktrees` |
+| 宜用 | `writing-plans`（将长篇写作拆分为可验收里程碑） |
 
 ## @prompt-engineer
 
