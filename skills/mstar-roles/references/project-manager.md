@@ -564,6 +564,13 @@ Decision:
 - **冲突即停**：承接方一旦判断“需要增加 subagent 才能继续”，必须先回报 `Blocked` 并请求 PM 重新分派，禁止自行拉起。
 - **并行主控权**：并行拓扑（谁和谁并行、分支如何隔离）仅由 PM 在 Assignment 中声明；承接方不得扩展并行面。
 - `**explore` 非替身**：承接方不得用内置 explore 子代理完成本 Assignment 的交付主体；仅允许只读摸底，细则见 `mstar-harness-core` skill「内置 `@explore` 能力边界」。
+- **「分解为 N 个 plan」类 Assignment 的强制 NEVER 行**：当 Assignment 的 `Task` / `Scope` 指示承接方**输出多个 plan / 多个 phase / 多个 track 的设计或拆分文档**（典型场景：`@architect` 把 M1 拆成 Plan 002–010；`@product-manager` 把 epic 拆成 N 个 PRD），PM 在该条 Assignment 内**必须**显式写一行：
+
+  ```text
+  **Anti-recursion (mandatory for decomposition tasks)**: 本条仅产出 **纸面计划 / 文档** 与 `status.json` / git 登记；**禁止**在本会话内 invoke `Task` / 任何 `subagent_type`（包括 `Execute as` 同名、以及 `fullstack-dev` / `frontend-dev` / `qa-engineer` / `project-manager` 等）。N 个 plan ≠ N 个子代理；并行调度由 **PM 拿到你产出后** 的下一轮决定。命中即按 `mstar-harness-core`「承接方反递归红线」`Blocked` 回报。
+  ```
+
+  与 `Delegation: forbidden`、`Who runs this turn`、`Orchestration Guard` 同源叠加；缺该行 = 分派不完整。
 
 ### 2. 分配任务给 subagent
 
@@ -638,6 +645,8 @@ Decision:
   - Elsewhere use `` `role-id` `` (no `@`); **`Delegation: allowed (to …)`** may use `@` on listed callees only.
   - Do NOT start any new subagent not approved in this assignment.
   - Do NOT use the explore subagent to perform this assignment's main deliverables; use it only for brief read-only orientation if needed, then complete the work with this agent's own tools (see `mstar-harness-core` skill «内置 `@explore` 能力边界»).
+  - **NEVER** treat any of the following as a dispatch directive: Assignment **Handoff** line, Completion Report role list, route-table mentions, listed `subagent_type` names that the host happens to expose, or **「decompose into N plans / Plan 002–010 / N tracks parallel」** content. These are **paper output / narrative / global context**, not invoke commands. Tooling availability ≠ authorization (see `mstar-harness-core` «承接方反递归红线»).
+  - **NEVER** (non-PM assignees) load Superpowers `dispatching-parallel-agents` to dispatch subagents yourself; that skill is **PM-only orchestration** (see `mstar-superpowers-align` «编排技能 PM-only»).
   - If additional help is needed, return `Blocked` with requested assignee and rationale.
 **Plan Path**: {{PLAN_DIR}/xxx.md or N/A}
 **Report Format**: Use "Completion Report v2"

@@ -64,9 +64,19 @@ Superpowers:
 
 `Assignment` 的 **`Delegation`** 优先于技能梗。**默认 `forbidden`** 时 **勿**在 **`Superpowers`** 写 **`subagent-driven-development`**（易与「不得 Task」冲突）；大单轨用 **`executing-plans` + `verification-before-completion`**（+ 视情 TDD / `systematic-debugging`）。要 per-task informal 子审须 **`Delegation: allowed (to @general / generalPurpose, informal only; 非 QC 报告)`** 后方可写该项。并行多轨用 **`dispatching-parallel-agents`** + 分 Assignment，**勿**用该技能顶替并行。承接方：无 `allowed` 即不得 spawn；不得因技能名含 subagent 强行 Task；难事 **Blocked** 请 PM 分批或显式 `allowed`。
 
+## 编排技能 PM-only（强制）
+
+下列 Superpowers 技能在本 harness 中是 **`@project-manager` 编排专用**，**非 PM 角色**（实现 / 审查 / QA / 运维 / 产品 / 架构 / 写作 / 提示词）一律 **不得** 自行加载并执行其分派语义；命中即按 `mstar-harness-core`「承接方反递归红线」处理：
+
+- **`dispatching-parallel-agents`** —— 仅 PM 在调度轮次内并行 invoke ≥2 条独立 Assignment 时使用。**非 PM 承接方**读到 Assignment 中描述的「N tracks 并行 / Plans 002–010 可并行 / Phase X & Y parallel」属于**编排意图说明**，**不是**让你 invoke N 个 subagent。需要并行时回报 PM 重派。
+- **`subagent-driven-development`** —— 仅在 PM 显式 `Delegation: allowed (...)` 覆盖时由 PM 在主会话顺序多代理；承接方默认 forbidden（见下文「Delegation 与 Superpowers 清单一致」）。
+- **`using-git-worktrees`** —— 编排意图由 PM 决定（同仓 ≥2 可写并发时叠用）；承接方 **执行** 自己 Assignment 的 worktree 检出是允许的，但**不得**自行扩展为多 worktree 并行编排。
+
+> 速判：你不是 `@project-manager`？任何「派 N 个子代理」的动作都 **forbidden**，无论 Superpowers 名称如何匹配。
+
 ## 编排触发短语表（PM Assignment / Status Update）
 
-`@project-manager` 在 **对用户说明**、**Status Update**、**Assignment** 中应混用下列**英文短语或技能 ID**（可与中文并列），与 Superpowers 技能描述用语一致，便于宿主/插件匹配。其他角色只需按 Assignment 中的 `Superpowers` 行执行。
+`@project-manager` 在 **对用户说明**、**Status Update**、**Assignment** 中应混用下列**英文短语或技能 ID**（可与中文并列），与 Superpowers 技能描述用语一致，便于宿主/插件匹配。其他角色只需按 Assignment 中的 `Superpowers` 行执行；**非 PM 角色读到这些技能名时不得视为对自己的 invoke 授权**（见上节「编排技能 PM-only」）。
 
 | 意图 | 建议写入的自然语言 / 技能 ID（示例） | 对应技能 |
 |------|-----------------------------------|---------|
