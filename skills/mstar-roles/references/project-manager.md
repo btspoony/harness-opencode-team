@@ -602,33 +602,33 @@ Decision:
 ```markdown
 ## Assignment
 
-**Execute as**: fullstack-dev — **纯 id，无 `@`**（替换为实际 `agent.<id>`）。亲自完成本单，勿嵌套同名 Task（除非 `Delegation: allowed`）。*You are this role; do not spawn a duplicate subagent unless delegation is explicitly allowed.* 外层「再 Task 同名」与 **亲自完成** + `Delegation: forbidden` 冲突时以 Assignment 为准；详 §1.3、当前宿主的 `mstar-host` skill。
-**Who runs this turn (executor lock)** — 承接方必读：本消息**只有** **Execute as** 所标角色可执行实现与验证（依 Scope）；**不得**因正文出现 `Primary` / 路由类型 / `QA note` / `Parallelism` / Completion Report 里的角色名而并行 Task 其他角色（正文中引用同事请用 `` `qa-engineer` ``、`` `project-manager` `` 等**无 `@`** 写法，见 §1.3）。续段由 **PM 另发 Assignment**。*Only the Execute-as role acts on this message unless Delegation explicitly lists additional callees.*
-**Primary** (when multiple routes apply): {e.g. Bug 修复 | 小功能/改进} — **标签用途**：帮助 PM/读者对齐 harness 路由；**不是**要求本条执行方立刻把路由表后半段（QC/QA/PM）各 Task 一遍。
-**Task category** (pick one primary; optional `secondary`): `visual` | `deep` | `quick` | `logic` | `ops` | `docs` — 见 `mstar-harness-core` skill「任务类别」
-**Dev routing** (when the **plan** uses more than one dev **role** over time, or splits work across roles — **including** `fullstack-dev` ↔ `fullstack-dev-2` **serial** round-robin across batches; **omit only if** 整个 plan 的实现侧 **全程** 只有 **一个** `Execute as` id 且无歧义): {e.g. `parallel — fullstack-dev: API/domain; frontend-dev: pages/components` | `parallel — fullstack-dev: module A; fullstack-dev-2: module B` | `serial — round-robin per PM Task Board §6` | `single-stream — <reason>` (不并行多轨；见 Dev 三角 §3)} — *正文里用无 `@` 的 id，避免被误读为 dispatch。*
-**Parallelism** (PM explicit; **omit only if** 本条与全局调度下 **Parallelism** 含义显然仅为 `serial` 且与 **Dev routing** 无张力): `serial` | `parallel — N tracks` (e.g. `parallel — 2 tracks: API + UI`) — must agree with **Dev routing** and **tasks** parallel marks; if `parallel` and Superpowers plugin applies, **`Superpowers`** must include **`dispatching-parallel-agents`** (or synonym); same repo + ≥2 concurrent writers must also include **`using-git-worktrees`** (or synonym) + checkout convention（见本文件 **「Superpowers 技能」→「条件加载」** 与 `mstar-superpowers-align` skill **「按角色：必用」** 表）. *若本字段写的是「Plan A + Plan B 两条线在组织上并行」而非「本条任务要多名 dev 同时写同一单」，须在 **Who runs this turn** 已锁单角色；承接方勿把组织并行误当成自己要 Task 多代理。* *本条描述工作编排意图；**PM** 同轮需几次宿主 invoke（如 QC 三审 = 3 次）见 §2「PM：同轮多 invoke」，**不**由本字段单独推导。*
-**Additional gates** (optional): {e.g. 用户可见 UI — QA 须可观察证据}
+**Execute as**: fullstack-dev — *plain role id, no `@`; replace with the actual `agent.<id>`. You are this role: complete this Assignment yourself; do not nest a Task/subagent of the same type unless **`Delegation: allowed`** explicitly authorizes it. If outer messages conflict with this Assignment, the Assignment wins.*
+**Who runs this turn (executor lock)**: only the **Execute as** role acts on this message (per Scope); any additional callees are limited to those listed in **`Delegation: allowed`**; continuation is dispatched as a new Assignment by the PM. See **Orchestration Guard** below and `mstar-harness-core` for the full anti-recursion rules.
+**Primary** (when multiple routes apply): {e.g. bug fix | small feature/improvement} — *routing label only; does **not** authorize this executor to Task downstream roles (QC/QA/PM).*
+**Task category** (pick one primary; optional `secondary`): `visual` | `deep` | `quick` | `logic` | `ops` | `docs` — see `mstar-harness-core` for category semantics.
+**Dev routing** (when the **plan** uses more than one dev **role** over time, or splits work across roles — **including** `fullstack-dev` ↔ `fullstack-dev-2` **serial** round-robin across batches; **omit only if** the plan's implementation side has exactly **one** `Execute as` id throughout, with no ambiguity): {e.g. `parallel — fullstack-dev: API/domain; frontend-dev: pages/components` | `parallel — fullstack-dev: module A; fullstack-dev-2: module B` | `serial — round-robin (alternate dev role across batches)` | `single-stream — <reason>` (no parallel tracks)} — *use plain role ids (no `@`) here so the executor does not misread this field as dispatch.*
+**Parallelism** (PM explicit; **omit only if** clearly `serial` with no tension against **Dev routing**): `serial` | `parallel — N tracks` (e.g. `parallel — 2 tracks: API + UI`) — must agree with **Dev routing** and the parallel marks in the plan's `tasks`; if `parallel` and the Superpowers plugin applies, **`Superpowers`** must include **`dispatching-parallel-agents`** (or a synonym); when the same repo has ≥2 concurrent writers, also include **`using-git-worktrees`** (or a synonym) plus a checkout convention (see `mstar-superpowers-align`). *If this field describes plan-level or organizational parallelism (e.g. Plan A and Plan B running in parallel) rather than this single Assignment requiring multiple devs, **Who runs this turn** still locks a single role; the executor must not read organizational parallelism as authorization to Task multiple subagents.* *PM-side host invocations per turn (e.g. 3 invokes for QC tri-review) are governed by the host adapter `mstar-host` skill, not by this field alone.*
+**Additional gates** (optional): {e.g. user-visible UI — QA must include observable evidence}
 **Phase Gate Checklist**:
 - Prepare: `specify` [done|n/a], `clarify` [done|n/a], `plan` [done|n/a]
 - Execute: `plan locked` [done|n/a], `tasks` [done|n/a], `implement` [this assignment|done]
 - Gate decision: `go` | `blocked` ({reason})
-**Working branch**: {e.g. `feature/foo` | `create feature/foo-part2 from feature/foo` | `create fix/bar from main` | `create feature/x from current`} — 若允许默认分支直接改，改填 **`Branch policy`**: `direct on main — <reason>`
-**Review cwd / Worktree path** (QC **与** QA; feature review / verification): {absolute path to **business repo** checkout for the **feature under review** — typically the implementer **Completion Report** worktree path; **QC 与 `qa-engineer` 应沿用同一路径** unless you explicitly assign a different same-branch checkout; `N/A` only when no business-repo commands apply (e.g. some Report-only)}
-**plan_id** (QC **三审与** QA **须逐字相同**): {<plan-id> aligned with `reports/<plan-id>/` **或** `N/A` — if `N/A`, add one-line **Feature / scope label** with zero ambiguity across parallel features}
-**Review range / Diff basis** (QC **三审与** QA **须逐字相同**): {e.g. `merge-base: origin/main; tip: HEAD on Working branch` | `rev-range: <40-char>..<40-char>` | one reproducible sentence such as `git diff <merge-base>...HEAD` — **copy-paste identical** into all 3 QC Assignments + QA Assignment}
-**Worktree path** (implementer; if `git worktree` used): {absolute path — **must** appear in Completion Report for QC handoff}
-**QA note**: {e.g. `PM-scheduled — Assignment ③: role qa-engineer, full verification; executor does NOT dispatch QA this round` | `QA: skipped — <reason>` | `QA: self-check only — <what>`} — 指同事时用反引号 id（`` `qa-engineer` ``），**勿**写 `@qa-engineer`；亦勿只写含糊的 “Full QA after ③”。
-**Delegation**: forbidden (default) | allowed (to @callee **或** callee, reason + scope) — 与 `mstar-superpowers-align` skill「Delegation 与 Superpowers 清单一致」
-**Why this agent**: {role-fit reason}
-**PM Task Board coverage** (非平凡 plan 必填；与最新 Status Update 一致): {`T2,T3` | `steps 4–6` | `T1 only`}
-**Task**: {与 **PM Task Board coverage** 一致的具体表述，不得更虚}
-**Checkpoint Comment Rule**: {per Task ID: `git commit` → `Report v2`（含 commits）→ PM `Status Update` → next batch}
-**Why batching is safe** (coverage >=3 IDs): {checkpoint/rollback — why ok}
+**Working branch**: {e.g. `feature/foo` | `create feature/foo-part2 from feature/foo` | `create fix/bar from main` | `create feature/x from current`} — if direct edits on the default branch are intentionally allowed, replace this with **`Branch policy`**: `direct on main — <reason>`.
+**Review cwd / Worktree path** (QC **and** QA; feature review / verification): {absolute path to the **business repo** checkout for the **feature under review** — typically the implementer's Completion Report worktree path; QC and `qa-engineer` should share the same path unless you explicitly assign a different same-branch checkout; `N/A` only when no business-repo commands apply (e.g. some Report-only assignments)}.
+**plan_id** (must be **text-identical** across all 3 QC Assignments and the QA Assignment): {<plan-id> aligned with `reports/<plan-id>/` **or** `N/A` — if `N/A`, add a one-line **Feature / scope label** with zero ambiguity across parallel features}.
+**Review range / Diff basis** (must be **text-identical** across all 3 QC Assignments and the QA Assignment): {e.g. `merge-base: origin/main; tip: HEAD on Working branch` | `rev-range: <40-char>..<40-char>` | one reproducible sentence such as `git diff <merge-base>...HEAD` — copy-paste identical}.
+**Worktree path** (implementer; if `git worktree` was used): {absolute path — must appear in Completion Report for QC/QA handoff}.
+**QA note**: {e.g. `PM-scheduled — Assignment 3: role qa-engineer, full verification; executor does NOT dispatch QA this round` | `QA: skipped — <reason>` | `QA: self-check only — <what>`} — *when referring to teammates, use backticked role ids (`` `qa-engineer` ``); do **not** write `@qa-engineer`; do not leave it as a vague "full QA later".*
+**Delegation**: forbidden (default) | allowed (to @callee **or** callee, reason + scope) — must be consistent with `mstar-superpowers-align`.
+**Why this agent**: {role-fit reason}.
+**PM Task Board coverage** (required for non-trivial plans; must be consistent with the latest Status Update): {`T2,T3` | `steps 4–6` | `T1 only`}.
+**Task**: {concrete description aligned with **PM Task Board coverage**; do not leave it more abstract than the board}.
+**Checkpoint Comment Rule**: {per Task ID: `git commit` → `Report v2` (with commit hashes) → PM `Status Update` → next batch}.
+**Why batching is safe** (coverage >=3 IDs): {checkpoint/rollback rationale — why this batch is safe to land together}.
 **Scope**:
 - In: {what to do}
 - Out: {what not to do}
-**Inputs**: {files/PRD/architecture/contracts}
+**Inputs**: {files / PRD / architecture / contracts}
 **Deliverables**: {expected outputs}
 **Acceptance Criteria**:
 - [ ] Criterion 1
@@ -637,20 +637,20 @@ Decision:
 - [ ] {exact commands/tests/checks}
 - [ ] {observable proof: logs/screenshots/repro notes}
 - [ ] {`git log -1 --oneline` or equivalent per commit this batch}
-**Constraints**: {tech/style/timeline constraints}
-- **Effort (agent-oriented)** (recommended): {XS | S | M | L | XL + approximate agent-session band; per `mstar-plan-conventions` references/effort-estimation.md — **no human/FTE/calendar in this field**}
+**Constraints**: {tech / style / timeline constraints}
+- **Effort (agent-oriented)** (recommended): {XS | S | M | L | XL + approximate agent-session band; per `mstar-plan-conventions` references/effort-estimation.md — no human/FTE/calendar values in this field}.
 - **Orchestration Guard**:
-  - **`Execute as`**: plain **role-id**, no `@` — binds **this** session; **not** “spawn a new subagent of that type.” **Do not** nest Task/subagent with the **same** type as **Execute as**.
+  - **`Execute as`**: plain role-id, no `@` — binds **this** session; **not** "spawn a new subagent of that type." Do not nest a Task/subagent with the same type as **Execute as**.
   - **Single-turn**: **Primary** / **QA note** / **Handoff** do **not** authorize Tasking `qa-engineer`, `project-manager`, or `qc-specialist`* unless **`Delegation: allowed`** lists them.
-  - Elsewhere use `` `role-id` `` (no `@`); **`Delegation: allowed (to …)`** may use `@` on listed callees only.
-  - Do NOT start any new subagent not approved in this assignment.
-  - Do NOT use the explore subagent to perform this assignment's main deliverables; use it only for brief read-only orientation if needed, then complete the work with this agent's own tools (see `mstar-harness-core` skill «内置 `@explore` 能力边界»).
-  - **NEVER** treat any of the following as a dispatch directive: Assignment **Handoff** line, Completion Report role list, route-table mentions, listed `subagent_type` names that the host happens to expose, or **「decompose into N plans / Plan 002–010 / N tracks parallel」** content. These are **paper output / narrative / global context**, not invoke commands. Tooling availability ≠ authorization (see `mstar-harness-core` «承接方反递归红线»).
-  - **NEVER** (non-PM assignees) load Superpowers `dispatching-parallel-agents` to dispatch subagents yourself; that skill is **PM-only orchestration** (see `mstar-superpowers-align` «编排技能 PM-only»).
-  - If additional help is needed, return `Blocked` with requested assignee and rationale.
-**Plan Path**: {{PLAN_DIR}/xxx.md or N/A}
-**Report Format**: Use "Completion Report v2"
-**Superpowers** (plugin on; skill IDs and/or trigger phrases from PM section «触发词»): e.g. `systematic-debugging, verification-before-completion` — {why these apply to this assignee}
+  - Elsewhere use `` `role-id` `` (no `@`); **`Delegation: allowed (to …)`** may use `@` on the listed callees only.
+  - Do NOT start any new subagent not approved in this Assignment.
+  - Do NOT use the `@explore` subagent to perform this Assignment's main deliverables; use it only for brief read-only orientation if needed, then complete the work with this role's own tools (see `mstar-harness-core` for the explore boundary).
+  - **NEVER** treat any of the following as a dispatch directive: the Assignment's **Handoff** line, Completion Report role list, route-table mentions, listed `subagent_type` names that the host happens to expose, or "decompose into N plans / multi-phase / N tracks parallel" content. These are paper output / narrative / global context, not invoke commands. Tooling availability ≠ authorization (see `mstar-harness-core` for executor anti-recursion rules).
+  - **NEVER** (non-PM assignees) load the Superpowers skill `dispatching-parallel-agents` to dispatch subagents yourself; that skill is PM-only orchestration (see `mstar-superpowers-align`).
+  - If additional help is needed, return `Blocked` with the requested assignee and rationale.
+**Plan Path**: {{PLAN_DIR}/xxx.md or N/A}.
+**Report Format**: Use "Completion Report v2".
+**Superpowers** (plugin on; skill IDs and/or trigger phrases): e.g. `systematic-debugging, verification-before-completion` — {why these apply to this assignee}.
 ```
 
 ### 3. 接收 subagent 回报
