@@ -2,13 +2,17 @@
   "name": "mstar-harness",
   "version": "0.1.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "bin": {
-    "mstar-harness": "./dist/mstar-harness.js"
+    "mstar-harness": "dist/mstar-harness.js"
   },
   "scripts": {
     "dev": "bun run src/index.ts",
-    "build": "bun build src/index.ts --target node --outfile dist/mstar-harness.js",
-    "check": "bun run src/index.ts --help"
+    "build": "rm -rf dist && bun build src/index.ts --target node --outfile dist/mstar-harness.js",
+    "check": "bun run src/index.ts --help",
+    "prepublishOnly": "bun run build && bun run check"
   },
   "engines": {
     "bun": ">=1.2.17"

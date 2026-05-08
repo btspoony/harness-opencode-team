@@ -2,6 +2,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { checkbox, select } from "@inquirer/prompts";
 import pc from "picocolors";
 import { Command } from "commander";
@@ -11,7 +12,7 @@ import type { DoctorOptions, InitOptions, ModelSelections, Scope, Target } from 
 import { SUPPORTED_TARGETS } from "./types";
 import { parseCsv, readJson, writeJson } from "./utils";
 
-const packageJsonPath = path.resolve(import.meta.dir, "../package.json");
+const packageJsonPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../package.json");
 const packageVersion = (() => {
   try {
     const parsed = JSON.parse(fs.readFileSync(packageJsonPath, "utf8")) as { version?: string };

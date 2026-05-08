@@ -91,6 +91,8 @@ These are for contributors developing this repository:
 
 - `bun run cli:dev -- --help`
 - `bun run cli:build`
+- `bun run cli:publish:dry-run`
+- `bun run cli:publish`
 
 ### Target Adapter Architecture
 
