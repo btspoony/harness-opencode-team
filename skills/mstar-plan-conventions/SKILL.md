@@ -79,10 +79,10 @@ description: Morning Star (启明星) harness 的计划目录约定 —— {HARN
 
 - **主计划**：技术方案、任务清单、Sign-off 仍以 **`{PLAN_DIR}/<plan-id>-<plan-name>.md`** 与 **`{HARNESS_DIR}/status.json`** 为权威。
 - **`{PLAN_DIR}/reports/`**：架构评审、QC 分报告、QC 汇总结论；**视为只读历史**，不在此反复改写同一结论（修正走新报告或回写主计划 / `status.json`）。
-- **`{PLAN_DIR}/residuals/<plan-id>/`**（可选）：对仍 **open** 的 residual 提供**长于 JSON 字段**的散文说明；**不替代** **`metadata.residual_findings`** 的 SSOT，见 `references/knowledge-and-designs.md`「open residual 散文详情」。
+- **`{PLAN_DIR}/residuals/<plan-id>/`**（可选）：对仍 **open** 的 residual 提供**长于 JSON 字段**的散文说明；**不替代** `residual_findings`（兼容 `metadata.residual_findings`）的 SSOT，见 `references/knowledge-and-designs.md`「open residual 散文详情」。
 - **`{HARNESS_DIR}/knowledge/`**：规格修订、架构评审产出、设计决策与 gap 分析等**实施上下文**；与面向用户的 `docs/` 分工见 `references/knowledge-and-designs.md`。
 - **`{SPECS_DIR}`**（可选）：规格目录别名，支持 `{HARNESS_DIR}/specs/` 与 `{HARNESS_DIR}/designs/`；用于冻结规格、少变基线或可对外参考文档（具体分工见 `references/knowledge-and-designs.md`）。
-- **residual findings（未关闭）**：**当前仍待跟踪**的条目写在 **`{HARNESS_DIR}/status.json`** 的 `metadata.residual_findings[<plan-id>]`（**仅 `open`**）；**已验证关闭**的条目迁出至 **`{HARNESS_DIR}/archived/residuals/<plan-id>.json`**，避免 `status.json` 无限膨胀。详见 `references/status-and-residuals.md`。
+- **residual findings（未关闭）**：**当前仍待跟踪**的条目写在 **`{HARNESS_DIR}/status.json`** 的 `residual_findings[<plan-id>]`（优先；兼容 `metadata.residual_findings`，仅 `open`）；**已验证关闭**的条目迁出至 **`{HARNESS_DIR}/archived/residuals/<plan-id>.json`**，避免 `status.json` 无限膨胀。详见 `references/status-and-residuals.md`。
 
 ### 已提交文档与计划产物的可到达性（强制建议）
 
@@ -99,7 +99,7 @@ description: Morning Star (启明星) harness 的计划目录约定 —— {HARN
 
 1. 创建 **`.agents/`** 作为 **`{HARNESS_DIR}`**（首选，对原有项目结构侵入小）。
 2. 创建 **`{PLAN_DIR}`** = **`.agents/plans/`**（子目录）。
-3. 在 **`{HARNESS_DIR}/`** 下创建 **`status.json`**（完整结构见 `references/status-and-residuals.md`：含 `metadata.residual_findings`）。
+3. 在 **`{HARNESS_DIR}/`** 下创建 **`status.json`**（完整结构见 `references/status-and-residuals.md`：含平级 `residual_findings`；兼容 `metadata.residual_findings`）。
 4. 可选：创建 **`{HARNESS_DIR}/notes.json`**（空 `entries: []` 或按模板），用于程序里程碑，避免日后向 `status.json` 堆日志。
 5. 创建 **`{PLAN_DIR}/reports/README.md`**，用途与命名约定与仓库内其它说明一致即可。
 6. 可选：若采用 **`{PLAN_DIR}/residuals/<plan-id>/`** 散文详情，在**首次**需要长文补充某 open R# 时再创建对应 **`residuals/<plan-id>/`** 子目录；无需为空 plan 预建占位目录。
@@ -212,7 +212,7 @@ Assignment 模板中的 **`Parallelism`** 行应与上表 **`Parallelism`** / **
 | `Todo` | 已登记，未开工 | 主 plan 文件 + `status.json` 条目 |
 | `InProgress` | 实现或准备阶段进行中 | 更新的主 plan、`tasks` 勾选；编码前已读 `metadata` 指向的 **`knowledge/`** 文档（若有） |
 | `InReview` | 审查与验证中 | `{PLAN_DIR}/reports/<plan-id>/` 下 `*-review.md`、`*-qc*.md`、`*-qc-consolidated.md`（见 `references/plan-files-and-reports.md`） |
-| `Done` | 已合并/收口 | 主 plan Sign-off、**`{HARNESS_DIR}/status.json`** 的 `done_at`；仍 open 的 R# 留在 `metadata.residual_findings`，已关闭的已迁入 **`{HARNESS_DIR}/archived/residuals/<plan-id>.json`** |
+| `Done` | 已合并/收口 | 主 plan Sign-off、**`{HARNESS_DIR}/status.json`** 的 `done_at`；仍 open 的 R# 留在 `residual_findings`（兼容 `metadata.residual_findings`），已关闭的已迁入 **`{HARNESS_DIR}/archived/residuals/<plan-id>.json`** |
 | `Blocked` | 等待外部输入或决策 | 顶层 `notes` + 建议填 `plans[].metadata.blocked_*` / `blocked_by_plan_id` |
 
 ## InReview 与 QC+QA：多 plan 编排硬门禁（`@project-manager`）

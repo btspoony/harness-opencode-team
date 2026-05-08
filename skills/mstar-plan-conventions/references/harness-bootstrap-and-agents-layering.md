@@ -13,7 +13,7 @@
 ## Bootstrap 最小步骤
 
 1. 创建 `{HARNESS_DIR}`（推荐 `.agents/`）与 `{PLAN_DIR}`（推荐 `.agents/plans/`）。
-2. 初始化 `status.json`（含 `version`、`updated_at`、`plans`、`metadata.residual_findings`）。
+2. 初始化 `status.json`（含 `version`、`updated_at`、`plans`、平级 `residual_findings`；兼容 `metadata.residual_findings`）。
 3. 初始化可选 `notes.json`（程序时间线）与 `plans/reports/README.md`。
 4. 创建 `.agents/AGENTS.md`（harness 子树规则）。
 5. 校准根 `AGENTS.md`：只保留仓库级长期约束，显式引用 `.agents/AGENTS.md` 作为 harness SSOT。

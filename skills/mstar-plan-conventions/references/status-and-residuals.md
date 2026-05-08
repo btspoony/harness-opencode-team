@@ -3,6 +3,7 @@
 > **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 改 SSOT / residual 前，须已 Read **`mstar-harness-core`** skill（SKILL.md；同仓分支与 worktree 见 `mstar-harness-core/references/branch-and-worktree.md`）。冲突以 **`mstar-harness-core`** 为准；专题索引见该 SKILL.md「Morning Star Skill 索引」。
 
 `status.json` 位于 `**{HARNESS_DIR}/status.json**`，是 `**plans[]` 行状态**与 **仍处 `open` 的 residual findings** 的**单一事实来源（SSOT）**。  
+`residual_findings` 键位推荐与 `plans` **平级**；兼容读取 `metadata.residual_findings` 遗留写法。
 **已关闭**的 residual **不应长期堆在**本文件中；权威档案见 `**{HARNESS_DIR}/archived/residuals/<plan-id>.json`**（见「Residual findings 生命周期」）。
 
 **编排语义（为何不是「多写几个字」）**：open 列表与 `archived/residuals/` 是跨会话、跨 agent 的**风险与决策交接面**。若非阻断结论只留在对话或单次 QC 报告里、**不进 SSOT**，下一任实现/审查方**无法可靠继承**已 defer、已风险接受或待跟进的约定；`Done` 也会与「已知债是否对仓库可见」**脱钩**，复盘或线上问题时常出现**无单一事实可引用**。因此 `**@project-manager`** 宜在审查收口后尽快把应跟踪项**登记为 open**；`**@qa-engineer`** 与 PM 宜在验证或豁免决策明确后**及时关闭并归档**——节奏可按里程碑灵活安排，但**不应默认「口头说过即可」**。
@@ -30,24 +31,23 @@
       "metadata": {}
     }
   ],
-  "metadata": {
-    "residual_findings": {
-      "plan-id": [
-        {
-          "id": "R1",
-          "title": "Finding title",
-          "severity": "critical | high | medium | low | nit",
-          "source": "QC-#1, QC-#3, review, …",
-          "scope": "Affected file or component",
-          "decision": "defer | accept | risk-accepted",
-          "owner": "@fullstack-dev",
-          "target": "Before plan 02 / YYYY-MM-DD / milestone",
-          "tracking": "Issue URL or null",
-          "detail_doc": "{PLAN_DIR}/residuals/plan-id/R1-short-label.md"
-        }
-      ]
-    }
-  }
+  "residual_findings": {
+    "plan-id": [
+      {
+        "id": "R1",
+        "title": "Finding title",
+        "severity": "critical | high | medium | low | nit",
+        "source": "QC-#1, QC-#3, review, …",
+        "scope": "Affected file or component",
+        "decision": "defer | accept | risk-accepted",
+        "owner": "@fullstack-dev",
+        "target": "Before plan 02 / YYYY-MM-DD / milestone",
+        "tracking": "Issue URL or null",
+        "detail_doc": "{PLAN_DIR}/residuals/plan-id/R1-short-label.md"
+      }
+    ]
+  },
+  "metadata": {}
 }
 ```
 
@@ -57,7 +57,7 @@
 
 ## Residual findings：severity（SSOT，机器字段）
 
-`metadata.residual_findings[<plan-id>][]` 里每条记录的 `**severity`** 只能是本节定义的枚举值。QC 报告 Markdown 里的 **Critical / Warning / Suggestion** 是**章节标题**，**不得**原样当作 JSON 里的 `severity`（二者关系见下表）。
+`residual_findings[<plan-id>][]`（兼容 `metadata.residual_findings[<plan-id>][]`）里每条记录的 `**severity`** 只能是本节定义的枚举值。QC 报告 Markdown 里的 **Critical / Warning / Suggestion** 是**章节标题**，**不得**原样当作 JSON 里的 `severity`（二者关系见下表）。
 
 ### 1. 允许取值
 
@@ -88,7 +88,7 @@
 
 ### 4. QC 报告小节 → JSON 里写什么 `severity`
 
-QC 报告模板见 `mstar-review-qc`。把 finding 登记进 `**metadata.residual_findings`** 时，按下表选择字段值：
+QC 报告模板见 `mstar-review-qc`。把 finding 登记进 `**residual_findings`**（兼容 `metadata.residual_findings`）时，按下表选择字段值：
 
 
 | 报告 Findings 小节 | 写入 JSON 的 `severity`                                                        |
@@ -149,7 +149,7 @@ QC 报告模板见 `mstar-review-qc`。把 finding 登记进 `**metadata.residua
 - `a2_self_audit`（或同义键）：string，规则自检结论。
 - `verification`: object，批次级验证结果（可覆盖全局 verification）。
 
-> 约束：`batches`/`verification` 是证据索引，不替代 `{PLAN_DIR}/reports/` 正式审查文档，也不替代 `metadata.residual_findings` 的风险追踪。
+> 约束：`batches`/`verification` 是证据索引，不替代 `{PLAN_DIR}/reports/` 正式审查文档，也不替代 `residual_findings`（兼容 `metadata.residual_findings`）的风险追踪。
 
 ### `plans[].notes` 与 `{HARNESS_DIR}/notes.json` 的协同
 
@@ -176,10 +176,10 @@ QC 报告模板见 `mstar-review-qc`。把 finding 登记进 `**metadata.residua
 ## 通用约束
 
 - 每条 `plans[]` 可带 `**metadata` 对象**（可选）。无扩展需求时可省略该键或置 `{}`。
-- 初始化时若尚无 findings，使用 `"metadata": { "residual_findings": {} }`。**程序时间线**请用可选 `**{HARNESS_DIR}/notes.json`**（见下），**勿**在 `status.json` 根级 `metadata` 中长期堆 `notes` 数组（遗留仓库若已有 `metadata.notes`，可择机迁出后删键）。
-- `**plans[].id`** 与 `**metadata.residual_findings**` 的键应对齐（同一 `plan-id`），便于 `jq` 与报告目录 `reports/<plan-id>/` 一致。**不要**再存 `residual_findings_plan_id`（与 `id` 重复）。
-- `**metadata.residual_findings` 空键**：某 `plan-id` 下**已无 open 条目**时，应从 `**metadata.residual_findings`** 中 **删除该键**（勿保留 `"plan-id": []` 空数组），减少噪声与误读。**注意**：这仅指 residual 映射对象上的键；`**plans[]` 是否仍保留该 plan 行**由团队决定（Done 瘦行、冷快照与「滚动保留」见 `done-compaction.md`），二者独立。
-- `**residual_summary`（可选）**：单行人类可读摘要；**仅描述仍留在** `metadata.residual_findings[<plan-id>]` **中的 open 项**（已关闭项应在 `**{HARNESS_DIR}/archived/residuals/`** 与可选 `**{HARNESS_DIR}/notes.json**` 中体现）。
+- 初始化时若尚无 findings，使用平级 `"residual_findings": {}`（优先）；兼容遗留 `"metadata": { "residual_findings": {} }`。**程序时间线**请用可选 `**{HARNESS_DIR}/notes.json`**（见下），**勿**在 `status.json` 根级 `metadata` 中长期堆 `notes` 数组（遗留仓库若已有 `metadata.notes`，可择机迁出后删键）。
+- `**plans[].id`** 与 `**residual_findings`**（或遗留 `**metadata.residual_findings**`）的键应对齐（同一 `plan-id`），便于 `jq` 与报告目录 `reports/<plan-id>/` 一致。**不要**再存 `residual_findings_plan_id`（与 `id` 重复）。
+- `**residual_findings` 空键**：某 `plan-id` 下**已无 open 条目**时，应从 `**residual_findings`**（或遗留 `metadata.residual_findings`）中 **删除该键**（勿保留 `"plan-id": []` 空数组），减少噪声与误读。**注意**：这仅指 residual 映射对象上的键；`**plans[]` 是否仍保留该 plan 行**由团队决定（Done 瘦行、冷快照与「滚动保留」见 `done-compaction.md`），二者独立。
+- `**residual_summary`（可选）**：单行人类可读摘要；**仅描述仍留在** `residual_findings[<plan-id>]`（兼容 `metadata.residual_findings[<plan-id>]`）**中的 open 项**（已关闭项应在 `**{HARNESS_DIR}/archived/residuals/`** 与可选 `**{HARNESS_DIR}/notes.json**` 中体现）。
 
 ---
 
@@ -220,7 +220,7 @@ QC 报告模板见 `mstar-review-qc`。把 finding 登记进 `**metadata.residua
 为避免 `**status.json` 随已关闭 R# 无限膨胀**，在 `**closed_at` / `closure_note`（及推荐 `closure_evidence`）已齐备** 且 `**@qa-engineer`** 或 `**@project-manager**` 已确认可关闭后：
 
 1. **追加**到 `**{HARNESS_DIR}/archived/residuals/<plan-id>.json`**（文件名与 `**plans[].id**` 一致；遗留同目录布局下全路径可能为 `**plans/archived/residuals/<plan-id>.json**` 等，视解析结果而定）。
-2. 从 `**metadata.residual_findings[<plan-id>]**` 数组中 **删除**该条（主列表**只保留 open**）。若删除后该数组为空，**删除** `**metadata.residual_findings`** 下的该 `**plan-id` 键**（见上文「空键」约定）。
+2. 从 `**residual_findings[<plan-id>]**`（兼容 `metadata.residual_findings[<plan-id>]`）数组中 **删除**该条（主列表**只保留 open**）。若删除后该数组为空，**删除**对应的 `**plan-id` 键（见上文「空键」约定）。
 3. 更新根级 `**updated_at`**；可选在 `**{HARNESS_DIR}/notes.json**` 追加一条里程碑（**优先**于根级 `metadata.notes`，见「`notes.json`」专节）。
 
 **归档文件格式**（每个 `plan-id` 一个 JSON 文件，可多次追加 `entries`）：
@@ -257,7 +257,7 @@ QC 报告模板见 `mstar-review-qc`。把 finding 登记进 `**metadata.residua
 
 ### 临时原位关闭（仅短过渡）
 
-在写入归档文件**之前**，可先在 `metadata.residual_findings` 内补全 `lifecycle` / `closed_*`（便于同一次 PR 内 diff）；**应在同一里程碑内**完成「迁入 `**{HARNESS_DIR}/archived/residuals/`** + 从主列表删除」，避免长期双写。
+在写入归档文件**之前**，可先在 `residual_findings`（兼容 `metadata.residual_findings`）内补全 `lifecycle` / `closed_*`（便于同一次 PR 内 diff）；**应在同一里程碑内**完成「迁入 `**{HARNESS_DIR}/archived/residuals/`** + 从主列表删除」，避免长期双写。
 
 ### 遗留：`metadata.residual_findings_history`（不推荐）
 
@@ -308,7 +308,7 @@ jq '.metadata.tech_debt_summary' .agents/status.json
 
 ## `metadata.tech_debt_summary`（可选·技术债一览）
 
-**定位**：在 `**metadata.residual_findings`**（按 `plan-id` 分列的 **open** R#）之上，提供**跨 plan 的聚合视图**，便于路线图、排期与「还有多少 open」一眼扫读。**不替代**单条 R# 的权威字段；新增/关闭 R# 时仍以 `residual_findings` 与 `**{HARNESS_DIR}/archived/residuals/`** 为准。
+**定位**：在 `**residual_findings`**（兼容 `metadata.residual_findings`；按 `plan-id` 分列的 **open** R#）之上，提供**跨 plan 的聚合视图**，便于路线图、排期与「还有多少 open」一眼扫读。**不替代**单条 R# 的权威字段；新增/关闭 R# 时仍以 `residual_findings` 与 `**{HARNESS_DIR}/archived/residuals/`** 为准。
 
 **维护**：`**@project-manager`** 在重大里程碑后更新（例如 QC 波次结束、批量归档 resolved、版本封板前）。可选在 `**{HARNESS_DIR}/notes.json**` 记一条「已刷新 `tech_debt_summary`」。
 
@@ -349,7 +349,7 @@ jq '.metadata.tech_debt_summary' .agents/status.json
 }
 ```
 
-- `**total_open` / `by_***`：应与当前 `**metadata.residual_findings**` 中所有 **open**（未归档）条目的数量与严重度**大致一致**；若有意的「跨 plan 合并视角」导致计数口径不同，在 `**{HARNESS_DIR}/notes.json`** 或 `cross_cutting` 中说明。
+- `**total_open` / `by_***`：应与当前 `**residual_findings`**（兼容 `metadata.residual_findings`）中所有 **open**（未归档）条目的数量与严重度**大致一致**；若有意的「跨 plan 合并视角」导致计数口径不同，在 `**{HARNESS_DIR}/notes.json`** 或 `cross_cutting` 中说明。
 - `**by_plan**`：键可为 **短标签** 或 `**plans[].id` 前缀**，与仓库约定一致即可。
 - `**cross_cutting`**：用于**跨多 plan / 多条 R#** 的主题债（架构层、重复实现等）；`**relates_to`** 列出对应 `**id**`（与 `residual_findings` 内 R# 对齐），避免与单条 R# 重复叙述时可只在此处保留总述。
 
@@ -357,12 +357,12 @@ jq '.metadata.tech_debt_summary' .agents/status.json
 
 ## 合并前：`status.json` 须反映事实（建议门禁）
 
-在合并关闭计划相关工作的分支或打开 PR 前，`**@project-manager**`（或项目约定角色）宜核对：`plans[].status`、`plans[].metadata.gates`（若热行仍保留）、`**metadata.residual_findings**`、`**metadata.tech_debt_summary**`（若使用）、`**{HARNESS_DIR}/notes.json**`（若使用）与审查结论、CI/测试结果一致。**SSOT 与事实不一致时，不宜视为可合并**，应先修正。
+在合并关闭计划相关工作的分支或打开 PR 前，`**@project-manager**`（或项目约定角色）宜核对：`plans[].status`、`plans[].metadata.gates`（若热行仍保留）、`**residual_findings**`（兼容 `metadata.residual_findings`）、`**metadata.tech_debt_summary**`（若使用）、`**{HARNESS_DIR}/notes.json**`（若使用）与审查结论、CI/测试结果一致。**SSOT 与事实不一致时，不宜视为可合并**，应先修正。
 
 **常见疏漏**（与业务无关的通用项）：
 
 - 关闭或新增 R# 后 `**tech_debt_summary` 未刷新**（`total_open`、`by_severity` 与 open 列表脱节）。
-- 仅在 `**plans[].notes`** 或对话中描述 finding，**未**写入 `**metadata.residual_findings[<plan-id>]`**（open 条目的权威位置）。
+- 仅在 `**plans[].notes`** 或对话中描述 finding，**未**写入 `**residual_findings[<plan-id>]`**（兼容 `metadata.residual_findings[<plan-id>]`；open 条目的权威位置）。
 - 团队若用 `**notes.json**`（或遗留 `**metadata.notes**`）作程序时间线：重大合并或批量归档后**未**追加条目，导致后续 agent 缺少上下文。
 
 ## 兼容性与键名映射（推荐）
@@ -380,6 +380,6 @@ jq '.metadata.tech_debt_summary' .agents/status.json
 ```bash
 # Replace .agents with your resolved {HARNESS_DIR} if different.
 jq '.plans[] | select(.id == "01-data-infrastructure")' .agents/status.json
-jq '.metadata.residual_findings["01-data-infrastructure"]' .agents/status.json
+jq '.residual_findings["01-data-infrastructure"] // .metadata.residual_findings["01-data-infrastructure"]' .agents/status.json
 ```
 
