@@ -23,9 +23,9 @@ Core value:
 
 ### CLI Install
 
-- Use the `mstar-harness` CLI:
-  - `npx mstar-harness init`
-  - or `bunx mstar-harness init`
+- Use the `mstar-harness` CLI (npm package `@mstar-harness/cli`):
+  - `npx @mstar-harness/cli init`
+  - or `bunx @mstar-harness/cli init`
 - `init` provides a target-aware guided setup so installation and baseline config happen in one flow.
 - CLI target support currently includes:
   - `opencode`
@@ -50,13 +50,14 @@ Manual install targets currently include:
       "$schema": "https://opencode.ai/config.json",
       "plugin": [
         "superpowers@git+https://github.com/obra/superpowers.git",
-        "morning-star@git+https://github.com/btspoony/mstar-harness.git"
+        "@mstar-harness/opencode@latest"
       ]
     }
     ```
   - Restart OpenCode
+- The OpenCode plugin resolves **skills and agents only inside `@mstar-harness/opencode`** (not `process.cwd()`). Published builds ship `harness-skills/` and `harness-agents/`. If you work from a **git checkout** of this repo, run **`bun install` / `npm install` at the repo root** so `postinstall` runs `opencode:bundle-assets` and populates those directories under `packages/opencode/`.
 
-For detailed OpenCode setup and migration, see `.opencode/INSTALL.md`.
+For detailed OpenCode setup and migration, see `packages/opencode/INSTALL.md`.
 
 #### Cursor
 

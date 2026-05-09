@@ -23,9 +23,9 @@
 
 ### CLI Install
 
-- 使用 `mstar-harness` CLI：
-  - `npx mstar-harness init`
-  - 或 `bunx mstar-harness init`
+- 使用 `mstar-harness` CLI（npm 包名 `@mstar-harness/cli`）：
+  - `npx @mstar-harness/cli init`
+  - 或 `bunx @mstar-harness/cli init`
 - `init` 提供按 target 的引导式安装流程，将安装与基础配置一步完成。
 - CLI 当前支持的 target：
   - `opencode`
@@ -50,20 +50,21 @@
       "$schema": "https://opencode.ai/config.json",
       "plugin": [
         "superpowers@git+https://github.com/obra/superpowers.git",
-        "morning-star@git+https://github.com/btspoony/mstar-harness.git"
+        "@mstar-harness/opencode@latest"
       ]
     }
     ```
   - 重启 OpenCode
+- OpenCode 插件**只从 `@mstar-harness/opencode` 包内路径**解析 skills/agents（**不**依赖 `process.cwd()`）。发布包内含 `harness-skills/`、`harness-agents/`。若在本仓库 **git 工作区**开发，请在**仓库根**执行 **`bun install` / `npm install`**，以便 `postinstall` 执行 `opencode:bundle-assets`，在 `packages/opencode/` 下生成上述目录。
 
-OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
+OpenCode 的详细安装与迁移说明见 `packages/opencode/INSTALL.md`。
 
 #### Cursor
 
 - 本地插件安装（直接 clone）：
   - `mkdir -p ~/.cursor/plugins/local`
   - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
-  - 重启 Cursor or 运行 `Developer: Reload Window`
+  - 重启 Cursor 或运行 `Developer: Reload Window`
 
 #### Codex
 

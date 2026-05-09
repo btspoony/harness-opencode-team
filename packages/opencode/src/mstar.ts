@@ -2,8 +2,8 @@
  * MorningStarHarness plugin for OpenCode.
  *
  * - Injects one-time harness bootstrap into first user message.
- * - Registers skill paths for both repo-level and .opencode skills.
- * - Loads agent definitions from agents/*.md into runtime config.
+ * - Registers skill paths only inside this package: `harness-skills/` (synced at build / repo postinstall) then `skills/` (host adapter).
+ * - Loads agents from `harness-agents/` only (same sync). Does not use `process.cwd()` so OpenCode project cwd does not matter.
  */
 import type { Plugin } from "@opencode-ai/plugin";
 import fs from "node:fs";
@@ -21,14 +21,21 @@ type MessagePart = { type: string; text?: string };
 type ChatMessage = { info: { role: string }; parts: MessagePart[] };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, "../..");
-const skillsDirs = [
-  path.join(repoRoot, "skills"),
-  path.join(repoRoot, ".opencode", "skills"),
-];
-const agentsDir = path.join(repoRoot, "agents");
-const bootstrapAgentsPath = path.join(repoRoot, ".opencode", "AGENTS.md");
+/** Published layout: `dist/mstar.js` (or `src/mstar.ts`) -> package root is one level up. */
+const packageRoot = path.resolve(__dirname, "..");
+
+const bundledSkillsDir = path.join(packageRoot, "harness-skills");
+const hostSkillsDir = path.join(packageRoot, "skills");
+const bundledAgentsDir = path.join(packageRoot, "harness-agents");
+const bootstrapAgentsPath = path.join(packageRoot, "AGENTS.md");
 const BOOTSTRAP_MARKER = "IMPORTANT_FOR_HARNESS";
+
+function resolveSkillPathCandidates(): string[] {
+  const out: string[] = [];
+  if (fs.existsSync(bundledSkillsDir)) out.push(bundledSkillsDir);
+  if (fs.existsSync(hostSkillsDir)) out.push(hostSkillsDir);
+  return out;
+}
 
 const extractFrontmatterAndBody = (content: string): FrontmatterAndBody => {
   const match = content.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
@@ -116,17 +123,17 @@ const normalizePath = (inputPath: string | undefined, homeDir: string): string |
   return path.resolve(normalized);
 };
 
-const loadAgentsFromMarkdown = (): Record<string, JsonObject> => {
-  if (!fs.existsSync(agentsDir)) return {};
+const loadAgentsFromDir = (agentsDirPath: string): Record<string, JsonObject> => {
+  if (!fs.existsSync(agentsDirPath)) return {};
 
   const files = fs
-    .readdirSync(agentsDir)
+    .readdirSync(agentsDirPath)
     .filter((name: string) => name.endsWith(".md"))
     .sort((a, b) => a.localeCompare(b));
 
   const result: Record<string, JsonObject> = {};
   for (const file of files) {
-    const filePath = path.join(agentsDir, file);
+    const filePath = path.join(agentsDirPath, file);
     const content = fs.readFileSync(filePath, "utf8");
     const { frontmatter, body } = extractFrontmatterAndBody(content);
     const parsed = parseSimpleFrontmatter(frontmatter);
@@ -141,6 +148,8 @@ const loadAgentsFromMarkdown = (): Record<string, JsonObject> => {
 
   return result;
 };
+
+const loadBundledAgents = (): Record<string, JsonObject> => loadAgentsFromDir(bundledAgentsDir);
 
 export const MorningStarHarnessPlugin: Plugin = async () => {
   const homeDir = os.homedir();
@@ -158,13 +167,13 @@ export const MorningStarHarnessPlugin: Plugin = async () => {
       };
       runtimeConfig.skills = runtimeConfig.skills || {};
       runtimeConfig.skills.paths = runtimeConfig.skills.paths || [];
-      for (const skillPath of skillsDirs) {
+      for (const skillPath of resolveSkillPathCandidates()) {
         if (fs.existsSync(skillPath) && !runtimeConfig.skills.paths.includes(skillPath)) {
           runtimeConfig.skills.paths.push(skillPath);
         }
       }
 
-      const markdownAgents = loadAgentsFromMarkdown();
+      const markdownAgents = loadBundledAgents();
       runtimeConfig.agent = runtimeConfig.agent || {};
       for (const [agentId, definition] of Object.entries(markdownAgents)) {
         runtimeConfig.agent[agentId] = {
