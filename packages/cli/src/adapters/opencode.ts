@@ -90,6 +90,7 @@ function validateSetup(config: Record<string, unknown>) {
 
 export const opencodeAdapter: AgentAdapter = {
   target: "opencode",
+  mode: "config",
   getAvailableModels: () => getOpencodeModels(),
   resolveConfigPath: (scope, outputPath) => resolveOpencodeConfigPath(scope, outputPath),
   mutateConfigForInit: (config, assignments) => {

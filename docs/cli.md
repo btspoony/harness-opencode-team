@@ -1,22 +1,34 @@
 # mstar-harness CLI Guide
 
-This guide documents the standalone `mstar-harness` CLI for OpenCode bootstrap.
+This guide documents the standalone `mstar-harness` CLI for OpenCode and Cursor bootstrap.
 
 ## Fast Path
 
-Use this sequence for the quickest user flow:
+Use this sequence for the quickest user flow.
+
+### OpenCode
 
 1) Preview what will change:
 
-- `npx mstar-harness init --dry-run --scope project --yes --pm-model openai/gpt-5.5 --strategic-models openai/gpt-5.5 --dev-models openai/gpt-5.3-codex --qc-models openai/gpt-5.5,openai/gpt-5.4,openai/gpt-5.3-codex --other-models openai/gpt-5.5`
+- `npx mstar-harness init --target opencode --dry-run --yes --pm-model openai/gpt-5.5 --strategic-models openai/gpt-5.5 --dev-models openai/gpt-5.3-codex --qc-models openai/gpt-5.5,openai/gpt-5.4,openai/gpt-5.3-codex --other-models openai/gpt-5.5`
 
 2) Apply the setup:
 
-- `npx mstar-harness init --scope project --yes --pm-model openai/gpt-5.5 --strategic-models openai/gpt-5.5 --dev-models openai/gpt-5.3-codex --qc-models openai/gpt-5.5,openai/gpt-5.4,openai/gpt-5.3-codex --other-models openai/gpt-5.5`
+- `npx mstar-harness init --target opencode --yes --pm-model openai/gpt-5.5 --strategic-models openai/gpt-5.5 --dev-models openai/gpt-5.3-codex --qc-models openai/gpt-5.5,openai/gpt-5.4,openai/gpt-5.3-codex --other-models openai/gpt-5.5`
 
 3) Verify the final config:
 
-- `npx mstar-harness doctor --scope project`
+- `npx mstar-harness doctor --target opencode`
+
+### Cursor
+
+1) Install plugin to project (default scope):
+
+- `npx mstar-harness init --target cursor`
+
+2) Verify project install:
+
+- `npx mstar-harness doctor --target cursor`
 
 ## Install
 
@@ -36,7 +48,9 @@ Interactive bootstrap:
 - `npx mstar-harness init`
 - `bunx mstar-harness init`
 
-Non-interactive bootstrap:
+`--scope` defaults to `project` when omitted.
+
+OpenCode non-interactive bootstrap:
 
 - `npx mstar-harness init --yes --target opencode --scope project --pm-model openai/gpt-5.5 --strategic-models openai/gpt-5.5,openai/gpt-5.4 --dev-models openai/gpt-5.3-codex,openai/gpt-5.5-fast --qc-models openai/gpt-5.5,openai/gpt-5.4,openai/gpt-5.3-codex --other-models openai/gpt-5.5,openai/gpt-5.4`
 
@@ -44,18 +58,27 @@ Dry-run preview (no file write):
 
 - `npx mstar-harness init --dry-run --scope project --output .tmp/opencode.json --yes --pm-model openai/gpt-5.5 --strategic-models openai/gpt-5.5 --dev-models openai/gpt-5.3-codex --qc-models openai/gpt-5.5,openai/gpt-5.4,openai/gpt-5.3-codex --other-models openai/gpt-5.5`
 
+Cursor install:
+
+- Global install (clone to `~/.cursor/plugins/local/mstar-harness`):
+  - `npx mstar-harness init --target cursor --scope global`
+- Project install (git submodule at `.cursor/plugins/mstar-harness`):
+  - `npx mstar-harness init --target cursor --scope project`
+
 ### `mstar-harness doctor`
 
 Check an existing config:
 
 - `npx mstar-harness doctor --target opencode --scope project`
 - `npx mstar-harness doctor --output ./opencode.json`
+- `npx mstar-harness doctor --target cursor --scope global`
+- `npx mstar-harness doctor --target cursor --scope project`
 
 If validation fails, `doctor` exits with a non-zero status code.
 
 ## What `init` Ensures
 
-`init` enforces these baseline requirements in `opencode.json`:
+OpenCode `init` enforces these baseline requirements in `opencode.json`:
 
 - `"$schema": "https://opencode.ai/config.json"`
 - `plugin` contains `morning-star@git+https://github.com/btspoony/mstar-harness.git` (deduplicated)
@@ -70,8 +93,8 @@ If validation fails, `doctor` exits with a non-zero status code.
 ### `init` options
 
 - `--yes`: non-interactive mode
-- `--target <opencode>`
-- `--scope <global|project>`
+- `--target <opencode|cursor>`
+- `--scope <global|project>` (default: `project`)
 - `--dry-run`
 - `--pm-model <model>`
 - `--strategic-models <a,b,c>`
@@ -91,8 +114,6 @@ These are for contributors developing this repository:
 
 - `bun run cli:dev -- --help`
 - `bun run cli:build`
-- `bun run cli:publish:dry-run`
-- `bun run cli:publish`
 
 ### Target Adapter Architecture
 
@@ -100,6 +121,7 @@ The CLI uses a target adapter layer so new code agents can be added without rewr
 
 - Adapter registry: `packages/cli/src/adapters/index.ts`
 - OpenCode adapter: `packages/cli/src/adapters/opencode.ts`
+- Cursor adapter: `packages/cli/src/adapters/cursor.ts`
 - Shared contracts: `packages/cli/src/types.ts`
 
 To add a new agent target, implement a new adapter with:

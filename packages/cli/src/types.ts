@@ -1,4 +1,4 @@
-export const SUPPORTED_TARGETS = ["opencode"] as const;
+export const SUPPORTED_TARGETS = ["opencode", "cursor"] as const;
 export type Target = (typeof SUPPORTED_TARGETS)[number];
 export type Scope = "global" | "project";
 
@@ -31,12 +31,15 @@ export type ModelSelections = {
 
 export type AgentAdapter = {
   target: Target;
-  getAvailableModels: () => string[];
-  resolveConfigPath: (scope: Scope, outputPath?: string) => string;
-  mutateConfigForInit: (
+  mode: "config" | "install";
+  getAvailableModels?: () => string[];
+  resolveConfigPath?: (scope: Scope, outputPath?: string) => string;
+  mutateConfigForInit?: (
     config: Record<string, unknown>,
     assignments: Record<string, string>,
   ) => Record<string, unknown>;
-  validateConfig: (config: Record<string, unknown>) => string[];
+  validateConfig?: (config: Record<string, unknown>) => string[];
+  runInstallInit?: (scope: Scope, dryRun: boolean) => { location: string; notes: string[] };
+  runInstallDoctor?: (scope: Scope) => { location: string; errors: string[] };
   printPostSetupSummary?: (config: Record<string, unknown>) => void;
 };

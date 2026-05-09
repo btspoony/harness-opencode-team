@@ -35,16 +35,6 @@ async function pickTargetInteractive() {
   });
 }
 
-async function pickScopeInteractive() {
-  return select<Scope>({
-    message: "Select install scope",
-    choices: [
-      { name: "global", value: "global" },
-      { name: "project", value: "project" },
-    ],
-  });
-}
-
 async function pickModelsInteractive(params: {
   title: string;
   hint: string;
@@ -117,30 +107,52 @@ async function resolveSelections(options: InitOptions, models: string[]) {
 
 async function runInit(options: InitOptions) {
   const target = options.target || (options.yes ? "opencode" : await pickTargetInteractive());
-  const scope = options.scope || (options.yes ? "project" : await pickScopeInteractive());
+  const scope = options.scope || "project";
   const adapter = getAdapter(target);
 
+  if (!options.scope && !options.yes) {
+    console.log(pc.dim("Scope not provided; defaulting to project."));
+  }
+
+  if (adapter.mode === "install") {
+    logStep("Step 2/2 - Run target install flow");
+    const installResult = adapter.runInstallInit?.(scope, !!options.dryRun);
+    if (!installResult) {
+      throw new Error(`Adapter ${target} does not implement install init flow.`);
+    }
+    console.log(pc.green(`Status: ${options.dryRun ? "ready (dry-run)" : "configured"} (${scope})`));
+    console.log(`Target: ${target}`);
+    console.log(`Install location: ${installResult.location}`);
+    for (const note of installResult.notes) {
+      console.log(`  - ${note}`);
+    }
+    return;
+  }
+
   logStep(`Step 3/7 - Fetch available models from ${adapter.target}`);
-  const models = adapter.getAvailableModels();
+  const models = adapter.getAvailableModels?.();
+  if (!models) throw new Error(`Adapter ${target} does not implement model discovery.`);
   const selections = await resolveSelections(options, models);
 
   logStep("Step 5/7 - Build role model assignments");
   const assignments = buildModelAssignments(selections);
 
   logStep("Step 6/7 - Update config");
-  const configPath = adapter.resolveConfigPath(scope, options.output);
+  const configPath = adapter.resolveConfigPath?.(scope, options.output);
+  if (!configPath) throw new Error(`Adapter ${target} does not implement config path resolution.`);
   const current = readJson(configPath);
-  const updated = adapter.mutateConfigForInit(current, assignments);
+  const updated = adapter.mutateConfigForInit?.(current, assignments);
+  if (!updated) throw new Error(`Adapter ${target} does not implement init mutation.`);
 
   logStep("Step 7/7 - Self-check");
-  const checkErrors = adapter.validateConfig(updated);
+  const checkErrors = adapter.validateConfig?.(updated) || [];
   if (checkErrors.length) {
     throw new Error(`Configuration verification failed:\n- ${checkErrors.join("\n- ")}`);
   }
 
   if (!options.dryRun) {
     writeJson(configPath, updated);
-    const persistedErrors = adapter.validateConfig(readJson(configPath));
+    const persistedErrors = adapter.validateConfig?.(readJson(configPath)) || [];
     if (persistedErrors.length) {
       throw new Error(`Post-write verification failed:\n- ${persistedErrors.join("\n- ")}`);
     }
@@ -160,17 +172,35 @@ function runDoctor(options: DoctorOptions) {
   const target = options.target || "opencode";
   const adapter = getAdapter(target);
   const scope = options.scope || "project";
-  const configPath = adapter.resolveConfigPath(scope, options.output);
-  const config = readJson(configPath);
-  const errors = adapter.validateConfig(config);
-
   console.log(`Target: ${target}`);
+
+  if (adapter.mode === "install") {
+    const result = adapter.runInstallDoctor?.(scope);
+    if (!result) {
+      throw new Error(`Adapter ${target} does not implement install doctor flow.`);
+    }
+    console.log(`Install location: ${result.location}`);
+    if (!result.errors.length) {
+      console.log(pc.green("Doctor result: healthy"));
+      return;
+    }
+    console.log(pc.red(`Doctor result: ${result.errors.length} issue(s)`));
+    for (const issue of result.errors) console.log(`  - ${issue}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const configPath = adapter.resolveConfigPath?.(scope, options.output);
+  if (!configPath) {
+    throw new Error(`Adapter ${target} does not implement config doctor flow.`);
+  }
+  const config = readJson(configPath);
+  const errors = adapter.validateConfig?.(config) || [];
   console.log(`Config file: ${configPath}`);
   if (!errors.length) {
     console.log(pc.green("Doctor result: healthy"));
     return;
   }
-
   console.log(pc.red(`Doctor result: ${errors.length} issue(s)`));
   for (const issue of errors) console.log(`  - ${issue}`);
   process.exitCode = 1;
@@ -183,10 +213,10 @@ program
 
 program
   .command("init")
-  .description("Interactive/non-interactive setup for target agent model mapping")
+  .description("Interactive/non-interactive setup for target agent bootstrap")
   .option("-y, --yes", "Non-interactive mode")
   .option("--target <target>", "Install target", "opencode")
-  .option("--scope <scope>", "Config scope: global|project")
+  .option("--scope <scope>", "Config scope: global|project (default: project)")
   .option("--output <path>", "Config file path override, relative to project root")
   .option("--dry-run", "Preview result without writing config")
   .option("--pm-model <model>", "Model for project-manager")
