@@ -21,20 +21,27 @@
 
 ## 快速开始（推荐方式）
 
-### OpenCode（推荐）：使用 CLI 安装
+### CLI Install
 
 - 使用 `mstar-harness` CLI：
   - `npx mstar-harness init`
   - 或 `bunx mstar-harness init`
-- CLI 会自动：
-  - 确保 `opencode.json` 包含 `"$schema": "https://opencode.ai/config.json"`
-  - 确保并去重 Morning Star 插件配置
-  - 配置角色模型映射（交互或非交互）
-  - 写入后执行按目标 agent 的自检
+- `init` 提供按 target 的引导式安装流程，将安装与基础配置一步完成。
+- CLI 当前支持的 target：
+  - `opencode`
+  - `cursor`
 
-完整 CLI 用法和高级参数（`--yes`、`--dry-run`、`--output`、`doctor`）见 [`docs/cli.md`](docs/cli.md)。
+完整 CLI 用法和高级参数（`--yes`、`--dry-run`、`--output`、`doctor`），以及 Cursor target 的安装模式说明，见 [`docs/cli.md`](docs/cli.md)。
 
-### OpenCode：手动安装（备选）
+### Manual Install
+
+当前支持手动安装的 target：
+
+- `opencode`
+- `cursor`
+- `codex`
+
+#### OpenCode
 
 - 推荐使用 plugin 安装：
   - 在 `opencode.json` 增加插件配置：
@@ -51,14 +58,14 @@
 
 OpenCode 的详细安装与迁移说明见 `.opencode/INSTALL.md`。
 
-### Cursor 安装方式
+#### Cursor
 
 - 本地插件安装（直接 clone）：
   - `mkdir -p ~/.cursor/plugins/local`
   - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
   - 重启 Cursor or 运行 `Developer: Reload Window`
 
-### Codex 安装方式
+#### Codex
 
 - Marketplace 安装：
   - `codex plugin marketplace add https://github.com/btspoony/mstar-harness.git --sparse .codex/`

@@ -21,20 +21,27 @@ Core value:
 
 ## Quick Start
 
-### OpenCode (Recommended): CLI Install
+### CLI Install
 
 - Use the `mstar-harness` CLI:
   - `npx mstar-harness init`
   - or `bunx mstar-harness init`
-- The CLI will:
-  - ensure `"$schema": "https://opencode.ai/config.json"` in `opencode.json`
-  - ensure and deduplicate the Morning Star plugin entry
-  - configure role model mapping with interactive or non-interactive flows
-  - run target-aware self-check after writing
+- `init` provides a target-aware guided setup so installation and baseline config happen in one flow.
+- CLI target support currently includes:
+  - `opencode`
+  - `cursor`
 
-For full CLI usage and advanced options (`--yes`, `--dry-run`, `--output`, `doctor`), see [`docs/cli.md`](docs/cli.md).
+For full CLI usage and advanced options (`--yes`, `--dry-run`, `--output`, `doctor`) including Cursor target install modes, see [`docs/cli.md`](docs/cli.md).
 
-### OpenCode: Manual Install (Alternative)
+### Manual Install
+
+Manual install targets currently include:
+
+- `opencode`
+- `cursor`
+- `codex`
+
+#### OpenCode
 
 - Plugin install:
   - Add plugin config in `opencode.json`:
@@ -51,14 +58,14 @@ For full CLI usage and advanced options (`--yes`, `--dry-run`, `--output`, `doct
 
 For detailed OpenCode setup and migration, see `.opencode/INSTALL.md`.
 
-### Cursor Installation
+#### Cursor
 
 - Local plugin install (direct clone):
   - `mkdir -p ~/.cursor/plugins/local`
   - `git clone https://github.com/btspoony/mstar-harness.git ~/.cursor/plugins/local/mstar-harness`
   - Restart Cursor or run `Developer: Reload Window`
 
-### Codex Installation
+#### Codex
 
 - Marketplace install:
   - `codex plugin marketplace add https://github.com/btspoony/mstar-harness.git --sparse .codex/`
