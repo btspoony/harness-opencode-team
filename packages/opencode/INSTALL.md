@@ -24,13 +24,13 @@ Restart OpenCode. The plugin installs from npm and registers Morning Star runtim
 ## Usage
 
 - Keep your role models and permissions in `opencode.json`.
-- Morning Star plugin loads:
-  - `<workspace>/skills/*` (your project checkout)
-  - packaged host skills from `@mstar-harness/opencode`
-  - `<workspace>/agents/*.md`
+- Morning Star plugin loads **skills** in this order:
+  - If `<cwd>/skills/` exists, that tree is used (your harness checkout or custom skills).
+  - Otherwise the npm package ships **`harness-skills/`** (a copy of Morning Star `skills/` from the release build) plus packaged **`skills/`** (OpenCode host adapter, e.g. `mstar-host`).
+- **Agents**: `<cwd>/agents/*.md` overlays **`harness-agents/`** from the package (same id in workspace wins).
 - Bootstrap prompt entry is injected once with `<IMPORTANT_FOR_HARNESS>`.
 
-Run OpenCode from your **project root** (or ensure `process.cwd()` is the workspace that contains `skills/` and `agents/`) so those directories resolve correctly.
+For **npm-only** installs you do not need a separate harness clone: bundled `harness-skills` / `harness-agents` are enough if OpenCode’s cwd is not a repo that already provides its own `skills/` / `agents/`.
 
 ## Updating
 
@@ -64,4 +64,4 @@ The `@mstar-harness/cli` package (`npx @mstar-harness/cli init`) migrates that e
 
 1. Use `skill` tool to list what's discovered
 2. Check that the plugin is loading (see above)
-3. Confirm your current working directory is the repository root that contains `skills/`
+3. If you rely on workspace `skills/`, confirm `process.cwd()` is the directory that contains them; otherwise ensure you installed a published `@mstar-harness/opencode` build (not a raw `src/` entry without running `bun run bundle-assets` in the package)

@@ -13,11 +13,14 @@
   "files": [
     "dist",
     "skills",
+    "harness-skills",
+    "harness-agents",
     "AGENTS.md",
     "INSTALL.md"
   ],
   "scripts": {
-    "build": "rm -rf dist && bun build src/mstar.ts --target node --outfile dist/mstar.js",
+    "bundle-assets": "bun run scripts/bundle-harness-assets.ts",
+    "build": "bun run bundle-assets && rm -rf dist && bun build src/mstar.ts --target node --outfile dist/mstar.js",
     "prepublishOnly": "bun run build"
   },
   "engines": {
