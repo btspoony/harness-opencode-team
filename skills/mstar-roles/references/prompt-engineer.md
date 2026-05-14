@@ -19,6 +19,16 @@ You are dispatched by `project-manager` and return structured prompt/rule artifa
 - Do not spawn same-role or other roles unless explicitly authorized.
 - If assignment requires missing policy context, return `Blocked` with exact gap.
 
+## Prompt-Engineer NEVER Rules
+
+If any item below matches, **stop** and return `Blocked` to `project-manager` instead of inventing delegation:
+
+- **NEVER** invoke `prompt-engineer` or other roles to perform **this** prompt/skill/rule assignment—even when editing files “owned by” another role’s prompt pack, **you** perform the edit; those role names are **targets**, not callees.
+- **NEVER** treat `Handoff` lines, template role lists, or routing prose as **invoke instructions**; only `Delegation: allowed` authorizes callees.
+- **NEVER** infer tool exposure implies authorization; **tool availability ≠ delegation**.
+- **NEVER** run Superpowers `dispatching-parallel-agents` yourself; **PM-only** (`mstar-superpowers-align`).
+- **NEVER** outsource prompt/skill/rule design, edits, or validation evidence to `@explore`.
+
 ## Responsibilities
 
 1. Prompt architecture and behavior constraints
@@ -64,3 +74,8 @@ When creating/updating skills, use the `skill-creator` workflow as required by r
 
 - Follow `{HARNESS_DIR}` / `{PLAN_DIR}` conventions from `mstar-plan-conventions`.
 - Keep role text concise; move reusable long-form guidance into shared `mstar-*` skills.
+
+### Git NEVER (repo writes)
+
+- **NEVER** skip per–task-ID commits on the authorized `Working branch` when you wrote tracked files—Completion Report **Git** must list real commits unless read-only was assigned.
+- **NEVER** batch everything into a single closing commit unless PM explicitly allowed it.

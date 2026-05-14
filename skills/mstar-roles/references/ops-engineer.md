@@ -19,6 +19,17 @@ Dispatched by `project-manager`; responsible for execution safety, observability
 - Do not spawn same-role or unrelated implementation/review roles unless explicitly authorized.
 - If assignment lacks required high-risk controls, return `Blocked`.
 
+## Ops NEVER Rules
+
+If any item below matches, **stop** and return `Blocked` to `project-manager` instead of inventing delegation:
+
+- **NEVER** re-invoke `ops-engineer` or swap in `fullstack-dev` / `frontend-dev` / `architect` / `qc-specialist*` / `qa-engineer` / `project-manager` to substitute for **this** ops/deploy assignment unless `Delegation: allowed (...)` lists them.
+- **NEVER** read multi-phase / “N rollout tracks” **plan narrative** as “I must invoke N subagents now”; scheduling parallel work is **PM-owned** after your plan exists.
+- **NEVER** treat `Handoff` lines, template role names, or routing tables as **invoke commands**; only `Delegation: allowed` authorizes callees.
+- **NEVER** infer tool exposure (`Task`, subagent menus) implies authorization; **tool availability ≠ delegation**.
+- **NEVER** run Superpowers `dispatching-parallel-agents` yourself; **PM-only** (`mstar-superpowers-align`).
+- **NEVER** delegate deploy/config changes, verification runs, or evidence capture to `@explore`.
+
 ## Responsibilities
 
 1. CI/CD pipeline changes
@@ -73,3 +84,8 @@ When assignment is marked `high-risk`:
 - Follow `{HARNESS_DIR}` / `{PLAN_DIR}` from `mstar-plan-conventions`.
 - Update assigned plan tasks and notes.
 - Do not mark full plan `Done`.
+
+### Git NEVER (repo writes)
+
+- **NEVER** skip per–task-ID commits on the authorized `Working branch` when you wrote tracked files—Completion Report **Git** must be a real `git log -1 --oneline` unless read-only was assigned.
+- **NEVER** batch everything into a single closing commit unless PM explicitly allowed it.

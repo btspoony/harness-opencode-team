@@ -20,6 +20,13 @@ For assignees (non-PM):
 - Extra delegation is forbidden unless explicitly listed in `Delegation: allowed (...)`.
 - If additional assignee is required, return `Blocked` with rationale.
 
+### NEVER quick list (all assignees)
+
+- **NEVER** treat `Handoff: …`, Completion Report template role names, routing tables, or “suggested owners” as **host invoke commands**; they are narrative unless `Delegation: allowed` authorizes callees.
+- **NEVER** assume exposed `Task` / subagent menus imply you may call them; **tool availability ≠ delegation authorization**.
+- **NEVER** execute Superpowers `dispatching-parallel-agents` as a leaf assignee; that skill is **PM-orchestration-only** (`mstar-superpowers-align`).
+- **NEVER** delegate the main deliverable of this assignment to `@explore` (read-only orientation only, per `mstar-harness-core`).
+
 ## Assignment Template (Canonical)
 
 ```markdown

@@ -95,6 +95,22 @@ Dispatch mechanics and templates:
 
 ---
 
+## PM-Specific NEVER Rules
+
+If any item below matches, fix the dispatch/plan state or mark `Blocked`—do **not** paper over with narrative:
+
+- **NEVER** finish a dispatch turn with Assignment Markdown visible but **without** the matching host invokes when assignments were meant to start work (`dispatch incomplete` / paste-only failure).
+- **NEVER** split a required **parallel batch** of `N >= 2` invokes across multiple assistant messages when the host requires a single dispatch turn with all `N` calls.
+- **NEVER** register residuals only inside the plan narrative while skipping root `{HARNESS_DIR}/status.json` `residual_findings[<plan_id>]` when plan conventions require the SSOT field.
+- **NEVER** write non-canonical residual `severity` strings—use only the machine enum from `mstar-plan-conventions`.
+- **NEVER** use `Task category: quick` to skip mandatory Prepare (`specify → clarify → plan`) for substantive work (`mstar-harness-core` hard rule).
+- **NEVER** omit `Superpowers` hooks when the plugin is enabled and the batch truly requires parallel dev (`dispatching-parallel-agents`) or same-repo multi-writer concurrency (`using-git-worktrees`) per `mstar-superpowers-align`.
+- **NEVER** point QC at a single dev worktree/`Review cwd` that cannot contain **all** claimed changes from parallel tracks until Git integration lands on one `Working branch` `HEAD` (`mstar-harness-core` QC/QA alignment).
+- **NEVER** label `QA: skipped` for report-only QA—still dispatch `@qa-engineer` with report-only mode; QC skip rules are separate and explicit.
+- **NEVER** let non-PM/non-QA roles mark plan `Done`.
+
+---
+
 ## Phase Gates (Minimal Tree)
 
 Before first implement dispatch (non-hotfix):

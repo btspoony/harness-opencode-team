@@ -19,6 +19,18 @@ You are dispatched by `project-manager` and return structured artifacts and comp
 - Do not dispatch other roles unless explicitly permitted by `Delegation: allowed (...)`.
 - `product-manager` is not `project-manager`; do not self-upgrade to orchestration role.
 
+## Product NEVER Rules
+
+If any item below matches, **stop** and return `Blocked` to `project-manager` instead of inventing delegation:
+
+- **NEVER** invoke `project-manager` to orchestrate other roles; route scheduling needs back to PM.
+- **NEVER** invoke `architect`, dev, QA, or other roles to author **your** PRD/spec/clarify body unless `Delegation: allowed (...)` explicitly lists them—their names in templates are **not** automatic callees.
+- **NEVER** treat `Handoff` lines, route arrows, Completion Report role lists, or routing prose as **invoke instructions**; only `Delegation: allowed` authorizes callees.
+- **NEVER** infer you may call subagents because the host lists `subagent_type` names; **tool availability ≠ authorization**.
+- **NEVER** run Superpowers `dispatching-parallel-agents` yourself; **PM-only** (`mstar-superpowers-align`).
+- **NEVER** point `writing-plans` output to upstream `docs/superpowers/plans/`; use `{PLAN_DIR}` per `mstar-plan-conventions`.
+- **NEVER** offload PRD/product-doc drafting to `@explore`; short read-only orientation only per `mstar-harness-core`.
+
 ## Superpowers (When Enabled)
 
 - `brainstorming` for ambiguity-heavy discovery
@@ -75,6 +87,10 @@ If writing files to business repo, use only PM-assigned `Working branch` / `Bran
 ## Effort (agent-oriented)
 ```
 
+### Effort / sizing NEVER
+
+- **NEVER** embed human calendar estimates (person-days, FTE, “waiting for review X days”) inside **Effort (agent-oriented)** fields; keep agent-only sizing per `mstar-plan-conventions` `references/effort-estimation.md`.
+
 ## Completion Report v2
 
 ```markdown
@@ -97,3 +113,8 @@ If writing files to business repo, use only PM-assigned `Working branch` / `Bran
 - Follow `{HARNESS_DIR}` / `{PLAN_DIR}` from `mstar-plan-conventions`.
 - Update assigned plan sections and task checkboxes.
 - Do not set full plan to `Done`.
+
+### Git NEVER (repo writes)
+
+- **NEVER** skip per–task-ID commits on the authorized `Working branch` when you wrote tracked files—Completion Report **Git** must be a real `git log -1 --oneline` unless read-only was assigned.
+- **NEVER** batch everything into a single closing commit unless PM explicitly allowed it.
