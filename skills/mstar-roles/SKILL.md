@@ -35,14 +35,14 @@ If any conflict appears, `mstar-harness-core` remains the authoritative source f
 
 ## Shared Skill Dependencies
 
-All roles should treat these as baseline dependencies:
+Treat these as baseline dependencies **where the role touches implementation, review, verification, or ops execution** (see `mstar-harness-core` load contract).
 
 | Skill | Use when task involves |
 | --- | --- |
 | `mstar-harness-core` | State machine, phase gates, task category, branch/worktree policy, dispatch anti-recursion |
 | `mstar-plan-conventions` | `{HARNESS_DIR}` / `{PLAN_DIR}`, `status.json`, residual lifecycle, plan metadata |
 | `mstar-review-qc` | QC workflow, review template, verdict rules, high-risk checks |
-| `mstar-coding-behavior` | Think-before-coding, simplicity, surgical changes, goal-driven execution |
+| `mstar-coding-behavior` | Think-before-coding, simplicity, surgical changes, goal-driven execution (**not** required for `project-manager` orchestration-only work) |
 | `mstar-superpowers-align` | Superpowers alignment, dispatching/worktree constraints, delegation compatibility |
 | `mstar-host-*` | Host-specific behavior and capabilities |
 

@@ -116,6 +116,7 @@ This section lists optional enhancements by capability domain, aligned with prin
 | **Browser / E2E verification** | User-visible flow validation and evidence capture | agent-browser, Playwright, aligned with QA observable-evidence requirements |
 | **Git workflow** | Atomic commits and branch closure | e.g., `git-commit`, `finishing-a-development-branch` |
 | **Systematic debugging** | RCA before fix | Superpowers `systematic-debugging` (see `mstar-superpowers-align`) |
+| **OpenViking memory** | Long-term semantic memory (`memsearch` / `memread` / `membrowse` / `memcommit`) | **Only if** the `memsearch` tool is present: follow `mstar-harness-core` `references/openviking-memory-plugin.md`; does not override harness gates |
 
 ### Not recommended
 
