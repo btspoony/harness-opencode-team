@@ -4,6 +4,10 @@ All notable changes to the `@mstar-harness/opencode` package are documented in t
 
 The monorepo root [CHANGELOG.md](../../CHANGELOG.md) summarizes cross-surface releases.
 
+## 0.3.1
+
+- Align package version with monorepo **0.3.1** (see root `CHANGELOG.md` for harness and host-adapter notes bundled via `harness-skills/` / `harness-agents/`).
+
 ## 0.3.0
 
 - Align package version with monorepo **0.3.0** (see root `CHANGELOG.md` for harness and host-adapter notes bundled via `harness-skills/` / `harness-agents/`).

@@ -2,7 +2,7 @@
 
 Chinese summary: [CHANGELOG_CN.md](CHANGELOG_CN.md).
 
-All notable changes to this repository are documented here. Published artifacts share version **0.3.0**:
+All notable changes to this repository are documented here. Published artifacts share version **0.3.1**:
 
 | Surface | Package / manifest |
 | --- | --- |
@@ -13,6 +13,16 @@ All notable changes to this repository are documented here. Published artifacts 
 | Codex plugin | `.codex-plugin/plugin.json` |
 
 Package-specific histories: [`packages/cli/CHANGELOG.md`](packages/cli/CHANGELOG.md), [`packages/opencode/CHANGELOG.md`](packages/opencode/CHANGELOG.md).
+
+## [0.3.1] - 2026-05-15
+
+### Harness (skills / agents)
+
+- **Plan / Git alignment** (`mstar-plan-conventions`, `mstar-harness-core`): When multiple plans share one **Spec** (`primary_spec`), document a **Spec integration branch** plus per-**plan_id** implementation branches; merge each plan’s work back to the Spec line; **require a PR** (or equivalent controlled merge) before landing that integration line on `main` / the default protected branch (narrow `Branch policy` exceptions unchanged). Adds `spec_integration_branch` and clarified `merge_target` metadata in `references/status-and-residuals.md`, QC/worktree notes in `references/plan-files-and-reports.md`, and a cross-reference in `references/branch-and-worktree.md`.
+
+### Version alignment
+
+- Bump **0.3.0 → 0.3.1** for npm workspaces (`morning-star`, `@mstar-harness/cli`, `@mstar-harness/opencode`) and Cursor / Codex plugin manifests.
 
 ## [0.3.0] - 2026-05-14
 

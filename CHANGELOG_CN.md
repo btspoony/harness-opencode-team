@@ -1,6 +1,6 @@
 # 更新日志
 
-本仓库各发布面的版本与根目录 [CHANGELOG.md](CHANGELOG.md) 中的 **0.3.0** 对齐。
+本仓库各发布面的版本与根目录 [CHANGELOG.md](CHANGELOG.md) 中的 **0.3.1** 对齐。
 
 | 发布面 | 位置 |
 | --- | --- |
@@ -11,6 +11,16 @@
 | Codex 插件 | `.codex-plugin/plugin.json` |
 
 各包独立日志：[packages/cli/CHANGELOG.md](packages/cli/CHANGELOG.md)、[packages/opencode/CHANGELOG.md](packages/opencode/CHANGELOG.md)。
+
+## [0.3.1] - 2026-05-15
+
+### Harness（skills / agents）
+
+- **Plan / Git 对齐**（`mstar-plan-conventions`、`mstar-harness-core`）：多 Plan 共用一条 **Spec**（`primary_spec`）时，约定 **Spec 集成分支** 与各 **Plan 实现分支**；各 Plan 完成后将变更 **merge 回 Spec 集成分支**；再合入 `main` / 默认保护分支时 **必须走 PR**（或等价受控合入；`Branch policy` 窄例外不变）。补充 `spec_integration_branch`、澄清 `merge_target`（`references/status-and-residuals.md`），在 `references/plan-files-and-reports.md` 中衔接 worktree/QC 叙述，并在 `references/branch-and-worktree.md` 增加交叉引用。
+
+### 版本对齐
+
+- npm workspace（`morning-star`、`@mstar-harness/cli`、`@mstar-harness/opencode`）与 Cursor / Codex 插件 manifest：**0.3.0 → 0.3.1**。
 
 ## [0.3.0] - 2026-05-14
 
