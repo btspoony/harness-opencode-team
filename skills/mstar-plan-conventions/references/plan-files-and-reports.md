@@ -36,7 +36,7 @@
 - **batch 之间**：依赖实现方 **`verification-before-completion`**、主 plan 任务勾选与 PM 协调；需要书面中间意见时，用对话、主 plan 批注或**非三审**的定向检查（如单审、架构 review），**不**默认等同「又一轮完整三审」。
 - **Request Changes 后复验**：若须再跑一轮完整三审，使用**新文件名**落盘，避免覆盖首轮报告，例如 `<plan-id>-qc1-rev2.md` … `<plan-id>-qc3-rev2.md`（或团队约定的 `wave2-` 前缀）；`@project-manager` 在 `QC Consolidated Decision` 中写明**当前以哪一波次为准**。
 - **显式例外**：仅当用户与 PM 书面同意**中间门禁**时，在 Assignment 写清 **`QC gate: incremental — <scope>`**（或等价），并仍须保证该次三审的 **`plan_id` + `Review range` / `Diff basis`** 三份一致；**优先**用子范围专用标签或子目录，避免与「整 plan 终局」那套 `-qc*.md` 混名。
-- **同仓多 worktree 并行 dev**：**推荐**在排各 batch / 各轨 worktree 前确立 **plan 集成分支** 与各轨 topic 线及 **merge 靶**（见 `mstar-harness-core` `references/branch-and-worktree.md` **「推荐默认编排：先建 plan 集成分支，再挂各 worktree」**）。终局（或增量）三审派单前，PM 仍须满足 **单一待审 `Working branch` / `HEAD`** 或已按上条 **拆 scope**；**不得**假设「整 plan 一次三审」可只靠某一个开发 worktree 路径覆盖未合并的其他并行轨。
+- **同仓多 worktree 并行 dev**：**推荐**在排各 batch / 各轨 worktree 前确立 **plan 集成分支** 与各轨 topic 线及 **merge 靶**（见 `mstar-harness-core` `references/branch-and-worktree.md` **「推荐默认编排：先建 plan 集成分支，再挂各 worktree」**）。**多 `plan_id` 同属一条 `primary_spec`（Spec 文档）时**：该「集成分支」在计划语义上即 **Spec 集成分支**；各 Plan 的 topic 分支 **merge 回 Spec 集成分支**，**全部 Plans 完成后** 合入 `main`/`master` **须走 PR**，见 `mstar-plan-conventions` SKILL.md **「Spec 文档驱动的分支模型」**。终局（或增量）三审派单前，PM 仍须满足 **单一待审 `Working branch` / `HEAD`** 或已按上条 **拆 scope**；**不得**假设「整 plan 一次三审」可只靠某一个开发 worktree 路径覆盖未合并的其他并行轨。
 
 ### 多 `plan_id` 同时 `InReview`（PM 编排）
 

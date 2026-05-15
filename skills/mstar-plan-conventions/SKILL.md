@@ -1,6 +1,6 @@
 ---
 name: mstar-plan-conventions
-description: Morning Star (启明星) harness 的计划目录约定 —— {HARNESS_DIR} 与 {PLAN_DIR} 的发现与初始化、status.json 的 SSOT 结构与状态权限、residual findings 登记/归档/生命周期、severity 枚举（SSOT，机器字段）、notes.json 程序时间线、tech_debt_summary 技术债一览、knowledge/ 开发过程知识库、reports/ 审查留档命名、QC 三审触发时机、主 plan Done 标记、archived/plans Profile A/B、工期预估（仅 agent-oriented）。任何角色在读写 .agents/、创建/更新 plan 文件、登记 residual finding、QC/QA 报告入库、Done 收口、写工期预估时必读；`@project-manager` 编排任一含 plan 的任务前必读；实现角色开工前须读本 skill 以对齐 metadata.primary_spec/spec_refs 与 knowledge 目录。
+description: Morning Star (启明星) harness 的计划目录约定 —— {HARNESS_DIR} 与 {PLAN_DIR} 的发现与初始化、status.json 的 SSOT 结构与状态权限、residual findings 登记/归档/生命周期、severity 枚举（SSOT，机器字段）、notes.json 程序时间线、tech_debt_summary 技术债一览、knowledge/ 开发过程知识库、reports/ 审查留档命名、QC 三审触发时机、主 plan Done 标记、archived/plans Profile A/B、工期预估（仅 agent-oriented）、**Spec 集成分支 + 多 Plan 实现分支** 的 Git 对齐与 **Spec 完成后须经 PR 合入 main** 门禁。任何角色在读写 .agents/、创建/更新 plan 文件、登记 residual finding、QC/QA 报告入库、Done 收口、写工期预估时必读；`@project-manager` 编排任一含 plan 的任务前必读；实现角色开工前须读本 skill 以对齐 metadata.primary_spec/spec_refs 与 knowledge 目录。
 ---
 
 ## Load order（必读顺序）
@@ -106,6 +106,38 @@ description: Morning Star (启明星) harness 的计划目录约定 —— {HARN
    - **推荐（团队交付 / agent handoff）**：**不要**将 **`{HARNESS_DIR}`** 整体加入 `.gitignore`，以便 clone 后计划与报告路径可达。
    - **仅本机私密**：若必须 ignore 整个 **`{HARNESS_DIR}`**，则按上文「可到达性」约束已提交文档；敏感片段另用密钥或私密渠道管理。
 10. 如果项目已有 **`.plans/`** 或 **`plans/`** 目录（遗留同目录布局），**不要再创建** **`.agents/`**，直接使用已有目录作为 **`{HARNESS_DIR} = {PLAN_DIR}`**，并视需要补建 **`reports/`**、**`residuals/`**、**`knowledge/`**、**`archived/residuals/`**、可选 **`notes.json`** 与 `metadata` 结构。
+
+## Spec 文档驱动的分支模型（多 Plan 归属同一 Spec）
+
+当 **`metadata.primary_spec`**（及可选 **`spec_refs`**）指向**单一规格主线**，且 PM 将工作拆成 **多个 `plan_id`** 并行或串行交付时，业务仓库的 Git 拓扑建议按下述对齐，避免「实现分支直接打 main」与「多 Plan 无集成靶」两类漂移。**同仓 worktree、QC 前归并到单一 `HEAD` 等强制条款**仍以 **`mstar-harness-core`** `references/branch-and-worktree.md` 为准；本节只补充 **Spec ↔ 分支** 的命名级契约。
+
+### 分支角色
+
+| 概念 | 含义 |
+|------|------|
+| **Spec 文档** | 该次交付冻结或主规格（常为 `{SPECS_DIR}` / `knowledge/` 下路径；与 `primary_spec` 对齐）。 |
+| **Spec 集成分支** | **一条**与「该 Spec 所覆盖的全部 Plans」对应的 **集成线**：各 Plan 实现成果 **merge 回** 此分支后，才视为该 Spec 在代码侧已集成。 |
+| **Plan 实现分支** | **每个 `plan_id`** 一条（或 PM 书面拆分的子轨）；**仅**承载该 Plan 范围内的提交与 QC/QA 前归并。 |
+
+### 工作流（默认推荐）
+
+1. **开线**：由 **`@project-manager`** 与用户确认后，建立 **Spec 集成分支**（Assignment 写明 `Working branch: create <spec-integration-branch> from <base>` 或等价；`<base>` 见 `branch-and-worktree.md`，**禁止**未授权默认）。
+2. **拆 Plan**：每个从该 Spec 拆出的 plan 使用 **各自的 Plan 实现分支**（通常 `create <plan-feature-branch> from <spec-integration-branch>` 或 PM 规定的等价拓扑）；**实现 / QA / 运维等可写角色**在本 Plan 周期内 **只操作 Assignment 写明的该 Plan 分支**（及 PM 授权的 worktree 检出），**不得**擅自把未授权提交直接堆到默认保护分支。
+3. **Plan 收口**：该 Plan 完成 **QC 三审 + QA** 等 harness 要求后，将其变更 **merge（或团队书面约定的 rebase/cherry-pick）回 Spec 集成分支**；**不是**在「仅完成单个 Plan」时默认直接 merge 进 `main`/`master`，除非 Assignment 含显式 **`Branch policy`** 例外。
+4. **与 `mstar-harness-core` 的「plan 集成分支」关系**：**同仓、同一 plan、多并行轨**时，该 skill 推荐的 **plan 集成分支** 在「多 Plan、同源 Spec」场景下 **即** 本条所述 **Spec 集成分支**；各 Plan 的 topic 线 **merge 靶** 优先为 **Spec 集成分支**，而非彼此随意交叉除非 PM 书面约定。
+
+### 合入默认保护分支（main）：必须经 PR
+
+当 **归属该 Spec 的全部 Plans** 已在计划状态上完成（且代码变更已按团队流程 **汇总到 Spec 集成分支**）时：
+
+- **禁止**将 Spec 集成分支 **直接本地 merge / fast-forward push** 到 **`main`/`master`**（或项目约定的其它默认保护分支）作为**常规完成路径**。
+- **必须**通过 **Pull Request（或宿主平台等价的受控合入流程）** 将 Spec 集成分支合入默认分支，以满足 **审查、CI、权限与审计** 等团队门禁。
+
+**窄例外**（须 **Assignment 显式** **`Branch policy: direct on <branch> — <reason>`**，与 `mstar-harness-core` 一致）：例如已批准的热修、或用户与团队书面采用的无 PR 流程。**不得**由 agent 自行认定「可以跳过 PR」。
+
+### 登记建议
+
+在 **`{HARNESS_DIR}/status.json`** 的 **`plans[].metadata`**（或根级 **`metadata.versioning`** 等团队约定节）中记录 **`spec_integration_branch`**、各 plan 的 **`working_branch`**，以及 **`merge_target`**（对 Plan 实现分支通常为 **Spec 集成分支名**，而非 `main`）。字段表见 `references/status-and-residuals.md`。
 
 ## Harness 初始化蓝图（含 `AGENTS.md` 分层策略）
 
@@ -223,7 +255,7 @@ Assignment 模板中的 **`Parallelism`** 行应与上表 **`Parallelism`** / **
 
 ## 各角色与 Plan 的关系
 
-- **`@project-manager`**：负责发现 plan 目录、创建/登记 plan、分配任务、推进状态、Done 收口。分配时须告知 subagent plan 目录的实际路径；涉及业务 Git 仓库写操作时须在 Assignment 中写明 **`Working branch`** 或 **`Branch policy`**（见 `mstar-harness-core` `references/branch-and-worktree.md`）。启用 **`knowledge/`** 时维护索引 README，并在 Assignment 中点名 **`primary_spec` / `spec_refs`**（若本轮依赖知识库）。**维护 `status.json` 时**：若存在 **`InReview`** 行，每轮 Status Update **自检**是否对该 `plan_id` 已派或未派 QC；派发前 **Read `mstar-review-qc`**。
+- **`@project-manager`**：负责发现 plan 目录、创建/登记 plan、分配任务、推进状态、Done 收口。分配时须告知 subagent plan 目录的实际路径；涉及业务 Git 仓库写操作时须在 Assignment 中写明 **`Working branch`** 或 **`Branch policy`**（见 `mstar-harness-core` `references/branch-and-worktree.md`）。启用 **`knowledge/`** 时维护索引 README，并在 Assignment 中点名 **`primary_spec` / `spec_refs`**（若本轮依赖知识库）。**多 Plan 归属同一 Spec 时**：按上文 **「Spec 文档驱动的分支模型」** 声明 **Spec 集成分支**、各 **Plan 实现分支** 与 **merge 靶**；在 `status.json` 登记 **`spec_integration_branch` / `merge_target`**（见 `references/status-and-residuals.md`）；**全部 Plans 完成后** 合入 `main`/`master` **走 PR**，不得默认直接 merge。**维护 `status.json` 时**：若存在 **`InReview`** 行，每轮 Status Update **自检**是否对该 `plan_id` 已派或未派 QC；派发前 **Read `mstar-review-qc`**。
 - **`@architect`** / **`@product-manager`**：产出规格或评审结论若适合跨会话复用，写入 **`{HARNESS_DIR}/knowledge/`**（或 `{SPECS_DIR}`）并更新对应 **README**，建议由 PM 在 `plans[].metadata` 挂接路径。
 - **可写盘 agent**（dev / qa / ops）：完成任务后更新主 plan 中**本人负责**的任务 checkbox（见 `references/plan-files-and-reports.md`）、相关 Sign-off 栏位，并更新 `status.json`（权限见上）。**实现前**若 `plans[].metadata` 含 `primary_spec` / `spec_refs`，须先阅读对应文件（见 `references/knowledge-and-designs.md`）。
 - **`@product-manager`**：可更新 plan 文档中需求/验收/用户故事等产品负责部分，并在交付后勾选**与之对应**的主 plan 任务 checkbox；**不得**将 `status.json` 中计划状态设为 `Done`；如需改 `progress`/`notes`，以 Assignment 为准或交由 PM 收口。
@@ -233,6 +265,7 @@ Assignment 模板中的 **`Parallelism`** 行应与上表 **`Parallelism`** / **
 
 ## References
 
+- 本 SKILL **「Spec 文档驱动的分支模型（多 Plan 归属同一 Spec）」** — Spec 集成分支、Plan 实现分支、merge 回集成线、**全部完成后经 PR 合入 main**（与 `mstar-harness-core` `references/branch-and-worktree.md` 并用）。
 - `references/status-and-residuals.md` — `{HARNESS_DIR}/status.json` SSOT 结构、`plans[].metadata` 标准字段、根级 `metadata` 字段、residual findings 的 **severity** 枚举（SSOT）、生命周期（open → closed → archived）、`notes.json` 程序时间线、`tech_debt_summary` 技术债一览、常用 jq 查询。
 - `references/knowledge-and-designs.md` — `{HARNESS_DIR}/knowledge/` 开发过程知识库（目录、索引、命名、维护）、`{SPECS_DIR}`（`specs/` or `designs/`）规格目录、`{PLAN_DIR}/residuals/<plan-id>/` open residual 散文详情、与 `reports/` 的分工。
 - `references/plan-files-and-reports.md` — 主 plan 文件命名、审查报告命名表、QC 分报告与 consolidated 保留原则、**QC 三审触发时机（单 plan · 多 batch）**、**多 `plan_id` 同时 `InReview` 的 QC 编排**、residual findings 权威位置与顺序、主 plan Markdown checkbox 规则、Done 标记方式、QC 落盘宿主权限。
