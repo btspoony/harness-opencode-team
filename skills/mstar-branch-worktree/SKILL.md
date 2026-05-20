@@ -1,6 +1,22 @@
-# Git 功能分支、同仓并发与 Worktree 对齐（Morning Star）
+---
+name: mstar-branch-worktree
+description: Morning Star business-repo Git feature branches, same-repo concurrent `git worktree` isolation, plan/Spec integration branches, and QC/QA checkout alignment (`Review cwd`, `Working branch`, `plan_id`, `Review range` / `Diff basis` must match verbatim across three QC reviewers and QA). Read when PM writes `Working branch` / `Branch policy`, two or more writable streams touch one repo, dispatching QC tri-review or QA after merging to a single `HEAD`, dev/QA/ops before first `git commit`, or explaining worktree paths. Required for `@project-manager` parallel implement or pre-QC orchestration; `@fullstack-dev*` / `@frontend-dev` / `@qa-engineer` / `@ops-engineer` on repo writes; `@qc-specialist*` before review. Does not replace the state machine (`mstar-harness-core`).
+---
 
-本 reference 涵盖：功能分支门禁、分支协作契约、同仓并发写入、多 worktree 并行开发与 QC/QA 衔接、plan 集成分支推荐编排。
+## Load order（必读顺序）
+
+**首次 Read 本 skill 前：必须先 Read `mstar-harness-core`（SKILL.md）。** 冲突时 **以 `mstar-harness-core` 为准**。
+
+**Spec 多 plan 命名**（`spec_integration_branch`、合入 `main` 的 PR 门禁）→ **`mstar-plan-conventions`**。下文为 **Git 操作与 QC/QA 检出对齐** 全文（无单独 reference 层）。
+
+## Scope（摘要）
+
+- **仅 PM 决定分支**；其他可写角色不得自行新开分支或切回 `main`。
+- **Assignment 须含其一**：`Working branch: <existing>` | `create <new> from <base>` | `Branch policy: direct on <branch> — <reason>`。
+- **同仓 ≥2 可写并发**：须 `git worktree`（或等价隔离）；PM 写明各流 **Worktree path**。
+- **QC/QA 前**：待审提交归并到 **单一 `Working branch` `HEAD`**；三审 + QA 共用一套 **`Review cwd` + `plan_id` + `Review range` / `Diff basis`**（逐字相同）。
+
+## Git 功能分支、同仓并发与 Worktree 对齐
 
 ## Git 功能分支门禁（业务仓库）
 

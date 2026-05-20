@@ -1,10 +1,10 @@
 # Done 计划行冷快照与 status.json 瘦身（Morning Star）
 
-> **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 做 Done 瘦身 / 归档前，须已 Read **`mstar-harness-core`** skill（SKILL.md）与 **`mstar-plan-conventions`** SKILL.md（plan SSOT 总线）。合并与分支事实仍受 **`mstar-harness-core`** `references/branch-and-worktree.md` 约束。
+> **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 做 Done 瘦身 / 归档前，须已 Read **`mstar-harness-core`** skill（SKILL.md）与 **`mstar-plan-conventions`** SKILL.md（plan SSOT 总线）。合并与分支事实仍受 **`mstar-branch-worktree`** 约束。
 
 ## 可选：`Done` 计划行冷快照（`{HARNESS_DIR}/archived/plans/`）
 
-**背景**：多条 `Done` 的 `plans[]` 行常带大块 `metadata`（`gates`、QC 摘要、`tests`、`commits`、长 `scope`/`description`），`status.json` 会无限膨胀；而**根级 `residual_findings` 中的 open 项**（canonical 见 `mstar-plan-conventions` **SKILL.md** 开篇）宜保持有界（已关闭项应迁出至 **`{HARNESS_DIR}/archived/residuals/`**，见 `status-and-residuals.md`）。
+**背景**：多条 `Done` 的 `plans[]` 行常带大块 `metadata`（`gates`、QC 摘要、`tests`、`commits`、长 `scope`/`description`），`status.json` 会无限膨胀；而**根级 `residual_findings` 中的 open 项**（canonical 见 `mstar-plan-artifacts` **SKILL.md** 开篇）宜保持有界（已关闭项应迁出至 **`{HARNESS_DIR}/archived/residuals/`**，见 `mstar-plan-artifacts/references/status-and-residuals.md`）。
 
 **定位**：**`{HARNESS_DIR}/status.json`** 仍为**当前执行**的 SSOT（非终态计划、根 `metadata`、**open** 的 `residual_findings`）。本节为**可选**做法：在**不破坏可到达性**（快照文件须提交进仓库）的前提下给热文件瘦身。
 

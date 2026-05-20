@@ -1,6 +1,6 @@
 # `{KNOWLEDGE_DIR}`、`{ITERATION_DIR}` 与 `{SPECS_DIR}` / `residuals/` 散文（Morning Star）
 
-> **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 维护知识库 / 迭代 compass / 规格挂接前，须已 Read **`mstar-harness-core`** skill（SKILL.md；仓库写操作与分支门禁见 `mstar-harness-core/references/branch-and-worktree.md`）。冲突以 **`mstar-harness-core`** 为准。
+> **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 维护知识库 / 迭代 compass / 规格挂接前，须已 Read **`mstar-harness-core`** skill（SKILL.md；仓库写操作与分支门禁见 **`mstar-branch-worktree`**）。冲突以 **`mstar-harness-core`** 为准。
 
 **路径符号（默认）**：`**{KNOWLEDGE_DIR}** = **{HARNESS_DIR}/knowledge/**`；`**{ITERATION_DIR}** = **{HARNESS_DIR}/iterations/**`。完整符号表见 `mstar-plan-conventions` SKILL.md「Harness 与 Plan 目录发现」。
 

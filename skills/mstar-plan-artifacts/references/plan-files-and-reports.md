@@ -1,6 +1,6 @@
 # Plan 文件与 Reports 留档（Morning Star）
 
-> **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 排 reports / QC 波次前，须已 Read **`mstar-harness-core`** skill（SKILL.md；多 worktree 与 QC 单一 `HEAD` 见 `mstar-harness-core/references/branch-and-worktree.md`）。冲突以 **`mstar-harness-core`** 为准。
+> **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 排 reports / QC 波次前，须已 Read **`mstar-harness-core`** skill（SKILL.md；多 worktree 与 QC 单一 `HEAD` 见 **`mstar-branch-worktree`**）。冲突以 **`mstar-harness-core`** 为准。
 
 ## Plan 文件（`{PLAN_DIR}/<name>.md`）
 
@@ -23,7 +23,7 @@
 
 ## Residual findings（R#）：权威在哪、和主 plan 谁先谁后？
 
-- **Open 条目的单一事实来源（SSOT）**是 **`{HARNESS_DIR}/status.json`** 根级 **`residual_findings[<plan-id>]`**（与 `plans` 平级；canonical 见 `mstar-plan-conventions` **SKILL.md** 开篇；字段见 `status-and-residuals.md`）。跨会话 handoff、关闭与归档流程**以该数组为准**。
+- **Open 条目的单一事实来源（SSOT）**是 **`{HARNESS_DIR}/status.json`** 根级 **`residual_findings[<plan-id>]`**（与 `plans` 平级；canonical 见 `mstar-plan-artifacts` **SKILL.md** 开篇；字段见 `mstar-plan-artifacts/references/status-and-residuals.md`）。跨会话 handoff、关闭与归档流程**以该数组为准**。
 - **推荐操作顺序**（避免 plan 与 JSON 两套 ID 漂移）：
   1. `@project-manager` 读完三份 QC 报告并完成「QC 三审轻量汇总」：对 finding **去重合并**，为每条待跟踪项分配**稳定 `id`**（如 `R1`、`R2`，全 plan 内唯一）。
   2. **立即**将上述条目写入根级 **`residual_findings[<plan-id>]`**（含 `source` 指向哪位 QC / 哪份报告文件名，便于回溯）；**勿**与 legacy 侧双写（见 `mstar-plan-conventions` **SKILL.md** 开篇）。
@@ -36,7 +36,7 @@
 - **batch 之间**：依赖实现方 **`verification-before-completion`**、主 plan 任务勾选与 PM 协调；需要书面中间意见时，用对话、主 plan 批注或**非三审**的定向检查（如单审、架构 review），**不**默认等同「又一轮完整三审」。
 - **Request Changes 后复验**：若须再跑一轮完整三审，使用**新文件名**落盘，避免覆盖首轮报告，例如 `<plan-id>-qc1-rev2.md` … `<plan-id>-qc3-rev2.md`（或团队约定的 `wave2-` 前缀）；`@project-manager` 在 `QC Consolidated Decision` 中写明**当前以哪一波次为准**。
 - **显式例外**：仅当用户与 PM 书面同意**中间门禁**时，在 Assignment 写清 **`QC gate: incremental — <scope>`**（或等价），并仍须保证该次三审的 **`plan_id` + `Review range` / `Diff basis`** 三份一致；**优先**用子范围专用标签或子目录，避免与「整 plan 终局」那套 `-qc*.md` 混名。
-- **同仓多 worktree 并行 dev**：**推荐**在排各 batch / 各轨 worktree 前确立 **plan 集成分支** 与各轨 topic 线及 **merge 靶**（见 `mstar-harness-core` `references/branch-and-worktree.md` **「推荐默认编排：先建 plan 集成分支，再挂各 worktree」**）。**多 `plan_id` 同属一条 `primary_spec`（Spec 文档）时**：该「集成分支」在计划语义上即 **Spec 集成分支**；各 Plan 的 topic 分支 **merge 回 Spec 集成分支**，**全部 Plans 完成后** 合入 `main`/`master` **须走 PR**，见 `mstar-plan-conventions` SKILL.md **「Spec 文档驱动的分支模型」**。终局（或增量）三审派单前，PM 仍须满足 **单一待审 `Working branch` / `HEAD`** 或已按上条 **拆 scope**；**不得**假设「整 plan 一次三审」可只靠某一个开发 worktree 路径覆盖未合并的其他并行轨。
+- **同仓多 worktree 并行 dev**：**推荐**在排各 batch / 各轨 worktree 前确立 **plan 集成分支** 与各轨 topic 线及 **merge 靶**（见 `mstar-branch-worktree` **「推荐默认编排：先建 plan 集成分支，再挂各 worktree」**）。**多 `plan_id` 同属一条 `primary_spec`（Spec 文档）时**：该「集成分支」在计划语义上即 **Spec 集成分支**；各 Plan 的 topic 分支 **merge 回 Spec 集成分支**，**全部 Plans 完成后** 合入 `main`/`master` **须走 PR**，见 `mstar-plan-conventions` SKILL.md **「Spec 文档驱动的分支模型」**。终局（或增量）三审派单前，PM 仍须满足 **单一待审 `Working branch` / `HEAD`** 或已按上条 **拆 scope**；**不得**假设「整 plan 一次三审」可只靠某一个开发 worktree 路径覆盖未合并的其他并行轨。
 
 ### 多 `plan_id` 同时 `InReview`（PM 编排）
 
