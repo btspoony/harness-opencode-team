@@ -171,7 +171,7 @@ After `mstar-harness-core`, load **only** what the role and round need (see `ski
 | `mstar-plan-conventions` | PM; dev* for path symbols / metadata |
 | `mstar-plan-artifacts` | PM (status/residual, InReview/QC waves), architect, product-manager, QC* (reports), QA (R#) |
 
-Legacy stub files under `mstar-harness-core/references/` and `mstar-plan-conventions/references/` point to these topic skills — edit the topic skill only.
+Edit topic skills directly (`mstar-phase-gates`, `mstar-branch-worktree`, `mstar-plan-artifacts`, …); do not recreate moved stub files under legacy paths.
 
 ## Post-Skill-Change Sync Checklist
 
@@ -181,4 +181,4 @@ Legacy stub files under `mstar-harness-core/references/` and `mstar-plan-convent
 - [ ] Cursor routing-eval updated if routing/gate behavior changed.
 - [ ] User-facing docs updated in both `README.md` and `README_CN.md` if onboarding changed.
 - [ ] Validation evidence included for behavior-shaping changes.
-- [ ] Stale cross-references updated (`mstar-branch-worktree`, not old `references/branch-and-worktree.md` paths).
+- [ ] Stale cross-references point at topic **`SKILL.md`** or real `mstar-plan-artifacts/references/*` files (no deleted stub paths).

@@ -134,4 +134,4 @@ PM 在 Assignment 写 **`Task category`**（主类 + 可选 `secondary`）：
 - `references/library-docs-protocol.md` — Context7
 - `references/openviking-memory-plugin.md` — 条件加载
 
-**已迁至专题 skill**（旧路径若存在仅为指针）：`branch-and-worktree` → `mstar-branch-worktree`；`phase-gate-playbook` → `mstar-phase-gates`。
+**专题 skill**（规则在各自 `SKILL.md`）：`mstar-phase-gates`、`mstar-branch-worktree`、`mstar-plan-artifacts` 等 — 见上表索引。

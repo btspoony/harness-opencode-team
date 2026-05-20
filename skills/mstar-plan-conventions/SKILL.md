@@ -77,14 +77,11 @@ PM 在需要持久化追踪时：
 
 ## 实现角色最小阅读
 
-仅需路径符号与 `plans[].metadata` 的 `primary_spec` / `spec_refs` 时：读本 SKILL 至「路径符号」+ **`references/knowledge-and-designs.md`**（在 **`mstar-plan-artifacts`**）即可，**不必**通读 status/residual 全文。
+仅需路径符号与 `plans[].metadata` 的 `primary_spec` / `spec_refs` 时：读本 SKILL 至「路径符号」+ **`mstar-plan-artifacts/references/knowledge-and-designs.md`** 即可，**不必**通读 status/residual 全文。
 
 ## References
 
 - `references/harness-bootstrap-and-agents-layering.md` — 新仓 harness + AGENTS 分层
 - `references/effort-estimation.md` — agent-oriented 工期（禁人天/FTE）
 
-**已迁出（勿在本目录维护正文）**：
-
-- `references/status-and-residuals.md` → skill **`mstar-plan-artifacts`**
-- `references/plan-files-and-reports.md`、`knowledge-and-designs.md`、`done-compaction.md` → **`mstar-plan-artifacts`**
+**Plan 工件细则**（主 plan、reports、`status.json`、residual、knowledge、Done 归档）→ skill **`mstar-plan-artifacts`**（`references/` 下正文文件）。
