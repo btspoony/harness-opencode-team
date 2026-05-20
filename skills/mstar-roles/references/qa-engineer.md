@@ -6,7 +6,7 @@
 
 **Typically:** `mstar-plan-conventions` (paths); `mstar-superpowers-align` (when plugin on).
 
-**On demand:** `mstar-status-residuals` (closing R# after verified fix); `mstar-phase-gates` (gate checklist when assignment references verification phase).
+**On demand:** `mstar-plan-artifacts` (closing R# after verified fix); `mstar-phase-gates` (gate checklist when assignment references verification phase).
 
 **Host:** `mstar-host-opencode` | `mstar-host-cursor`.
 
@@ -91,7 +91,7 @@ Report-only mode may skip QC tri-review only when no test/config/code artifacts 
 
 ## Plan & Residual Rules
 
-- Follow `{HARNESS_DIR}` / `{PLAN_DIR}` from `mstar-plan-conventions`; residual lifecycle from `mstar-status-residuals`.
+- Follow `{HARNESS_DIR}` / `{PLAN_DIR}` from `mstar-plan-conventions`; residual lifecycle from `mstar-plan-artifacts`.
 - QA and PM are the only roles allowed to finalize plan `Done`.
 
 ### Git NEVER (repo writes)

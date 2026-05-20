@@ -4,7 +4,7 @@
 
 **Always:** `mstar-harness-core`, `mstar-dispatch-gates`.
 
-**When editing harness text:** read **all** topic skills you touch — at minimum `mstar-phase-gates`, `mstar-plan-conventions`, `mstar-status-residuals`, `mstar-plan-artifacts`, `mstar-branch-worktree`, `mstar-review-qc`, `mstar-coding-behavior`, `mstar-superpowers-align`, plus host adapters — so prompts stay aligned with SSOT and do not re-duplicate rules.
+**When editing harness text:** read **all** topic skills you touch — at minimum `mstar-phase-gates`, `mstar-plan-conventions`, `mstar-plan-artifacts`, `mstar-plan-artifacts`, `mstar-branch-worktree`, `mstar-review-qc`, `mstar-coding-behavior`, `mstar-superpowers-align`, plus host adapters — so prompts stay aligned with SSOT and do not re-duplicate rules.
 
 **Typically:** `mstar-plan-conventions` (path symbols in examples).
 

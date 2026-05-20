@@ -129,8 +129,7 @@ Use **`.harness/`** only for **in-progress maint work** on this repo (not publis
 - Dispatch, Delegation, anti-recursion, parallel invoke -> `skills/mstar-dispatch-gates/*`
 - Git branches, worktrees, QC/QA checkout alignment -> `skills/mstar-branch-worktree/*`
 - Plan directory discovery, init, Spec branch summary -> `skills/mstar-plan-conventions/*`
-- `status.json`, residual lifecycle, severity SSOT -> `skills/mstar-status-residuals/*`
-- Main plan, reports/, knowledge, Done compaction -> `skills/mstar-plan-artifacts/*`
+- Plan artifacts (`status.json`, residual, main plan, reports/, knowledge, Done compaction) -> `skills/mstar-plan-artifacts/*`
 - QC baseline and review template -> `skills/mstar-review-qc/*`
 - Cross-role coding behavior -> `skills/mstar-coding-behavior/*`
 - Superpowers alignment contract -> `skills/mstar-superpowers-align/*`
@@ -170,8 +169,7 @@ After `mstar-harness-core`, load **only** what the role and round need (see `ski
 | `mstar-dispatch-gates` | PM; **all leaf executors** before Task/subagent |
 | `mstar-branch-worktree` | PM, dev*, QC*, QA, ops when Git/write or QC checkout |
 | `mstar-plan-conventions` | PM; dev* for path symbols / metadata |
-| `mstar-status-residuals` | PM, QC*, QA when touching `status.json` / R# |
-| `mstar-plan-artifacts` | PM (InReview/QC waves), architect, product-manager, QC* (report paths) |
+| `mstar-plan-artifacts` | PM (status/residual, InReview/QC waves), architect, product-manager, QC* (reports), QA (R#) |
 
 Legacy stub files under `mstar-harness-core/references/` and `mstar-plan-conventions/references/` point to these topic skills — edit the topic skill only.
 

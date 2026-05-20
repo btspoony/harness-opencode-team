@@ -44,8 +44,7 @@ Treat these as baseline dependencies **where the role touches implementation, re
 | `mstar-dispatch-gates` | PM dispatch; **all leaf executors** before any Task/subagent call |
 | `mstar-branch-worktree` | Git write, parallel worktrees, QC/QA checkout fields |
 | `mstar-plan-conventions` | `{HARNESS_DIR}` discovery, init, Spec branch naming, `writing-plans` path |
-| `mstar-status-residuals` | `status.json`, open/archived residual, severity enum |
-| `mstar-plan-artifacts` | Main plan, `reports/`, knowledge/iteration indexes, Done compaction |
+| `mstar-plan-artifacts` | Main plan, `reports/`, `status.json`, residual, knowledge/iteration, Done compaction |
 | `mstar-review-qc` | QC workflow, template, verdict, high-risk checks |
 | `mstar-coding-behavior` | Implementation/debug/refactor (**not** PM orchestration-only) |
 | `mstar-superpowers-align` | Superpowers plugin on; Assignment `Superpowers` lines |
@@ -55,10 +54,10 @@ Treat these as baseline dependencies **where the role touches implementation, re
 
 | Role | Typical adds |
 | --- | --- |
-| `project-manager` | `mstar-dispatch-gates`, `mstar-phase-gates`, `mstar-plan-conventions`, `mstar-superpowers-align`, `mstar-roles` ref; + `mstar-review-qc` before QC; + `mstar-branch-worktree` / `mstar-status-residuals` / `mstar-plan-artifacts` as the round requires |
+| `project-manager` | `mstar-dispatch-gates`, `mstar-phase-gates`, `mstar-plan-conventions`, `mstar-superpowers-align`, `mstar-roles` ref; + `mstar-review-qc` before QC; + `mstar-branch-worktree` / `mstar-plan-artifacts` as the round requires |
 | `fullstack-dev*`, `frontend-dev` | `mstar-coding-behavior`, `mstar-dispatch-gates`, `mstar-branch-worktree` (if repo writes); plan path symbols from `mstar-plan-conventions` (minimal) |
 | `qc-specialist*` | `mstar-review-qc`, `mstar-branch-worktree`, `mstar-plan-artifacts` (report paths) |
-| `qa-engineer` | `mstar-review-qc`, `mstar-branch-worktree`, `mstar-status-residuals` (closing R#) |
+| `qa-engineer` | `mstar-review-qc`, `mstar-branch-worktree`, `mstar-plan-artifacts` (closing R#) |
 | `architect`, `product-manager` | `mstar-phase-gates` (Prepare), `mstar-plan-artifacts` (knowledge/specs) |
 | `ops-engineer` | `mstar-coding-behavior`, `mstar-branch-worktree` |
 | `prompt-engineer` | All topic skills when editing harness text |

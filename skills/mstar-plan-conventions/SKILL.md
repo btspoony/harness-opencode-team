@@ -1,6 +1,6 @@
 ---
 name: mstar-plan-conventions
-description: Morning Star (启明星) harness 计划目录约定 —— `{HARNESS_DIR}` / `{PLAN_DIR}` / `{ITERATION_DIR}` / `{KNOWLEDGE_DIR}` / `{SPECS_DIR}` 发现与初始化、`docs/` 与 harness 子树边界、未启用 plan 时的工作方式、Spec 集成分支与多 Plan 实现分支（merge 靶与 PR 合 main）、Superpowers `writing-plans` 落盘门限、工期预估（agent-oriented）。**必须**在读写 `.agents/`、初始化 harness、编排含 plan 的任务、或对齐 `metadata.primary_spec` 时 Read；`@project-manager` 开 plan 任务前必读。`status.json` / residual → `mstar-status-residuals`；reports / QC 波次 / knowledge 索引 → `mstar-plan-artifacts`；分支与 QC 检出 → `mstar-branch-worktree`。
+description: Morning Star (启明星) harness 计划目录约定 —— `{HARNESS_DIR}` / `{PLAN_DIR}` / `{ITERATION_DIR}` / `{KNOWLEDGE_DIR}` / `{SPECS_DIR}` 发现与初始化、`docs/` 与 harness 子树边界、未启用 plan 时的工作方式、Spec 集成分支与多 Plan 实现分支（merge 靶与 PR 合 main）、Superpowers `writing-plans` 落盘门限、工期预估（agent-oriented）。**必须**在读写 `.agents/`、初始化 harness、编排含 plan 的任务、或对齐 `metadata.primary_spec` 时 Read；`@project-manager` 开 plan 任务前必读。plan 文件 / status / residual / reports / knowledge → **`mstar-plan-artifacts`**；分支与 QC 检出 → **`mstar-branch-worktree`**。
 ---
 
 ## Load order（必读顺序）
@@ -9,8 +9,7 @@ description: Morning Star (启明星) harness 计划目录约定 —— `{HARNES
 
 | 你还可能要 Read | 何时 |
 |-----------------|------|
-| `mstar-status-residuals` | 读写 `status.json`、登记/关闭 R# |
-| `mstar-plan-artifacts` | 主 plan、reports 命名、InReview/QC 波次、knowledge |
+| `mstar-plan-artifacts` | 主 plan、reports、`status.json`、residual、InReview/QC 波次、knowledge |
 | `mstar-branch-worktree` | Assignment 写分支 / worktree / QC 检出 |
 | `mstar-review-qc` | 派 QC 三审（PM 同轮必读） |
 
@@ -62,7 +61,7 @@ PM 在需要持久化追踪时：
 - **Plan 实现分支**：每 `plan_id` 一条（PM 书面）。
 - **合入 `main`**：全部 Plans 完成后 **必须 PR**（窄例外见 Assignment `Branch policy`）。
 - Git 操作与 QC 单一 `HEAD` → **`mstar-branch-worktree`**。
-- `status.json` 登记 `spec_integration_branch` / `merge_target` → **`mstar-status-residuals`**。
+- `status.json` 登记 `spec_integration_branch` / `merge_target` → **`mstar-plan-artifacts`**。
 
 ## Superpowers `writing-plans` 门限
 
@@ -70,7 +69,7 @@ PM 在需要持久化追踪时：
 
 ## 状态与权限（摘要）
 
-`Todo` | `InProgress` | `InReview` | `Blocked` | `Done` — **`Done` 仅 PM 或 QA**。字段与 residual → **`mstar-status-residuals`**。主 plan checkbox → **`mstar-plan-artifacts`**。
+`Todo` | `InProgress` | `InReview` | `Blocked` | `Done` — **`Done` 仅 PM 或 QA**。字段与 residual → **`mstar-plan-artifacts`**。主 plan checkbox → **`mstar-plan-artifacts`**。
 
 ## 未启用 Plan 时
 
@@ -87,5 +86,5 @@ PM 在需要持久化追踪时：
 
 **已迁出（勿在本目录维护正文）**：
 
-- `references/status-and-residuals.md` → skill **`mstar-status-residuals`**
+- `references/status-and-residuals.md` → skill **`mstar-plan-artifacts`**
 - `references/plan-files-and-reports.md`、`knowledge-and-designs.md`、`done-compaction.md` → **`mstar-plan-artifacts`**

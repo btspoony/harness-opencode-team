@@ -1,8 +1,5 @@
 # Moved
 
-Spec-Driven phase gates and the execution playbook now live in the **`mstar-phase-gates`** skill:
+Spec-Driven phase gates and the execution playbook now live in the **`mstar-phase-gates`** skill (**`SKILL.md`** only; playbook inlined).
 
-- Read **`mstar-phase-gates`** `SKILL.md`
-- Details: **`mstar-phase-gates/references/phase-gate-playbook.md`**
-
-Do not duplicate rules here; update the topic skill only.
+Do not duplicate rules here; update `mstar-phase-gates` only.

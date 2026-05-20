@@ -137,8 +137,7 @@ Load **`mstar-harness-core` first**, then topic skills **on demand** (see `mstar
 | `mstar-dispatch-gates` | PM dispatch, Delegation, anti-recursion, parallel invoke |
 | `mstar-branch-worktree` | Feature branches, worktrees, QC/QA checkout alignment |
 | `mstar-plan-conventions` | `{HARNESS_DIR}` discovery, init, Spec branch summary |
-| `mstar-status-residuals` | `status.json`, residual lifecycle, severity SSOT |
-| `mstar-plan-artifacts` | Main plan, `reports/`, knowledge, Done compaction |
+| `mstar-plan-artifacts` | Main plan, `reports/`, `status.json`, residual, knowledge, Done compaction |
 | `mstar-host` (per host) | Host-specific capabilities (OpenCode / Cursor) |
 | `pm` | Shared `/pm` shortcut for Cursor and Codex PM entry |
 | `mstar-roles` | Role prompt bus + per-role skill load lists |

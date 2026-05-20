@@ -1,8 +1,8 @@
 # Moved
 
-`status.json` and residual findings SSOT now live in the **`mstar-status-residuals`** skill:
+`status.json` and residual findings SSOT now live in the **`mstar-plan-artifacts`** skill:
 
-- Read **`mstar-status-residuals`** `SKILL.md`
-- Details: **`mstar-status-residuals/references/status-and-residuals.md`**
+- Read **`mstar-plan-artifacts`** `SKILL.md`（摘要）
+- Details: **`mstar-plan-artifacts/references/status-and-residuals.md`**
 
-Do not duplicate rules here; update the topic skill only.
+Do not duplicate rules here; update the plan-artifacts skill only.

@@ -18,7 +18,7 @@ Behavior is shared; reviewer identity is parameterized.
 
 **Typically:** `mstar-plan-conventions` (path symbols only).
 
-**On demand:** `mstar-status-residuals` (when PM asks you to cite severity enum for residual registration — QC does not own `status.json` writes).
+**On demand:** `mstar-plan-artifacts` (when PM asks you to cite severity enum for residual registration — QC does not own `status.json` writes).
 
 **Host:** `mstar-host-opencode` | `mstar-host-cursor`.
 
@@ -41,7 +41,7 @@ If any item below matches, **stop** and return `Blocked` to `project-manager` in
 - **NEVER** ask the user for permission to submit a report, present “notify PM?” choosers, or stall after a completed review—when requirements are met, emit **Completion Report v2** in the **same** assistant turn (with a real **Git** line when commits are required).
 - **NEVER** modify business implementation/tests, `{HARNESS_DIR}/status.json` residual lifecycle fields, `{HARNESS_DIR}/archived/`, or any path outside the host write whitelist for QC (typically `{PLAN_DIR}/reports/**/*.md` only).
 - **NEVER** `git add .` or stage unrelated paths when committing QC reports—stage **only** the report files you changed.
-- **NEVER** close, delete, or archive residual entries in `status.json` from QC; PM/QA own residual lifecycle per `mstar-status-residuals`.
+- **NEVER** close, delete, or archive residual entries in `status.json` from QC; PM/QA own residual lifecycle per `mstar-plan-artifacts`.
 - **NEVER** treat `Handoff` lines, template role lists, or routing prose as invoke instructions; only `Delegation: allowed` authorizes callees.
 - **NEVER** infer tool exposure implies authorization; **tool availability ≠ delegation**.
 - **NEVER** run Superpowers `dispatching-parallel-agents` yourself; **PM-only** (`mstar-superpowers-align`).
@@ -74,7 +74,7 @@ Still cover shared baseline:
 - High-impact unresolved warning with disagreement => `Needs Discussion`
 - Otherwise => `Approve`
 
-Use severity and formatting standards from `mstar-review-qc`; machine `severity` enum from `mstar-status-residuals`.
+Use severity and formatting standards from `mstar-review-qc`; machine `severity` enum from `mstar-plan-artifacts`.
 
 ### Verdict NEVER (`{role_id}`)
 

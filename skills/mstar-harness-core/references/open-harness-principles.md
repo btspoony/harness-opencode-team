@@ -10,7 +10,7 @@
 |------|------|----------------|
 | **意图优先于字面** | 先弄清「用户真正要达成什么」，再分类与分派 | `mstar-phase-gates` SKILL.md Prepare · `clarify` / `plan` 意图门禁；PM「第一性原理」 |
 | **先准备再实现** | 访谈式规划、锁范围、再写代码 | Prepare：`specify -> clarify -> plan`；Execute：`plan locked -> tasks -> implement` |
-| **`clarify` 核心纪律** | 逐方面核对至共享理解；沿设计决策树逐枝、一次一决；能探索代码库则先探索；每问带推荐答案 | **`mstar-phase-gates`** SKILL.md；`mstar-phase-gates/references/phase-gate-playbook.md` |
+| **`clarify` 核心纪律** | 逐方面核对至共享理解；沿设计决策树逐枝、一次一决；能探索代码库则先探索；每问带推荐答案 | **`mstar-phase-gates`** SKILL.md（含 Phase Gate Playbook） |
 | **按任务类别选能力与模型** | 视觉/深读/快改/硬逻辑等用不同强项 | `mstar-harness-core` SKILL.md「Task category」；Assignment 字段 **`Task category`**；宿主侧按角色配置 model（如 OpenCode 的 `opencode.json`） |
 | **可验证编辑** | 减少「凭记忆 Patch」导致的漂移与损坏 | `mstar-phase-gates` SKILL.md「可验证编辑与上下文纪律」：读后再改、失败则重读 |
 | **持续推进与可核对完成** | 长任务有清单、有关门证据，避免空转 | `mstar-superpowers-align` 的 `verification-before-completion`；PM 对 `tasks`/Phase Gate 的拉回 |

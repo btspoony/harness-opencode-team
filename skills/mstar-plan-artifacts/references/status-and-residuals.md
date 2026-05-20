@@ -2,8 +2,8 @@
 
 > **Load order（与其它 `mstar-*` skill 一致）**：依赖本 reference 改 SSOT / residual 前，须已 Read **`mstar-harness-core`** skill（SKILL.md；同仓分支与 worktree 见 **`mstar-branch-worktree`**）。冲突以 **`mstar-harness-core`** 为准；专题索引见该 SKILL.md「Morning Star Skill 索引」。
 
-`status.json` 位于 `**{HARNESS_DIR}/status.json**`，是 `**plans[]` 行状态**与 **仍处 `open` 的 residual findings** 的**单一事实来源（SSOT）**。  
-**residual 的 canonical / legacy fallback 定义**见本 skill **`SKILL.md` 开篇「\`status.json\` 与 open residual（canonical）」**；本文件展开**字段、severity、生命周期、归档与 `jq` 示例**。
+`status.json` 位于 **`{HARNESS_DIR}/status.json`**，是 **`plans[]` 行状态**与 **仍处 `open` 的 residual findings** 的**单一事实来源（SSOT）**。  
+**residual 的 canonical / legacy fallback 定义**见 **`mstar-plan-artifacts` SKILL.md**「`status.json` 与 open residual（摘要）」；本文件展开**字段、severity、生命周期、归档与 `jq` 示例**。
 **已关闭**的 residual **不应长期堆在**本文件中；权威档案见 `**{HARNESS_DIR}/archived/residuals/<plan-id>.json`**（见「Residual findings 生命周期」）。
 
 **编排语义（为何不是「多写几个字」）**：open 列表与 `archived/residuals/` 是跨会话、跨 agent 的**风险与决策交接面**。若非阻断结论只留在对话或单次 QC 报告里、**不进 SSOT**，下一任实现/审查方**无法可靠继承**已 defer、已风险接受或待跟进的约定；`Done` 也会与「已知债是否对仓库可见」**脱钩**，复盘或线上问题时常出现**无单一事实可引用**。因此 `**@project-manager`** 宜在审查收口后尽快把应跟踪项**登记为 open**；`**@qa-engineer`** 与 PM 宜在验证或豁免决策明确后**及时关闭并归档**——节奏可按里程碑灵活安排，但**不应默认「口头说过即可」**。

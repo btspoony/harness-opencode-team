@@ -88,7 +88,7 @@ Routing in `mstar-roles` **project-manager** may read `@explore → @product-man
 - Printing an Assignment in the main thread is not dispatch; PM must actually invoke the target role.
 - Built-in `@explore` remains read-only orientation, not a substitute for role-owned implementation or review deliverables.
 - More MCPs does not fix process gaps; follow `mstar-phase-gates` and evidence rules first.
-- Topic skills load **on demand** per `mstar-roles` (see hub matrix): `mstar-dispatch-gates`, `mstar-phase-gates`, `mstar-branch-worktree`, `mstar-plan-conventions`, `mstar-status-residuals`, `mstar-plan-artifacts`, etc.
+- Topic skills load **on demand** per `mstar-roles` (see hub matrix): `mstar-dispatch-gates`, `mstar-phase-gates`, `mstar-branch-worktree`, `mstar-plan-conventions`, `mstar-plan-artifacts`, `mstar-plan-artifacts`, etc.
 
 ## Shared protocol: library documentation retrieval (Context7)
 

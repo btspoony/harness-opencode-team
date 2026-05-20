@@ -23,7 +23,7 @@
 
 ## Residual findings（R#）：权威在哪、和主 plan 谁先谁后？
 
-- **Open 条目的单一事实来源（SSOT）**是 **`{HARNESS_DIR}/status.json`** 根级 **`residual_findings[<plan-id>]`**（与 `plans` 平级；canonical 见 `mstar-status-residuals` **SKILL.md** 开篇；字段见 `mstar-status-residuals/references/status-and-residuals.md`）。跨会话 handoff、关闭与归档流程**以该数组为准**。
+- **Open 条目的单一事实来源（SSOT）**是 **`{HARNESS_DIR}/status.json`** 根级 **`residual_findings[<plan-id>]`**（与 `plans` 平级；canonical 见 `mstar-plan-artifacts` **SKILL.md** 开篇；字段见 `mstar-plan-artifacts/references/status-and-residuals.md`）。跨会话 handoff、关闭与归档流程**以该数组为准**。
 - **推荐操作顺序**（避免 plan 与 JSON 两套 ID 漂移）：
   1. `@project-manager` 读完三份 QC 报告并完成「QC 三审轻量汇总」：对 finding **去重合并**，为每条待跟踪项分配**稳定 `id`**（如 `R1`、`R2`，全 plan 内唯一）。
   2. **立即**将上述条目写入根级 **`residual_findings[<plan-id>]`**（含 `source` 指向哪位 QC / 哪份报告文件名，便于回溯）；**勿**与 legacy 侧双写（见 `mstar-plan-conventions` **SKILL.md** 开篇）。

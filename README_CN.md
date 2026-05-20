@@ -108,8 +108,7 @@ OpenCode 的详细安装与迁移说明见 `packages/opencode/INSTALL.md`。
 | `mstar-dispatch-gates` | PM 派发、Delegation、反递归、并行 invoke |
 | `mstar-branch-worktree` | 功能分支、worktree、QC/QA 检出对齐 |
 | `mstar-plan-conventions` | `{HARNESS_DIR}` 发现、初始化、Spec 分支摘要 |
-| `mstar-status-residuals` | `status.json`、residual 生命周期、severity SSOT |
-| `mstar-plan-artifacts` | 主 plan、`reports/`、knowledge、Done 归档 |
+| `mstar-plan-artifacts` | 主 plan、`reports/`、`status.json`、residual、knowledge、Done 归档 |
 | `mstar-review-qc` | QC 审查标准与报告模板 |
 | `mstar-coding-behavior` | 通用编码行为基线 |
 | `mstar-superpowers-align` | 与 Superpowers 的对齐与冲突消解 |
