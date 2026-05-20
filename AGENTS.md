@@ -129,7 +129,7 @@ Use **`.harness/`** only for **in-progress maint work** on this repo (not publis
 - Dispatch, Delegation, anti-recursion, parallel invoke -> `skills/mstar-dispatch-gates/*`
 - Git branches, worktrees, QC/QA checkout alignment -> `skills/mstar-branch-worktree/*`
 - Plan directory discovery, init, Spec branch summary -> `skills/mstar-plan-conventions/*`
-- Plan artifacts (`status.json`, residual, main plan, reports/, knowledge, Done compaction) -> `skills/mstar-plan-artifacts/*`
+- Plan artifacts (`status.json`, residual, main plan, reports/, knowledge, Done compaction, `templates/`) -> `skills/mstar-plan-artifacts/*`
 - QC baseline and review template -> `skills/mstar-review-qc/*`
 - Cross-role coding behavior -> `skills/mstar-coding-behavior/*`
 - Superpowers alignment contract -> `skills/mstar-superpowers-align/*`

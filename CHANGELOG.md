@@ -2,17 +2,27 @@
 
 Chinese summary: [CHANGELOG_CN.md](CHANGELOG_CN.md).
 
-All notable changes to this repository are documented here. Published harness surfaces are at **0.4.0** unless noted:
+All notable changes to this repository are documented here. Published harness surfaces are at **0.4.1** unless noted:
 
 | Surface | Package / manifest | Version |
 | --- | --- | --- |
-| Monorepo root | `morning-star` (`package.json`) | **0.4.0** |
+| Monorepo root | `morning-star` (`package.json`) | **0.4.1** |
 | CLI | `@mstar-harness/cli` (`packages/cli`) | **0.3.1** (unchanged) |
-| OpenCode plugin | `@mstar-harness/opencode` (`packages/opencode`) | **0.4.0** |
-| Cursor plugin | `.cursor-plugin/plugin.json` | **0.4.0** |
-| Codex plugin | `.codex-plugin/plugin.json` | **0.4.0** |
+| OpenCode plugin | `@mstar-harness/opencode` (`packages/opencode`) | **0.4.1** |
+| Cursor plugin | `.cursor-plugin/plugin.json` | **0.4.1** |
+| Codex plugin | `.codex-plugin/plugin.json` | **0.4.1** |
 
 Package-specific histories: [`packages/cli/CHANGELOG.md`](packages/cli/CHANGELOG.md), [`packages/opencode/CHANGELOG.md`](packages/opencode/CHANGELOG.md).
+
+## [0.4.1] - 2026-05-19
+
+### Harness (skills / agents)
+
+- **`mstar-plan-artifacts`**: Move `templates/` (`status.empty.json`, `notes.empty.json`) from `mstar-plan-conventions` so artifact SSOT and empty-file templates live in one skill; `mstar-plan-conventions` keeps path discovery and init steps with pointers to `mstar-plan-artifacts/templates/`.
+
+### Version alignment
+
+- Bump **0.4.0 → 0.4.1** for monorepo root, `@mstar-harness/opencode`, and Cursor / Codex plugin manifests. **`@mstar-harness/cli` remains 0.3.1**.
 
 ## [0.4.0] - 2026-05-19
 

@@ -49,8 +49,8 @@ description: Morning Star (启明星) harness 计划目录约定 —— `{HARNES
 
 PM 在需要持久化追踪时：
 
-1. 建 `.agents/`、`plans/`、`status.json`（模板见 **`templates/status.empty.json`**）
-2. 可选 `notes.json`、`reports/README.md`、`knowledge/`、`iterations/`、`specs/`
+1. 建 `.agents/`、`plans/`、`status.json`（空模板见 **`mstar-plan-artifacts/templates/status.empty.json`**）
+2. 可选 `notes.json`（模板 **`mstar-plan-artifacts/templates/notes.empty.json`**）、`reports/README.md`、`knowledge/`、`iterations/`、`specs/`
 3. Git：团队交付 **勿** ignore 整个 `{HARNESS_DIR}`（handoff 需 clone 可达）
 
 步骤与 `.agents/AGENTS.md` 分层 → **`references/harness-bootstrap-and-agents-layering.md`**。
@@ -84,4 +84,4 @@ PM 在需要持久化追踪时：
 - `references/harness-bootstrap-and-agents-layering.md` — 新仓 harness + AGENTS 分层
 - `references/effort-estimation.md` — agent-oriented 工期（禁人天/FTE）
 
-**Plan 工件细则**（主 plan、reports、`status.json`、residual、knowledge、Done 归档）→ skill **`mstar-plan-artifacts`**（`references/` 下正文文件）。
+**Plan 工件细则**（主 plan、reports、`status.json`、residual、knowledge、Done 归档、**`templates/`**）→ skill **`mstar-plan-artifacts`**（`references/` 与 `templates/`）。

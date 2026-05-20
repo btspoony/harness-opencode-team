@@ -4,6 +4,14 @@ All notable changes to the `@mstar-harness/opencode` package are documented in t
 
 The monorepo root [CHANGELOG.md](../../CHANGELOG.md) summarizes cross-surface releases.
 
+## 0.4.1
+
+### Bundled harness skills (`harness-skills/` at publish)
+
+- **`mstar-plan-artifacts/templates/`**: `status.empty.json` and `notes.empty.json` moved from `mstar-plan-conventions` (paths in skill text updated).
+
+See root [CHANGELOG.md](../../CHANGELOG.md).
+
 ## 0.4.0
 
 ### Bundled harness skills (`harness-skills/` at publish)

@@ -51,7 +51,7 @@
 }
 ```
 
-**空仓库可复制模板**：本仓库 **`mstar-plan-conventions/templates/status.empty.json`**；可选 **`templates/notes.empty.json`** → `{HARNESS_DIR}/notes.json`。说明见 **`mstar-plan-conventions/templates/README.md`**。
+**空仓库可复制模板**：本 skill **`templates/status.empty.json`**；可选 **`templates/notes.empty.json`** → `{HARNESS_DIR}/notes.json`。说明见 **`templates/README.md`**。
 
 **已关闭条目**在以上字段之外补充：`lifecycle`、`closed_at`、`closure_note`；可选 `closure_evidence`、`superseded_by`。语义见下「Residual findings 生命周期」。
 

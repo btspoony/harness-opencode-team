@@ -1,16 +1,26 @@
 # 更新日志
 
-本仓库 harness 发布面版本以 [CHANGELOG.md](CHANGELOG.md) 为准：**0.4.0**（CLI 包除外，见下表）。
+本仓库 harness 发布面版本以 [CHANGELOG.md](CHANGELOG.md) 为准：**0.4.1**（CLI 包除外，见下表）。
 
 | 发布面 | 位置 | 版本 |
 | --- | --- | --- |
-| monorepo 根 | `morning-star`（`package.json`） | **0.4.0** |
+| monorepo 根 | `morning-star`（`package.json`） | **0.4.1** |
 | CLI | `@mstar-harness/cli`（`packages/cli`） | **0.3.1**（保持不变） |
-| OpenCode 插件 | `@mstar-harness/opencode`（`packages/opencode`） | **0.4.0** |
-| Cursor 插件 | `.cursor-plugin/plugin.json` | **0.4.0** |
-| Codex 插件 | `.codex-plugin/plugin.json` | **0.4.0** |
+| OpenCode 插件 | `@mstar-harness/opencode`（`packages/opencode`） | **0.4.1** |
+| Cursor 插件 | `.cursor-plugin/plugin.json` | **0.4.1** |
+| Codex 插件 | `.codex-plugin/plugin.json` | **0.4.1** |
 
 各包独立日志：[packages/cli/CHANGELOG.md](packages/cli/CHANGELOG.md)、[packages/opencode/CHANGELOG.md](packages/opencode/CHANGELOG.md)。
+
+## [0.4.1] - 2026-05-19
+
+### Harness（skills / agents）
+
+- **`mstar-plan-artifacts`**：将 `templates/`（`status.empty.json`、`notes.empty.json`）从 `mstar-plan-conventions` 迁入，与 `status.json` / residual SSOT 同 skill；`mstar-plan-conventions` 仍负责路径发现与初始化步骤，模板路径指向 `mstar-plan-artifacts/templates/`。
+
+### 版本对齐
+
+- monorepo 根、`@mstar-harness/opencode`、Cursor / Codex 插件 manifest：**0.4.0 → 0.4.1**。**`@mstar-harness/cli` 保持 0.3.1**。
 
 ## [0.4.0] - 2026-05-19
 

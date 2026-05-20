@@ -15,8 +15,9 @@ description: Morning Star plan harness artifacts — `{PLAN_DIR}` main plans and
 | knowledge / iterations / specs 边界与索引 | `references/knowledge-and-designs.md` |
 | Done 行瘦身 Profile A/B | `references/done-compaction.md` |
 | `status.json`、residual severity、生命周期、`jq` | `references/status-and-residuals.md` |
+| 空仓库 `status.json` / `notes.json` 模板 | `templates/status.empty.json`、`templates/notes.empty.json`（见 `templates/README.md`） |
 
-**Out of scope:** 分支与 QC/QA 检出对齐 → **`mstar-branch-worktree`**；QC 清单与 verdict → **`mstar-review-qc`**；`{HARNESS_DIR}` 发现与初始化 → **`mstar-plan-conventions`**。
+**Out of scope:** 分支与 QC/QA 检出对齐 → **`mstar-branch-worktree`**；QC 清单与 verdict → **`mstar-review-qc`**；`{HARNESS_DIR}` 路径发现与目录初始化步骤 → **`mstar-plan-conventions`**。
 
 ## `status.json` 与 open residual（摘要）
 
@@ -27,4 +28,4 @@ description: Morning Star plan harness artifacts — `{PLAN_DIR}` main plans and
 
 字段、severity 映射表、归档与 `jq` 示例 → **`references/status-and-residuals.md`**。
 
-**Templates：** `mstar-plan-conventions/templates/status.empty.json`、`templates/notes.empty.json`（本仓库 `skills/mstar-plan-conventions/templates/`）。
+**Templates（本 skill）：** `templates/status.empty.json`、`templates/notes.empty.json` — 复制到 `{HARNESS_DIR}/`（说明见 `templates/README.md`）。
